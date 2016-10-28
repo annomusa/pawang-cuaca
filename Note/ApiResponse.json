@@ -1,0 +1,2 @@
+{"coord":
+{"lon":-0.13,"lat":51.51},"weather":[{"id":801,"main":"Clouds","description":"few clouds","icon":"02n"}],"base":"stations","main":{"temp":282.936,"pressure":1037.38,"humidity":93,"temp_min":282.936,"temp_max":282.936,"sea_level":1045.21,"grnd_level":1037.38},"wind":{"speed":4.11,"deg":257.001},"clouds":{"all":24},"dt":1477626497,"sys":{"message":0.0099,"country":"GB","sunrise":1477637271,"sunset":1477672790},"id":2643743,"name":"London","cod":200}
