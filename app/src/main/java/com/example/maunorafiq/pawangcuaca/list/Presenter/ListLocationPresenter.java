@@ -1,7 +1,7 @@
-package com.example.maunorafiq.pawangcuaca.location;
+package com.example.maunorafiq.pawangcuaca.list.Presenter;
 
-import com.example.maunorafiq.pawangcuaca.base.BasePresenter;
 import com.example.maunorafiq.pawangcuaca.base.BasePresenterImpl;
+import com.example.maunorafiq.pawangcuaca.list.ListLocationContract;
 import com.example.maunorafiq.pawangcuaca.model.openweather.OWeatherResponse;
 
 import retrofit2.adapter.rxjava.HttpException;
@@ -11,35 +11,35 @@ import rx.Observer;
  * Created by maunorafiq on 10/28/16.
  */
 
-public class ListLocationPresenter extends BasePresenterImpl implements Observer<OWeatherResponse> {
-    private ListLocationInterface mInterface;
+public class ListLocationPresenter extends BasePresenterImpl implements Observer<OWeatherResponse>, ListLocationContract.UserActionListener {
+    private ListLocationContract.View mInterface;
 
-    public ListLocationPresenter(ListLocationInterface mInterface) {
+    public ListLocationPresenter(ListLocationContract.View mInterface) {
         this.mInterface = mInterface;
     }
 
     @Override
     public void onCompleted() {
-        mInterface.onCompleted();
+        mInterface.showComplete();
     }
 
     @Override
     public void onError(Throwable e) {
         e.printStackTrace();
         if(e instanceof java.net.SocketTimeoutException || e instanceof HttpException) {
-            mInterface.onError("Timeout!");
+            mInterface.showError("Timeout!");
         } else {
-            mInterface.onError(e.getMessage());
+            mInterface.showError(e.getMessage());
         }
     }
 
     @Override
     public void onNext(OWeatherResponse response) {
-        mInterface.onResponse(response);
+        mInterface.showResult(response);
     }
 
-    public void fetchWeather(){
+    public void fetchWeather(String city){
         unSubscribeAll();
-        subscribe(mInterface.getWeather(), this);
+        subscribe(mInterface.getWeather(city), this);
     }
 }
