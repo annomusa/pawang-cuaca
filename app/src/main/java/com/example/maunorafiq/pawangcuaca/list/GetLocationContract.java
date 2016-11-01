@@ -2,6 +2,7 @@ package com.example.maunorafiq.pawangcuaca.list;
 
 
 import android.location.Location;
+import android.os.Bundle;
 
 /**
  * Created by maunorafiq on 10/31/16.
@@ -10,7 +11,7 @@ import android.location.Location;
 public interface GetLocationContract {
 
     interface View {
-        void showLastLocation(Location lastLocation);
+        void showLocation(Location location);
         void showAccessGpsNotGranted();
     }
 
@@ -18,5 +19,6 @@ public interface GetLocationContract {
         void fetchLocation();
         void connectGApi();
         void disconnectGApi();
+        void stopLocationUpdate();
     }
 }

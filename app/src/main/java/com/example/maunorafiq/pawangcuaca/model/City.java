@@ -12,6 +12,14 @@ public class City {
         this.temperature = temperature;
     }
 
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getName(){
         return name;
     }
@@ -19,4 +27,6 @@ public class City {
     public String getTemperature(){
         return temperature;
     }
+
+
 }

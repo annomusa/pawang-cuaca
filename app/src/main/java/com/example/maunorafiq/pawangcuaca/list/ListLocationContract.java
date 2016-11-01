@@ -14,11 +14,12 @@ public interface ListLocationContract {
         void showComplete();
         void showError(String message);
         void showResult(OWeatherResponse result);
-        Observable<OWeatherResponse> getWeather(String city);
     }
 
     interface UserActionListener {
-        void fetchWeather(String city);
+        void fetchWeatherByCity(String city);
+        void fetchWeatherByCoordinates(double lat, double lon);
+        void setView(View view);
     }
 
 }
