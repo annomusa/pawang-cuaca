@@ -16,7 +16,9 @@ import rx.Observer;
  * Created by maunorafiq on 10/28/16.
  */
 @CustomScope
-public class ListLocationPresenter extends BasePresenterImpl implements Observer<OWeatherResponse>, ListLocationContract.UserActionListener {
+public class ListLocationPresenter extends BasePresenterImpl implements
+        Observer<OWeatherResponse>,
+        ListLocationContract.UserActionListener {
     private ListLocationContract.View mInterface;
     private RestApi restApi;
 

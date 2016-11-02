@@ -25,45 +25,42 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
-import java.text.DateFormat;
-import java.util.Date;
-
 /**
- * Created by maunorafiq on 11/1/16.
+ * Created by maunorafiq on 11/2/16.
  */
 
 public class GetLocationPresenter implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener,
         ResultCallback<LocationSettingsResult>,
+        LocationListener,
         GetLocationContract.UserActionListener {
 
-    private static final String TAG = "Get Location Presenter";
+    private static final String TAG = "Get Location Interactor";
+    private static final long UPDATE_INTERVAL_MILISECONDS = 10000;
+    private static final long FASTEST_UPDATE_INTERVAL_MILISECONDS = UPDATE_INTERVAL_MILISECONDS /4;
 
     public static final int REQUEST_CHECK_SETTINGS = 102;
-    public static final int MY_PERMISSION_ACCESS_COURSE_LOCATION = 103;
-    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
-    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 4;
+    public static final int PERMISSION_ACCESS_COURSE_LOCATION = 103;
 
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
-    private LocationSettingsRequest mLocationSettingsRequest;
+    private LocationSettingsRequest mGpsRequestDialog;
     private Location mCurrentLocation;
 
-    private GetLocationContract.View mInterface;
     private Context mContext;
+    private GetLocationContract.View mInterface;
 
-    public GetLocationPresenter(GetLocationContract.View mInterface, Context ctx) {
-        this.mInterface = mInterface;
-        mContext = ctx;
+    public GetLocationPresenter(Context mContext) {
+        this.mContext = mContext;
+        this.mInterface = (GetLocationContract.View) mContext;
 
         buildGoogleApiClient();
-        createLocationRequest();
-        buildLocationSettingsRequest();
+        createSpesificationLocationRequest();
+        buildGpsSettingsRequest();
     }
 
-    private synchronized void buildGoogleApiClient() {
+    private void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(mContext)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -71,52 +68,74 @@ public class GetLocationPresenter implements
                 .build();
     }
 
-    private void createLocationRequest() {
+    private void createSpesificationLocationRequest() {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
-        mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
+        mLocationRequest.setInterval(UPDATE_INTERVAL_MILISECONDS);
+        mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_MILISECONDS);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
     }
 
-    private void buildLocationSettingsRequest() {
+    private void buildGpsSettingsRequest() {
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
         builder.addLocationRequest(mLocationRequest);
-        mLocationSettingsRequest = builder.build();
+        mGpsRequestDialog = builder.build();
     }
 
-    private void checkLocationSettings() {
+    public void requestAccessLocation () {
+        if ( ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+            Log.d(TAG, "requestAccessLocation: not granted");
+            ActivityCompat.requestPermissions(
+                    (Activity) mContext,
+                    new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION },
+                    PERMISSION_ACCESS_COURSE_LOCATION
+            );
+        } else {
+            Log.d(TAG, "requestAccessLocation: granted");
+            requestActivateGps();
+        }
+    }
+
+    public void requestActivateGps() {
+        Log.d(TAG, "requestActivateGps: ");
         PendingResult<LocationSettingsResult> result =
                 LocationServices.SettingsApi.checkLocationSettings(
                         mGoogleApiClient,
-                        mLocationSettingsRequest
+                        mGpsRequestDialog
                 );
         result.setResultCallback(this);
     }
 
-    private void startLocationUpdates() {
-        if ( ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-            ActivityCompat.requestPermissions(
-                    (Activity) mContext,
-                    new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },
-                    MY_PERMISSION_ACCESS_COURSE_LOCATION );
-        } else {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this); // this call callback locationlistener
+    public void startLocationUpdate() {
+        int isGranted = ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION);
+        if( isGranted == PackageManager.PERMISSION_GRANTED ) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(
+                    mGoogleApiClient,
+                    mLocationRequest,
+                    this
+            ).setResultCallback(status -> {
+                Log.d(TAG, "startLocationUpdate: true");
+            });
         }
     }
 
+    private void stopLocationUpdate() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(
+                mGoogleApiClient,
+                this
+        ).setResultCallback(status -> Log.d(TAG, "stopLocationUpdate: true"));
+    }
 
-    // Connection Callback :: Callback result from gApiClient.connect()
+
+
+    //-------------- GApi -------------//
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        if (mCurrentLocation == null) {
-            if ( ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-                // Call onRequestPermissioResult on Activity
-                ActivityCompat.requestPermissions(
-                        (Activity) mContext,
-                        new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },
-                        MY_PERMISSION_ACCESS_COURSE_LOCATION );
-            } else {
-                mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        int isGranted = ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION);
+        if( isGranted == PackageManager.PERMISSION_GRANTED ) {
+            Log.d(TAG, "onConnected: true");
+            mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if (mCurrentLocation != null) {
+                Log.d(TAG, "onConnected: true++");
                 mInterface.showLocation(mCurrentLocation);
             }
         }
@@ -124,69 +143,66 @@ public class GetLocationPresenter implements
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.i(TAG, "Connection suspended");
+        Log.d(TAG, "onConnectionSuspended: ");
     }
 
-    // Connection failed Listener
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d(TAG, "onConnectionFailed: ");
     }
 
-    // Result Callback :: Callback result called in checkLocationSettings()
     @Override
     public void onResult(@NonNull LocationSettingsResult locationSettingsResult) {
         final Status status = locationSettingsResult.getStatus();
         switch (status.getStatusCode()) {
             case LocationSettingsStatusCodes.SUCCESS:
-                Log.i(TAG, "All location settings are satisfied.");
-                startLocationUpdates();
+                startLocationUpdate();
                 break;
             case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                Log.i(TAG, "Location settings are not satisfied. Show the user a dialog to upgrade location settings ");
+                Log.d(TAG, "Location settings are not satisfied. Show the user a dialog to upgrade location settings ");
                 try {
                     status.startResolutionForResult((Activity) mContext, REQUEST_CHECK_SETTINGS);
                 } catch (IntentSender.SendIntentException e) {
-                    Log.i(TAG, "PendingIntent unable to execute request.");
+                    Log.d(TAG, "PendingIntent unable to execute request.");
                 }
                 break;
             case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                Log.i(TAG, "Location settings are inadequate, and cannot be fixed here. Dialog " +
+                Log.d(TAG, "Location settings are inadequate, and cannot be fixed here. Dialog " +
                         "not created.");
                 break;
         }
     }
 
-    // Location Listener :: Callback from startLocationUpdates()
     @Override
     public void onLocationChanged(Location location) {
-        mInterface.showLocation(location);
+        mCurrentLocation = location;
+        Log.d(TAG, "onLocationChanged: " + mCurrentLocation.getLatitude() + " " + mCurrentLocation.getLongitude());
+        mInterface.showLocation(mCurrentLocation);
     }
+    //-------------- GApi -------------//
 
 
 
-    /*--------- Contract ----------*/
+    //-------------- Contract -------------//
     @Override
-    public void fetchLocation() {
-        checkLocationSettings();
-    }
-
-    @Override
-    public void connectGApi() {
+    public void onStartGApi() {
         mGoogleApiClient.connect();
+        requestAccessLocation();
     }
 
     @Override
-    public void disconnectGApi() {
+    public void onResumeGApi() {
+        if(mGoogleApiClient.isConnected()) startLocationUpdate();
+    }
+
+    @Override
+    public void onPauseGApi() {
+        if(mGoogleApiClient.isConnected()) stopLocationUpdate();
+    }
+
+    @Override
+    public void onStopGApi() {
         mGoogleApiClient.disconnect();
     }
-
-    @Override
-    public void stopLocationUpdate() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(
-                mGoogleApiClient,
-                this
-        );
-    }
-    /*--------- Contract ----------*/
+    //-------------- Contract -------------//
 }

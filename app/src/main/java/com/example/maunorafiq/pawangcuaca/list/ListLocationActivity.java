@@ -1,5 +1,6 @@
 package com.example.maunorafiq.pawangcuaca.list;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -39,9 +40,9 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-import static com.example.maunorafiq.pawangcuaca.list.Presenter.GetLocationPresenter.REQUEST_CHECK_SETTINGS;
-
-public class ListLocationActivity extends AppCompatActivity implements ListLocationContract.View, GetLocationContract.View {
+public class ListLocationActivity extends AppCompatActivity implements
+        ListLocationContract.View,
+        GetLocationContract.View {
 
     @Inject RestApi restApi;
     @Inject ListLocationPresenter mPresenter;
@@ -49,18 +50,17 @@ public class ListLocationActivity extends AppCompatActivity implements ListLocat
 
     private ItemLocationAdapter mAdapter;
     private ArrayList<City> cities;
-    private GetLocationPresenter mPresenterGetLocation;
     private String TAG = "List location activity";
     private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 101;
 
+    private String mLastCity;
     private Location mLastLocation;
     private String mLastUpdateTime;
-    private String mLastCity;
-    private String mLastTemp;
+
+    private GetLocationPresenter mInteractor;
 
     // Keys for storing activity state in the Bundle.
     protected final static String KEY_CITY = "city";
-    protected final static String KEY_TEMP = "temp";
     protected final static String KEY_LOCATION = "location";
     protected final static String KEY_LAST_UPDATED_TIME_STRING = "last-updated-time-string";
 
@@ -73,8 +73,7 @@ public class ListLocationActivity extends AppCompatActivity implements ListLocat
 
         App.getApiComponent(this, Constant.oWeatherUrl).inject(this);
         mPresenter.setView(this);
-
-        mPresenterGetLocation = new GetLocationPresenter(this, this);
+        mInteractor = new GetLocationPresenter(this);
 
         cities = new ArrayList<>();
         City city = new City("City", "-");
@@ -88,53 +87,52 @@ public class ListLocationActivity extends AppCompatActivity implements ListLocat
     @Override
     protected void onStart() {
         super.onStart();
-        mPresenterGetLocation.connectGApi();
+        mInteractor.onStartGApi(); // Get Location, Callback on ShowLocation
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        mInteractor.onResumeGApi();
         mPresenter.onResume();
-        mPresenter.fetchWeatherByCity("Kebayoran Baru");
+//        mPresenter.fetchWeatherByCity("Kebayoran Baru");
     }
 
     @Override
     protected void onPause() {
+        mInteractor.onPauseGApi();
         super.onPause();
-        mPresenterGetLocation.stopLocationUpdate();
     }
 
     @Override
     protected void onStop() {
+        mInteractor.onStopGApi();
         super.onStop();
-        mPresenterGetLocation.disconnectGApi();
     }
 
     private void updateValuesFromBundle(Bundle savedInstanceState) {
+        Log.d(TAG, "updateValuesFromBundle: checking bundle");
         if(savedInstanceState != null) {
+            Log.d(TAG, "updateValuesFromBundle: yey");
             if (savedInstanceState.keySet().contains(KEY_CITY)) {
-                String cityName = savedInstanceState.getString(KEY_CITY);
-                cities.get(0).setName(cityName);
+                mLastCity = savedInstanceState.getString(KEY_CITY);
+                Log.d(TAG, "updateValuesFromBundle: " + mLastCity);
+                cities.get(0).setName(mLastCity);
             }
-
-            if (savedInstanceState.keySet().contains(KEY_TEMP)) {
-                String cityTemp = savedInstanceState.getString(KEY_TEMP);
-                cities.get(0).setTemperature(cityTemp);
-            }
-
             if (savedInstanceState.keySet().contains(KEY_LOCATION)) {
                 mLastLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             }
 
             if (savedInstanceState.keySet().contains(KEY_LAST_UPDATED_TIME_STRING)) {
                 mLastUpdateTime = savedInstanceState.getString(KEY_LAST_UPDATED_TIME_STRING);
+                Log.d(TAG, "updateValuesFromBundle: " + mLastUpdateTime);
             }
-        }
+        } else Log.d(TAG, "updateValuesFromBundle: null");
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putString(KEY_CITY, mLastCity);
-        savedInstanceState.putString(KEY_TEMP, mLastTemp);
+        Log.d(TAG, "onSaveInstanceState: saving bundle");
+        savedInstanceState.putString(KEY_CITY, mLastCity); Log.d(TAG, "onSaveInstanceState: " + mLastCity);
         savedInstanceState.putParcelable(KEY_LOCATION, mLastLocation);
         savedInstanceState.putString(KEY_LAST_UPDATED_TIME_STRING, mLastUpdateTime);
         super.onSaveInstanceState(savedInstanceState);
@@ -162,7 +160,7 @@ public class ListLocationActivity extends AppCompatActivity implements ListLocat
 
 
 
-    /*------------ CONTRACT List Location ------------*/
+    /*------------ Contract ------------*/
     @Override
     public void showComplete() {
         mAdapter.notifyDataSetChanged();
@@ -178,24 +176,18 @@ public class ListLocationActivity extends AppCompatActivity implements ListLocat
     public void showResult(OWeatherResponse response) {
         Log.d(TAG, "showResult: " + response.getName() + " " + response.getMain().getTemp().toString());
         City city = new City(response.getName(), response.getMain().getTemp().toString());
-        cities.add(city);
-    }
-    /*------------ CONTRACT List Location ------------*/
-
-
-
-    /*------------ Get Location View Contract ------------*/
-    @Override
-    public void showLocation(Location lastLocation) {
-        Log.d(TAG, "showLocation: " + lastLocation.getLatitude() + " "  + lastLocation.getLongitude());
-        mPresenter.fetchWeatherByCoordinates(lastLocation.getLatitude(), lastLocation.getLongitude());
+        mLastCity = response.getName();
+        cities.get(0).setName(response.getName());
+        cities.get(0).setTemperature(response.getMain().getTemp().toString());
+//        cities.add(city);
     }
 
     @Override
-    public void showAccessGpsNotGranted() {
-        Log.d(TAG, "showAccessGpsNotGranted: hey");
+    public void showLocation(Location location) {
+        mPresenter.fetchWeatherByCoordinates(location.getLatitude(), location.getLongitude());
+//        mPresenter.fetchWeatherByCoordinates(35, 139);
     }
-    /*------------ Get Location View Contract ------------*/
+    /*------------ Contract ------------*/
 
 
 
@@ -221,8 +213,15 @@ public class ListLocationActivity extends AppCompatActivity implements ListLocat
             case PLACE_AUTOCOMPLETE_REQUEST_CODE:
                 handlePlaceAutoComplete(resultCode, data);
                 break;
-            case REQUEST_CHECK_SETTINGS:
-                mPresenterGetLocation.fetchLocation();
+            case GetLocationPresenter.REQUEST_CHECK_SETTINGS:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        mInteractor.startLocationUpdate();
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        Log.d(TAG, "onActivityResult: gps not activate");
+                        break;
+                }
                 break;
             default:
                 break;
@@ -248,14 +247,12 @@ public class ListLocationActivity extends AppCompatActivity implements ListLocat
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
-            case GetLocationPresenter.MY_PERMISSION_ACCESS_COURSE_LOCATION:
-                // Permission Granted
+            case GetLocationPresenter.PERMISSION_ACCESS_COURSE_LOCATION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mPresenterGetLocation.fetchLocation();
+                    mInteractor.requestActivateGps();
                 }
-                // Permission not Granted
                 else {
-
+                    Log.d(TAG, "onRequestPermissionsResult: not granted");
                 }
                 break;
         }
@@ -278,5 +275,4 @@ public class ListLocationActivity extends AppCompatActivity implements ListLocat
 
         return super.onOptionsItemSelected(item);
     }
-
 }
