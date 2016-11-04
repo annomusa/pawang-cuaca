@@ -1,6 +1,13 @@
 package com.example.maunorafiq.pawangcuaca.list;
 
+import android.content.Context;
+import android.location.Location;
+
+import com.example.maunorafiq.pawangcuaca.model.City;
 import com.example.maunorafiq.pawangcuaca.model.openweather.OWeatherResponse;
+import com.example.maunorafiq.pawangcuaca.usecase.GetWeather;
+
+import java.util.List;
 
 import rx.Observable;
 
@@ -11,15 +18,32 @@ import rx.Observable;
 public interface ListLocationContract {
 
     interface View {
+
         void showComplete();
+
         void showError(String message);
-        void showResult(OWeatherResponse result);
+
+        void showResult(GetWeather.CityWeather result);
+
     }
 
     interface UserActionListener {
-        void fetchWeatherByCity(String city);
-        void fetchWeatherByCoordinates(double lat, double lon);
+
         void setView(View view);
+
+        void setContext(Context context);
+
+        void requestGps();
+
+        void requestLocation();
+
+        void getCurrentLocation();
+
+        List<City> fetchCities();
+
+        void fetchWeather(int number, String city, double lat, double lon);
+
+        void addNewCity(String city);
     }
 
 }

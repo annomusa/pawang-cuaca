@@ -1,5 +1,7 @@
 package com.example.maunorafiq.pawangcuaca.usecase;
 
+import android.util.Log;
+
 import com.example.maunorafiq.pawangcuaca.Constant;
 import com.example.maunorafiq.pawangcuaca.di.CustomScope;
 import com.example.maunorafiq.pawangcuaca.model.openweather.OWeatherResponse;
@@ -12,28 +14,30 @@ import rx.Observable;
 /**
  * Created by maunorafiq on 11/2/16.
  */
-@CustomScope
+
 public class GetWeather {
+    private static final String TAG = "Get Weather Class";
+
     private RestApi restApi;
+
     private String city;
     private int number;
     private double lat;
     private double lon;
 
-    @Inject
     public GetWeather(RestApi restApi) {
         this.restApi = restApi;
     }
 
-    public void setCity(String city, int number) {
+    public void setRequest(int number, String city, double lat, double lon) {
         this.number = number;
         this.city = city;
-    }
-
-    public void setCoordinates(double lat, double lon, int number) {
         this.lat = lat;
         this.lon = lon;
-        this.number = number;
+    }
+
+    public void printRequest() {
+        Log.d(TAG, "printRequest: " + number + " " + city + " " + lat + " " + lon);
     }
 
     public Observable<CityWeather> execute() {
@@ -43,7 +47,6 @@ public class GetWeather {
         else
             return restApi.getWeatherByCoordinates(lat, lon, Constant.oWeatherApi)
                 .map(response -> new CityWeather(number, city, lat, lon, response));
-
     }
 
     public static class CityWeather {
@@ -59,6 +62,26 @@ public class GetWeather {
             this.lat = lat;
             this.lon = lon;
             this.oWeatherResponse = oWeatherResponse;
+        }
+
+        public OWeatherResponse getoWeatherResponse() {
+            return oWeatherResponse;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public double getLat() {
+            return lat;
+        }
+
+        public double getLon() {
+            return lon;
         }
     }
 }

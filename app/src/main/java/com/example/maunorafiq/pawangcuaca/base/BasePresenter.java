@@ -6,6 +6,9 @@ package com.example.maunorafiq.pawangcuaca.base;
 
 public interface BasePresenter {
     void onCreate();
+    void onStart();
     void onResume();
+    void onPause();
+    void onStop();
     void onDestroy();
 }
