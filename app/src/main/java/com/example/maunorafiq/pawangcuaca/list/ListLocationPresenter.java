@@ -6,19 +6,28 @@ import android.util.Log;
 
 import com.example.maunorafiq.pawangcuaca.base.BasePresenterImpl;
 import com.example.maunorafiq.pawangcuaca.di.CustomScope;
-import com.example.maunorafiq.pawangcuaca.model.City;
+import com.example.maunorafiq.pawangcuaca.model.reamldb.City;
+import com.example.maunorafiq.pawangcuaca.model.reamldb.RealmCity;
 import com.example.maunorafiq.pawangcuaca.service.RestApi;
 import com.example.maunorafiq.pawangcuaca.usecase.GetLocation;
 import com.example.maunorafiq.pawangcuaca.usecase.contract.GetLocationContract;
 import com.example.maunorafiq.pawangcuaca.usecase.GetWeather;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import retrofit2.adapter.rxjava.HttpException;
+import rx.Observable;
 import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.functions.Func2;
 
 /**
  * Created by maunorafiq on 10/28/16.
@@ -37,8 +46,11 @@ public class ListLocationPresenter extends BasePresenterImpl implements
     private ListLocationContract.View mInterface;
     private GetLocationContract.RequestListener mInteractorLocation;
 
+    private Realm mRealm;
+    private Subscription subscription;
+
     @Inject
-    public ListLocationPresenter(RestApi restApi) {
+    ListLocationPresenter(RestApi restApi) {
         this.restApi = restApi;
 
         mCities = new ArrayList<>();
@@ -47,6 +59,8 @@ public class ListLocationPresenter extends BasePresenterImpl implements
         mCities.add(new City("Surabaya", "-"));
         mCities.add(new City("Cikarang Barat", "-"));
     }
+
+
 
     @Override
     public void setView(ListLocationContract.View view) {
@@ -61,6 +75,41 @@ public class ListLocationPresenter extends BasePresenterImpl implements
     @Override
     public void addNewCity(String city) {
         mCities.add(new City(city, "-"));
+    }
+
+    @Override
+    public void addNewRealmCity(String id, String city) {
+        mRealm = Realm.getDefaultInstance();
+
+        mRealm.executeTransaction(realm -> {
+            RealmCity realmCity = realm.createObject(RealmCity.class, id);
+            realmCity.setName(city);
+        });
+        mRealm.close();
+    }
+
+    public void printRealmCities() {
+        mRealm = Realm.getDefaultInstance();
+        subscription = mRealm.where(RealmCity.class)
+                .findAllAsync()
+                .asObservable()
+                
+                .flatMap(new Func1<RealmResults<RealmCity>, Observable<RealmCity>>() {
+                    @Override
+                    public Observable<RealmCity> call(RealmResults<RealmCity> realmCities) {
+                        return Observable.from(realmCities);
+                    }
+                })
+                .zipWith(Observable.interval(1, TimeUnit.SECONDS), new Func2<RealmCity, Long, RealmCity>() {
+                    @Override
+                    public RealmCity call(RealmCity realmCity, Long t2) {
+                        return realmCity;
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(realmCity -> {
+                    Log.d(TAG, "printRealmCities: " + realmCity.getId() + " " + realmCity.getName());
+                });
     }
 
     @Override
@@ -117,6 +166,7 @@ public class ListLocationPresenter extends BasePresenterImpl implements
     @Override
     public void onStop() {
         super.onStop();
+        subscription.unsubscribe();
         mInteractorLocation.onStopGApi();
     }
 

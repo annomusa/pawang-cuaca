@@ -9,6 +9,9 @@ import com.example.maunorafiq.pawangcuaca.di.component.DaggerNetworkComponent;
 import com.example.maunorafiq.pawangcuaca.di.component.NetworkComponent;
 import com.example.maunorafiq.pawangcuaca.di.module.NetworkModule;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 /**
  * Created by maunorafiq on 10/28/16.
  */
@@ -19,6 +22,11 @@ public class App extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder().build();
+        Realm.deleteRealm(config);
+        Realm.setDefaultConfiguration(config);
     }
 
     public NetworkComponent getNetworkComponent(String url) {

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.maunorafiq.pawangcuaca.R;
-import com.example.maunorafiq.pawangcuaca.model.City;
+import com.example.maunorafiq.pawangcuaca.model.reamldb.City;
 
 import java.util.ArrayList;
 

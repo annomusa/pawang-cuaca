@@ -1,4 +1,4 @@
-package com.example.maunorafiq.pawangcuaca.model;
+package com.example.maunorafiq.pawangcuaca.model.reamldb;
 
 /**
  * Created by maunorafiq on 10/28/16.

@@ -36,7 +36,7 @@ public class BasePresenterImpl implements BasePresenter {
 
     @Override
     public void onStop() {
-
+        unSubscribeAll();
     }
 
     @Override

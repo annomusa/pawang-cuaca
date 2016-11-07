@@ -64,7 +64,7 @@ public class GetWeather {
             this.oWeatherResponse = oWeatherResponse;
         }
 
-        public OWeatherResponse getoWeatherResponse() {
+        public OWeatherResponse getOWeatherResponse() {
             return oWeatherResponse;
         }
 

@@ -23,7 +23,7 @@ import com.example.maunorafiq.pawangcuaca.Constant;
 import com.example.maunorafiq.pawangcuaca.R;
 import com.example.maunorafiq.pawangcuaca.usecase.GetLocation;
 import com.example.maunorafiq.pawangcuaca.list.adapter.ItemLocationAdapter;
-import com.example.maunorafiq.pawangcuaca.model.City;
+import com.example.maunorafiq.pawangcuaca.model.reamldb.City;
 import com.example.maunorafiq.pawangcuaca.service.RestApi;
 import com.example.maunorafiq.pawangcuaca.usecase.GetWeather;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -60,6 +60,7 @@ public class ListLocationActivity extends AppCompatActivity implements
     protected final static String KEY_LOCATION = "location";
     protected final static String KEY_LAST_UPDATED_TIME_STRING = "last-updated-time-string";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +69,7 @@ public class ListLocationActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
 
         App.getApiComponent(this, Constant.oWeatherUrl).inject(this);
+
         mPresenter.setView(this);
         mPresenter.setContext(this);
         cities = new ArrayList<>();
@@ -94,6 +96,8 @@ public class ListLocationActivity extends AppCompatActivity implements
         for (int i=1;i<cities.size();i++) {
             mPresenter.fetchWeather(i, cities.get(i).getName(), 0, 0);
         }
+
+        mPresenter.printRealmCities();
     }
 
     @Override
@@ -174,11 +178,11 @@ public class ListLocationActivity extends AppCompatActivity implements
     @Override
     public void showResult(GetWeather.CityWeather response) {
         if (response.getNumber() == 0){
-            cities.get(0).setName(response.getoWeatherResponse().getName());
-            cities.get(0).setTemperature(response.getoWeatherResponse().getMain().getTemp().toString());
+            cities.get(0).setName(response.getOWeatherResponse().getName());
+            cities.get(0).setTemperature(response.getOWeatherResponse().getMain().getTemp().toString());
         } else {
             cities.get(response.getNumber()).setName(response.getCity());
-            cities.get(response.getNumber()).setTemperature(response.getoWeatherResponse().getMain().getTemp().toString());
+            cities.get(response.getNumber()).setTemperature(response.getOWeatherResponse().getMain().getTemp().toString());
         }
     }
 
@@ -233,7 +237,9 @@ public class ListLocationActivity extends AppCompatActivity implements
                     + " " + place.getLocale()
             );
             mPresenter.addNewCity(place.getName().toString());
+            mPresenter.addNewRealmCity(place.getId(), place.getName().toString());
             cities = mPresenter.fetchCities();
+
         }
 
         else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
