@@ -97,7 +97,9 @@ public class ListLocationPresenter extends BasePresenterImpl implements
             RealmCity realmResponse = new RealmCity();
             realmResponse.setId(response.getId());
             realmResponse.setName( response.getCity()!= null ? response.getCity() : response.getOWeatherResponse().getName() );
-            realmResponse.setTemperature(response.getOWeatherResponse().getMain().getTemp().toString());
+            int temperature = response.getOWeatherResponse().getMain().getTemp().intValue();
+            Log.d(TAG, "onNext: " + temperature);
+            realmResponse.setTemperature(Integer.toString(temperature));
             realmResponse.setImageUrl(response.getOWeatherResponse().getWeather().get(0).getIcon());
             realm.copyToRealmOrUpdate(realmResponse);
         });
@@ -107,6 +109,14 @@ public class ListLocationPresenter extends BasePresenterImpl implements
         GetWeather getWeather = new GetWeather(restApi);
         getWeather.setRequest(id, city, lat, lon);
         subscribe(getWeather.execute(), this);
+    }
+
+    @Override
+    public void updateWeather() {
+        RealmResults<RealmCity> realmCities = mRealm.where(RealmCity.class).findAll();
+        for (RealmCity realmCity : realmCities) {
+            if (!realmCity.getId().equals("current_location")) findWeather(realmCity.getId(), realmCity.getName(), 0, 0);
+        }
     }
 
     @Override

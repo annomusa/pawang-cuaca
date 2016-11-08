@@ -8,11 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.maunorafiq.pawangcuaca.Constant;
 import com.example.maunorafiq.pawangcuaca.R;
 import com.example.maunorafiq.pawangcuaca.model.reamldb.RealmCity;
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,9 +27,11 @@ import io.realm.RealmRecyclerViewAdapter;
  */
 
 public class ItemListAdapter extends RealmRecyclerViewAdapter<RealmCity, ItemListAdapter.ItemViewHolder> {
+    private Context ctx;
 
     public ItemListAdapter(@NonNull Context context, @Nullable OrderedRealmCollection<RealmCity> data, boolean autoUpdate) {
         super(context, data, autoUpdate);
+        this.ctx = context;
     }
 
     @Override
@@ -40,13 +45,14 @@ public class ItemListAdapter extends RealmRecyclerViewAdapter<RealmCity, ItemLis
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         RealmCity realmCity = getData().get(position);
         holder.tvLocation.setText(realmCity.getName());
-        holder.tvTemperature.setText(realmCity.getTemperature());
+        holder.tvTemperature.setText(realmCity.getTemperature() + (char) 0x00B0);
+        Picasso.with(ctx).load(Constant.baseUrlImage + realmCity.getImageUrl() + ".png").into(holder.ivTemperature);
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.card_view) CardView cardView;
         @Bind(R.id.tv_location) TextView tvLocation;
         @Bind(R.id.tv_location_temperature) TextView tvTemperature;
+        @Bind(R.id.image_weather) ImageView ivTemperature;
 
         public ItemViewHolder(View itemView) {
             super(itemView);

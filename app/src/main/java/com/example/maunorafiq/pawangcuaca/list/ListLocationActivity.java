@@ -20,6 +20,7 @@ import com.example.maunorafiq.pawangcuaca.App;
 import com.example.maunorafiq.pawangcuaca.Constant;
 import com.example.maunorafiq.pawangcuaca.R;
 import com.example.maunorafiq.pawangcuaca.list.adapter.ItemListAdapter;
+import com.example.maunorafiq.pawangcuaca.list.decorator.DividerItemDecoration;
 import com.example.maunorafiq.pawangcuaca.usecase.GetLocation;
 import com.example.maunorafiq.pawangcuaca.usecase.GetWeather;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -102,6 +103,8 @@ public class ListLocationActivity extends AppCompatActivity implements
     private void configRecyclerView () {
         rvListLocation.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvListLocation.setAdapter(new ItemListAdapter(this, mPresenter.fetchCities(), true));
+        rvListLocation.setHasFixedSize(true);
+        rvListLocation.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
     }
     /*----------- Init -----------*/
 

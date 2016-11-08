@@ -20,7 +20,6 @@ public interface ListLocationContract {
         void showError(String message);
 
         void showResult(GetWeather.CityWeather result);
-
     }
 
     interface UserActionListener {
@@ -34,6 +33,8 @@ public interface ListLocationContract {
         List<RealmCity> fetchCities();
 
         void addNewRealmCity(String id, String city);
+
+        void updateWeather();
     }
 
 }
