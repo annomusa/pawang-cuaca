@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +22,6 @@ import com.example.maunorafiq.pawangcuaca.Constant;
 import com.example.maunorafiq.pawangcuaca.R;
 import com.example.maunorafiq.pawangcuaca.list.adapter.ItemListAdapter;
 import com.example.maunorafiq.pawangcuaca.list.decorator.DividerItemDecoration;
-import com.example.maunorafiq.pawangcuaca.usecase.GetLocation;
 import com.example.maunorafiq.pawangcuaca.usecase.GetWeather;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -39,6 +39,7 @@ public class ListLocationActivity extends AppCompatActivity implements
 
     @Inject ListLocationPresenter mPresenter;
     @Bind(R.id.list_location) RecyclerView rvListLocation;
+    @Bind(R.id.content_list_location) SwipeRefreshLayout refreshListLocation;
 
     private String TAG = "List location activity";
 
@@ -56,6 +57,7 @@ public class ListLocationActivity extends AppCompatActivity implements
         initListData();
         initFloatingButton();
         configRecyclerView();
+        configSwipeLayout();
     }
 
     @Override
@@ -106,6 +108,12 @@ public class ListLocationActivity extends AppCompatActivity implements
         rvListLocation.setHasFixedSize(true);
         rvListLocation.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
     }
+
+    private void configSwipeLayout() {
+        refreshListLocation.setOnRefreshListener(() -> {
+            mPresenter.updateWeather();
+        });
+    }
     /*----------- Init -----------*/
 
 
@@ -113,7 +121,7 @@ public class ListLocationActivity extends AppCompatActivity implements
     /*------------ Contract ------------*/
     @Override
     public void showComplete() {
-
+        refreshListLocation.setRefreshing(false);
     }
 
     @Override

@@ -115,7 +115,8 @@ public class ListLocationPresenter extends BasePresenterImpl implements
     public void updateWeather() {
         RealmResults<RealmCity> realmCities = mRealm.where(RealmCity.class).findAll();
         for (RealmCity realmCity : realmCities) {
-            if (!realmCity.getId().equals("current_location")) findWeather(realmCity.getId(), realmCity.getName(), 0, 0);
+            if (!realmCity.getId().equals("current_location"))
+                findWeather(realmCity.getId(), realmCity.getName(), 0, 0);
         }
     }
 
