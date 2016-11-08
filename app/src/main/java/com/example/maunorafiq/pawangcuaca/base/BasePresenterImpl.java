@@ -1,5 +1,7 @@
 package com.example.maunorafiq.pawangcuaca.base;
 
+import android.content.Context;
+
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
@@ -13,10 +15,11 @@ import rx.subscriptions.CompositeSubscription;
 
 public class BasePresenterImpl implements BasePresenter {
     private CompositeSubscription mCompositeSubscription;
+    private Context ctx;
 
     @Override
-    public void onCreate() {
-
+    public void onCreate(Context ctx) {
+        this.ctx = ctx;
     }
 
     @Override

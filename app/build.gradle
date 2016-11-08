@@ -59,6 +59,9 @@ dependencies {
     apt 'com.google.dagger:dagger-compiler:2.2'
     provided 'javax.annotation:jsr250-api:1.0'
 
+    // Realm Adapter
+    compile 'io.realm:android-adapters:1.4.0'
+
     // Test unit
     testCompile 'junit:junit:4.12'
 }

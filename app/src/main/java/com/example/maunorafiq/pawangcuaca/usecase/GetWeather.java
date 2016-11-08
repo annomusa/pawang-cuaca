@@ -21,7 +21,8 @@ public class GetWeather {
     private RestApi restApi;
 
     private String city;
-    private int number;
+
+    private String id;
     private double lat;
     private double lon;
 
@@ -29,35 +30,35 @@ public class GetWeather {
         this.restApi = restApi;
     }
 
-    public void setRequest(int number, String city, double lat, double lon) {
-        this.number = number;
+    public void setRequest(String id, String city, double lat, double lon) {
+        this.id = id;
         this.city = city;
         this.lat = lat;
         this.lon = lon;
     }
 
     public void printRequest() {
-        Log.d(TAG, "printRequest: " + number + " " + city + " " + lat + " " + lon);
+        Log.d(TAG, "printRequest: " + id + " " + city + " " + lat + " " + lon);
     }
 
     public Observable<CityWeather> execute() {
         if (city != null)
-            return restApi.getWeatherByCity(city, Constant.oWeatherApi)
-                .map(response -> new CityWeather(number, city, lat, lon, response));
+            return restApi.getWeatherByCity(city, "metric", Constant.oWeatherApi)
+                .map(response -> new CityWeather(id, city, lat, lon, response));
         else
-            return restApi.getWeatherByCoordinates(lat, lon, Constant.oWeatherApi)
-                .map(response -> new CityWeather(number, city, lat, lon, response));
+            return restApi.getWeatherByCoordinates(lat, lon, "metric",Constant.oWeatherApi)
+                .map(response -> new CityWeather(id, city, lat, lon, response));
     }
 
     public static class CityWeather {
-        int number;
+        String id;
         String city;
         double lat;
         double lon;
         OWeatherResponse oWeatherResponse;
 
-        public CityWeather(int number, String city, double lat, double lon, OWeatherResponse oWeatherResponse) {
-            this.number = number;
+        CityWeather(String id, String city, double lat, double lon, OWeatherResponse oWeatherResponse) {
+            this.id = id;
             this.city = city;
             this.lat = lat;
             this.lon = lon;
@@ -68,20 +69,12 @@ public class GetWeather {
             return oWeatherResponse;
         }
 
-        public int getNumber() {
-            return number;
-        }
+        public String getId() { return id; }
 
-        public String getCity() {
-            return city;
-        }
+        public String getCity() { return city; }
 
-        public double getLat() {
-            return lat;
-        }
+        public double getLat() { return lat; }
 
-        public double getLon() {
-            return lon;
-        }
+        public double getLon() { return lon; }
     }
 }

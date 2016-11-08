@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.example.maunorafiq.pawangcuaca.Constant;
 import com.example.maunorafiq.pawangcuaca.usecase.contract.GetLocationContract;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -41,8 +42,7 @@ public class GetLocation implements
     private static final long UPDATE_INTERVAL_MILISECONDS = 10000;
     private static final long FASTEST_UPDATE_INTERVAL_MILISECONDS = UPDATE_INTERVAL_MILISECONDS /4;
 
-    public static final int REQUEST_CHECK_SETTINGS = 102;
-    public static final int PERMISSION_ACCESS_COURSE_LOCATION = 103;
+
 
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
@@ -85,7 +85,9 @@ public class GetLocation implements
         LocationServices.FusedLocationApi.removeLocationUpdates(
                 mGoogleApiClient,
                 this
-        ).setResultCallback(status -> Log.d(TAG, "stopLocationUpdate: true"));
+        ).setResultCallback(status -> {
+//            Log.d(TAG, "stopLocationUpdate: true");
+        });
     }
 
 
@@ -116,7 +118,7 @@ public class GetLocation implements
                 break;
             case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                 try {
-                    status.startResolutionForResult((Activity) mContext, REQUEST_CHECK_SETTINGS);
+                    status.startResolutionForResult((Activity) mContext, Constant.REQUEST_CHECK_SETTINGS);
                 } catch (IntentSender.SendIntentException e) {
                     // TODO : Handle if intent (Pending Result) got an exception
                 }
@@ -130,7 +132,7 @@ public class GetLocation implements
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
-        Log.d(TAG, "onLocationChanged: " + mCurrentLocation.getLatitude() + " " + mCurrentLocation.getLongitude());
+//        Log.d(TAG, "onLocationChanged: " + mCurrentLocation.getLatitude() + " " + mCurrentLocation.getLongitude());
         mPresenter.retrieveCurrentLocation(location);
     }
     //-------------- GApi -------------//
@@ -164,7 +166,7 @@ public class GetLocation implements
             ActivityCompat.requestPermissions (
                     (Activity) mContext,
                     new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION },
-                    PERMISSION_ACCESS_COURSE_LOCATION );
+                    Constant.PERMISSION_ACCESS_COURSE_LOCATION );
         } else {
             requestGps();
         }
@@ -189,7 +191,7 @@ public class GetLocation implements
                     mLocationRequest,
                     this
             ).setResultCallback(status -> {
-                Log.d(TAG, "startLocationUpdate: true");
+//                Log.d(TAG, "startLocationUpdate: true");
             });
         }
     }

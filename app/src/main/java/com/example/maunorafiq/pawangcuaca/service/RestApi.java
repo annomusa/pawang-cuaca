@@ -16,10 +16,10 @@ public interface RestApi {
     Observable<OWeatherResponse> getWeatherByUrl(@Url String url);
 
     @GET("weather")
-    Observable<OWeatherResponse> getWeatherByCity(@Query("q") String city, @Query("appid") String oWeatherApi);
+    Observable<OWeatherResponse> getWeatherByCity(@Query("q") String city, @Query("units") String metric, @Query("appid") String oWeatherApi);
 
     @GET("weather")
-    Observable<OWeatherResponse> getWeatherByCoordinates(@Query("lat") double lat, @Query("lon") double lon, @Query("appid") String oWeatherApi);
+    Observable<OWeatherResponse> getWeatherByCoordinates(@Query("lat") double lat, @Query("lon") double lon, @Query("units") String metric, @Query("appid") String oWeatherApi);
 
     // http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=90faa1669716319e787ca1ab5da48cbc
     // http://api.openweathermap.org/data/2.5/weather?q=kebayoran%20baru&appid=90faa1669716319e787ca1ab5da48cbc

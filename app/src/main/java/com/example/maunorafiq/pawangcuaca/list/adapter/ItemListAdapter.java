@@ -1,29 +1,32 @@
 package com.example.maunorafiq.pawangcuaca.list.adapter;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.maunorafiq.pawangcuaca.R;
-import com.example.maunorafiq.pawangcuaca.model.reamldb.City;
-
-import java.util.ArrayList;
+import com.example.maunorafiq.pawangcuaca.model.reamldb.RealmCity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
 
 /**
- * Created by maunorafiq on 10/28/16.
+ * Created by maunorafiq on 11/8/16.
  */
 
-public class ItemLocationAdapter extends RecyclerView.Adapter<ItemLocationAdapter.ItemViewHolder> {
-    private ArrayList<City> cities;
+public class ItemListAdapter extends RealmRecyclerViewAdapter<RealmCity, ItemListAdapter.ItemViewHolder> {
 
-    public ItemLocationAdapter(ArrayList<City> cityList) {
-        cities = cityList;
+    public ItemListAdapter(@NonNull Context context, @Nullable OrderedRealmCollection<RealmCity> data, boolean autoUpdate) {
+        super(context, data, autoUpdate);
     }
 
     @Override
@@ -35,16 +38,12 @@ public class ItemLocationAdapter extends RecyclerView.Adapter<ItemLocationAdapte
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        holder.tvLocation.setText(cities.get(position).getName());
-        holder.tvTemperature.setText(cities.get(position).getTemperature());
+        RealmCity realmCity = getData().get(position);
+        holder.tvLocation.setText(realmCity.getName());
+        holder.tvTemperature.setText(realmCity.getTemperature());
     }
 
-    @Override
-    public int getItemCount() {
-        return cities.size();
-    }
-
-    public static class ItemViewHolder extends RecyclerView.ViewHolder {
+    public class ItemViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.card_view) CardView cardView;
         @Bind(R.id.tv_location) TextView tvLocation;
         @Bind(R.id.tv_location_temperature) TextView tvTemperature;

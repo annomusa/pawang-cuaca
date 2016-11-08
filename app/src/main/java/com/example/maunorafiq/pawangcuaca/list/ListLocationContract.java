@@ -2,7 +2,7 @@ package com.example.maunorafiq.pawangcuaca.list;
 
 import android.content.Context;
 
-import com.example.maunorafiq.pawangcuaca.model.reamldb.City;
+import com.example.maunorafiq.pawangcuaca.model.reamldb.RealmCity;
 import com.example.maunorafiq.pawangcuaca.usecase.GetWeather;
 
 import java.util.List;
@@ -25,21 +25,13 @@ public interface ListLocationContract {
 
     interface UserActionListener {
 
-        void setView(View view);
-
-        void setContext(Context context);
-
         void requestGps();
 
         void requestLocation();
 
         void getCurrentLocation();
 
-        List<City> fetchCities();
-
-        void fetchWeather(int number, String city, double lat, double lon);
-
-        void addNewCity(String city);
+        List<RealmCity> fetchCities();
 
         void addNewRealmCity(String id, String city);
     }
