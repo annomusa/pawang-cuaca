@@ -64,7 +64,7 @@ public class ListLocationActivity extends AppCompatActivity implements
     protected void onStart() {
         super.onStart();
         mPresenter.onStart();
-        mPresenter.getCurrentLocation();
+        mPresenter.updateWeather();
     }
 
     @Override
@@ -128,6 +128,7 @@ public class ListLocationActivity extends AppCompatActivity implements
     public void showError(String message) {
         Log.d(TAG, "showError: " + message);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        refreshListLocation.setRefreshing(false);
     }
 
     @Override

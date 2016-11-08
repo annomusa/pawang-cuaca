@@ -45,13 +45,15 @@ public class ItemListAdapter extends RealmRecyclerViewAdapter<RealmCity, ItemLis
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         RealmCity realmCity = getData().get(position);
         holder.tvLocation.setText(realmCity.getName());
-        holder.tvTemperature.setText(realmCity.getTemperature() + (char) 0x00B0);
+        holder.tvTemperature.setText(realmCity.getTemperature() != null ? realmCity.getTemperature() + (char) 0x00B0 : "--");
+        holder.tvLastChecked.setText("Last check : today");
         Picasso.with(ctx).load(Constant.baseUrlImage + realmCity.getImageUrl() + ".png").into(holder.ivTemperature);
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.tv_location) TextView tvLocation;
         @Bind(R.id.tv_location_temperature) TextView tvTemperature;
+        @Bind(R.id.tv_location_last_checked) TextView tvLastChecked;
         @Bind(R.id.image_weather) ImageView ivTemperature;
 
         public ItemViewHolder(View itemView) {

@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/tv_location_last_checked"
-        android:text="last checked : yesterday"
+        android:text="last checked : -"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
