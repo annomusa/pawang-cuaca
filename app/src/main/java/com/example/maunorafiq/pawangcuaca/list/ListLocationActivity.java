@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -107,6 +108,25 @@ public class ListLocationActivity extends AppCompatActivity implements
         rvListLocation.setAdapter(new ItemListAdapter(this, mPresenter.fetchCities(), true));
         rvListLocation.setHasFixedSize(true);
         rvListLocation.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(createRecyclerCallback());
+        itemTouchHelper.attachToRecyclerView(rvListLocation);
+    }
+
+    private ItemTouchHelper.Callback createRecyclerCallback () {
+        return new ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT ) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+            }
+        };
     }
 
     private void configSwipeLayout() {

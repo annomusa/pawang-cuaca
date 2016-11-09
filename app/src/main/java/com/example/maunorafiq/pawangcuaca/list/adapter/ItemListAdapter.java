@@ -46,7 +46,7 @@ public class ItemListAdapter extends RealmRecyclerViewAdapter<RealmCity, ItemLis
         RealmCity realmCity = getData().get(position);
         holder.tvLocation.setText(realmCity.getName());
         holder.tvTemperature.setText(realmCity.getTemperature() != null ? realmCity.getTemperature() + (char) 0x00B0 : "--");
-        holder.tvLastChecked.setText("Last check : today");
+        holder.tvLastChecked.setText("Last checked : today");
         Picasso.with(ctx).load(Constant.baseUrlImage + realmCity.getImageUrl() + ".png").into(holder.ivTemperature);
     }
 

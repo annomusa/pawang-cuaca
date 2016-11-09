@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observer;
 
@@ -54,17 +55,25 @@ public class ListLocationPresenter extends BasePresenterImpl implements
 
     @Override
     public RealmResults<RealmCity> fetchCities() {
-        return mRealm.where(RealmCity.class).findAll();
+        return mRealm.where(RealmCity.class).findAll().sort("ordinal", Sort.ASCENDING);
+    }
+
+    public void ChangeOrder(int currentPos, int nextPos) {
+        RealmResults<RealmCity> realmCities = mRealm.where(RealmCity.class).findAll();
+        for (int i=0; i<realmCities.size(); i++) {
+
+        }
     }
 
     @Override
     public void addNewRealmCity(String id, String city) {
         boolean isNotExist = mRealm.where(RealmCity.class).equalTo("id", id).findAll().size() == 0;
+        RealmResults<RealmCity> realmCities = mRealm.where(RealmCity.class).findAll();
         if ( isNotExist ) {
             mRealm.executeTransaction(realm -> {
                 RealmCity realmCity = realm.createObject(RealmCity.class, id);
                 realmCity.setName(city);
-                findWeather(id, city, 0, 0);
+                findWeather(realmCities.size(), id, city, 0, 0);
             });
         }
         printRealm();
@@ -95,33 +104,34 @@ public class ListLocationPresenter extends BasePresenterImpl implements
         mInterface.showResult(response);
         mRealm.executeTransaction(realm -> {
             RealmCity realmResponse = new RealmCity();
-            realmResponse.setId(response.getId());
-            realmResponse.setName( response.getCity()!= null ? response.getCity() : response.getOWeatherResponse().getName() );
-            realmResponse.setTemperature(Integer.toString(response.getOWeatherResponse().getMain().getTemp().intValue()));
-            realmResponse.setImageUrl(response.getOWeatherResponse().getWeather().get(0).getIcon());
-            realm.copyToRealmOrUpdate(realmResponse);
+            realmResponse.setId (response.getId() );
+            realmResponse.setOrdinal ( response.getOrdinal() );
+            realmResponse.setName ( response.getCity()!= null ? response.getCity() : response.getOWeatherResponse().getName() );
+            realmResponse.setTemperature ( Integer.toString(response.getOWeatherResponse().getMain().getTemp().intValue()) );
+            realmResponse.setImageUrl ( response.getOWeatherResponse().getWeather().get(0).getIcon() );
+            realm.copyToRealmOrUpdate ( realmResponse );
         });
     }
 
-    public void findWeather(String id, String city, double lat, double lon) {
+    public void findWeather(int ordinal, String id, String city, double lat, double lon) {
         GetWeather getWeather = new GetWeather(restApi);
-        getWeather.setRequest(id, city, lat, lon);
+        getWeather.setRequest(ordinal, id, city, lat, lon);
         subscribe(getWeather.execute(), this);
     }
 
     @Override
     public void updateWeather() {
         RealmResults<RealmCity> realmCities = mRealm.where(RealmCity.class).findAll();
-        for (RealmCity realmCity : realmCities) {
-            if (!realmCity.getId().equals("current_location"))
-                findWeather(realmCity.getId(), realmCity.getName(), 0, 0);
+        for (int i=0; i<realmCities.size(); i++) {
+            if (!realmCities.get(i).getId().equals("current_location"))
+                findWeather(i, realmCities.get(i).getId(), realmCities.get(i).getName(), 0, 0);
         }
         getCurrentLocation();
     }
 
     @Override
     public void retrieveCurrentLocation(Location location) {
-        findWeather("current_location", null, location.getLatitude(), location.getLongitude());
+        findWeather(0, "current_location", null, location.getLatitude(), location.getLongitude());
         mInteractorLocation.stopGetCurrentLocation();
     }
 

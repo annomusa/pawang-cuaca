@@ -21,7 +21,7 @@ public class GetWeather {
     private RestApi restApi;
 
     private String city;
-
+    private int ordinal;
     private String id;
     private double lat;
     private double lon;
@@ -30,8 +30,9 @@ public class GetWeather {
         this.restApi = restApi;
     }
 
-    public void setRequest(String id, String city, double lat, double lon) {
+    public void setRequest(int ordinal, String id, String city, double lat, double lon) {
         this.id = id;
+        this.ordinal = ordinal;
         this.city = city;
         this.lat = lat;
         this.lon = lon;
@@ -44,20 +45,21 @@ public class GetWeather {
     public Observable<CityWeather> execute() {
         if (city != null)
             return restApi.getWeatherByCity(city, "metric", Constant.oWeatherApi)
-                .map(response -> new CityWeather(id, city, lat, lon, response));
+                .map(response -> new CityWeather(ordinal, id, city, lat, lon, response));
         else
             return restApi.getWeatherByCoordinates(lat, lon, "metric",Constant.oWeatherApi)
-                .map(response -> new CityWeather(id, city, lat, lon, response));
+                .map(response -> new CityWeather(ordinal, id, city, lat, lon, response));
     }
 
     public static class CityWeather {
         String id;
+        int ordinal;
         String city;
         double lat;
         double lon;
         OWeatherResponse oWeatherResponse;
 
-        CityWeather(String id, String city, double lat, double lon, OWeatherResponse oWeatherResponse) {
+        CityWeather(int ordinal, String id, String city, double lat, double lon, OWeatherResponse oWeatherResponse) {
             this.id = id;
             this.city = city;
             this.lat = lat;
@@ -76,5 +78,7 @@ public class GetWeather {
         public double getLat() { return lat; }
 
         public double getLon() { return lon; }
+
+        public int getOrdinal() { return ordinal; }
     }
 }
