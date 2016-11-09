@@ -61,6 +61,7 @@ public class GetWeather {
 
         CityWeather(int ordinal, String id, String city, double lat, double lon, OWeatherResponse oWeatherResponse) {
             this.id = id;
+            this.ordinal = ordinal;
             this.city = city;
             this.lat = lat;
             this.lon = lon;

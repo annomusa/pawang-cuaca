@@ -58,11 +58,36 @@ public class ListLocationPresenter extends BasePresenterImpl implements
         return mRealm.where(RealmCity.class).findAll().sort("ordinal", Sort.ASCENDING);
     }
 
-    public void ChangeOrder(int currentPos, int nextPos) {
-        RealmResults<RealmCity> realmCities = mRealm.where(RealmCity.class).findAll();
-        for (int i=0; i<realmCities.size(); i++) {
+    public void changeOrder(int currentPos, int nextPos) {
+        Log.d(TAG, "changeOrder: " + currentPos + " " + nextPos);
+        if (nextPos == 0 || currentPos == 0) return;
 
+        RealmResults<RealmCity> realmCities = mRealm.where(RealmCity.class).findAll().sort("ordinal", Sort.ASCENDING);
+        mRealm.executeTransaction(realm -> {
+            RealmCity movedItem = new RealmCity();
+            movedItem = realmCities.get(currentPos);
+            movedItem.setOrdinal (nextPos);
+            realm.copyToRealmOrUpdate( movedItem );
+        });
+
+        boolean currentIsGreater = currentPos > nextPos;
+
+        int i = currentPos;
+        while (true) {
+            int movedOrdinal = nextPos;
+            Log.d(TAG, "changeOrder: --" + i);
+
+            mRealm.executeTransaction(realm -> {
+                RealmCity movedItem = new RealmCity();
+                movedItem = realmCities.get(movedOrdinal);
+
+                int newOrdinal = movedOrdinal;
+                movedItem.setOrdinal (currentIsGreater ? newOrdinal++ : newOrdinal--);
+                Log.d(TAG, "changeOrder: --" + (currentIsGreater ? newOrdinal++ : newOrdinal-- ));
+                realm.copyToRealmOrUpdate( movedItem );
+            });
         }
+
     }
 
     @Override
@@ -104,7 +129,7 @@ public class ListLocationPresenter extends BasePresenterImpl implements
         mInterface.showResult(response);
         mRealm.executeTransaction(realm -> {
             RealmCity realmResponse = new RealmCity();
-            realmResponse.setId (response.getId() );
+            realmResponse.setId ( response.getId() );
             realmResponse.setOrdinal ( response.getOrdinal() );
             realmResponse.setName ( response.getCity()!= null ? response.getCity() : response.getOWeatherResponse().getName() );
             realmResponse.setTemperature ( Integer.toString(response.getOWeatherResponse().getMain().getTemp().intValue()) );

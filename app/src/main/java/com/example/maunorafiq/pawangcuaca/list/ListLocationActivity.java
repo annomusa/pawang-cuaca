@@ -1,6 +1,7 @@
 package com.example.maunorafiq.pawangcuaca.list;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.example.maunorafiq.pawangcuaca.App;
 import com.example.maunorafiq.pawangcuaca.Constant;
 import com.example.maunorafiq.pawangcuaca.R;
+import com.example.maunorafiq.pawangcuaca.detail.DetailActivity;
 import com.example.maunorafiq.pawangcuaca.list.adapter.ItemListAdapter;
 import com.example.maunorafiq.pawangcuaca.list.decorator.DividerItemDecoration;
 import com.example.maunorafiq.pawangcuaca.usecase.GetWeather;
@@ -119,12 +121,14 @@ public class ListLocationActivity extends AppCompatActivity implements
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT ) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
+//                mPresenter.changeOrder(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                return true;
             }
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-
+                Intent detail = new Intent(getApplicationContext(), DetailActivity.class);
+                startActivity(detail);
             }
         };
     }
