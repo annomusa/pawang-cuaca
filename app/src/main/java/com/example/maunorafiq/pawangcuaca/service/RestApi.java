@@ -1,6 +1,7 @@
 package com.example.maunorafiq.pawangcuaca.service;
 
-import com.example.maunorafiq.pawangcuaca.model.openweather.OWeatherResponse;
+import com.example.maunorafiq.pawangcuaca.model.openweather.current.OWeatherResponse;
+import com.example.maunorafiq.pawangcuaca.model.openweather.forecast.OWeatherResponse2;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -21,6 +22,10 @@ public interface RestApi {
     @GET("weather")
     Observable<OWeatherResponse> getWeatherByCoordinates(@Query("lat") double lat, @Query("lon") double lon, @Query("units") String metric, @Query("appid") String oWeatherApi);
 
-    // http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=90faa1669716319e787ca1ab5da48cbc
-    // http://api.openweathermap.org/data/2.5/weather?q=kebayoran%20baru&appid=90faa1669716319e787ca1ab5da48cbc
+    @GET("forecast")
+    Observable<OWeatherResponse2> getWeatherForecast(@Query("q") String city, @Query("units") String metric, @Query("appid") String oWheatherApi);
+
+//    http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=90faa1669716319e787ca1ab5da48cbc
+//    http://api.openweathermap.org/data/2.5/weather?q=kebayoran%20baru&appid=90faa1669716319e787ca1ab5da48cbc
+//    http://api.openweathermap.org/data/2.5/forecast?q=London&appid=90faa1669716319e787ca1ab5da48cbc&units=metric
 }

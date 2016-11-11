@@ -3,11 +3,8 @@ package com.example.maunorafiq.pawangcuaca.usecase;
 import android.util.Log;
 
 import com.example.maunorafiq.pawangcuaca.Constant;
-import com.example.maunorafiq.pawangcuaca.di.CustomScope;
-import com.example.maunorafiq.pawangcuaca.model.openweather.OWeatherResponse;
+import com.example.maunorafiq.pawangcuaca.model.openweather.current.OWeatherResponse;
 import com.example.maunorafiq.pawangcuaca.service.RestApi;
-
-import javax.inject.Inject;
 
 import rx.Observable;
 

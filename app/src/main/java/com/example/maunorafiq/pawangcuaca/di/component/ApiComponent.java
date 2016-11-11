@@ -1,5 +1,6 @@
 package com.example.maunorafiq.pawangcuaca.di.component;
 
+import com.example.maunorafiq.pawangcuaca.detail.DetailActivity;
 import com.example.maunorafiq.pawangcuaca.di.CustomScope;
 import com.example.maunorafiq.pawangcuaca.di.module.ApiModule;
 import com.example.maunorafiq.pawangcuaca.list.ListLocationActivity;
@@ -12,5 +13,7 @@ import dagger.Component;
 @CustomScope
 @Component(modules = ApiModule.class, dependencies = NetworkComponent.class)
 public interface ApiComponent {
-    ListLocationActivity inject(ListLocationActivity activity);
+    void inject(ListLocationActivity activity);
+    void inject(DetailActivity activity);
+
 }

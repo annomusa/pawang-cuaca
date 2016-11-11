@@ -1,5 +1,5 @@
 
-package com.example.maunorafiq.pawangcuaca.model.openweather;
+package com.example.maunorafiq.pawangcuaca.model.openweather.current;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;

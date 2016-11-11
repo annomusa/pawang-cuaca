@@ -44,7 +44,7 @@ public class ListLocationActivity extends AppCompatActivity implements
     @Bind(R.id.list_location) RecyclerView rvListLocation;
     @Bind(R.id.content_list_location) SwipeRefreshLayout refreshListLocation;
 
-    private String TAG = "List location activity";
+    private String TAG = "ListTime location activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +117,8 @@ public class ListLocationActivity extends AppCompatActivity implements
 
     private ItemTouchHelper.Callback createRecyclerCallback () {
         return new ItemTouchHelper.SimpleCallback(
-                ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                //ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT ) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -127,8 +128,13 @@ public class ListLocationActivity extends AppCompatActivity implements
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                Intent detail = new Intent(getApplicationContext(), DetailActivity.class);
-                startActivity(detail);
+                if (direction == ItemTouchHelper.LEFT) {
+                    Intent detail = new Intent(getApplicationContext(), DetailActivity.class);
+                    detail.putExtra("location", mPresenter.getCityByOrdinal(viewHolder.getAdapterPosition()));
+                    startActivity(detail);
+                } else {
+                    mPresenter.deleteItem(viewHolder.getAdapterPosition());
+                }
             }
         };
     }
@@ -144,7 +150,7 @@ public class ListLocationActivity extends AppCompatActivity implements
 
     /*------------ Contract ------------*/
     @Override
-    public void showComplete() {
+    public void showCompletion() {
         refreshListLocation.setRefreshing(false);
     }
 
@@ -204,22 +210,14 @@ public class ListLocationActivity extends AppCompatActivity implements
     private void handlePlaceAutoComplete(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Place place = PlaceAutocomplete.getPlace(this, data);
-            Log.i(TAG, "Place: " + place.getId()
-                    + " " + place.getName()
-                    + " " + place.getLatLng()
-                    + " " + place.getAddress()
-                    + " " + place.getLocale()
-            );
             mPresenter.addNewRealmCity(place.getId(), place.getName().toString());
         }
 
         else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
             Status status = PlaceAutocomplete.getStatus(this, data);
-            Log.i(TAG, status.getStatusMessage());
         }
 
         else if (resultCode == RESULT_CANCELED) {
-            Log.i(TAG, "handlePlaceAutoComplete: Canceled");
         }
     }
 

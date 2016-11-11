@@ -47,7 +47,7 @@ public class BasePresenterImpl implements BasePresenter {
         unSubscribeAll();
     }
 
-    protected void unSubscribeAll() {
+    private void unSubscribeAll() {
         if(mCompositeSubscription != null){
             mCompositeSubscription.unsubscribe();
             mCompositeSubscription.clear();

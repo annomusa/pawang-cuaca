@@ -1,2 +1,80 @@
-{"coord":
-{"lon":-0.13,"lat":51.51},"weather":[{"id":801,"main":"Clouds","description":"few clouds","icon":"02n"}],"base":"stations","main":{"temp":282.936,"pressure":1037.38,"humidity":93,"temp_min":282.936,"temp_max":282.936,"sea_level":1045.21,"grnd_level":1037.38},"wind":{"speed":4.11,"deg":257.001},"clouds":{"all":24},"dt":1477626497,"sys":{"message":0.0099,"country":"GB","sunrise":1477637271,"sunset":1477672790},"id":2643743,"name":"London","cod":200}
+{
+	"coord": 
+	{
+		"lon":-0.13,
+		"lat":51.51
+	},
+	"weather":
+	[
+		{
+			"id":801,
+			"main":"Clouds",
+			"description":"few clouds",
+			"icon":"02n"
+		}
+	],
+	"base":"stations",
+	"main":
+	{
+		"temp":282.936,
+		"pressure":1037.38,
+		"humidity":93,
+		"temp_min":282.936,
+		"temp_max":282.936,
+		"sea_level":1045.21,
+		"grnd_level":1037.38
+	},
+	"wind":{
+		"speed":4.11,
+		"deg":257.001
+	},
+	"clouds":{"all":24},
+	"dt":1477626497,
+	"sys":{"message":0.0099,"country":"GB","sunrise":1477637271,"sunset":1477672790},
+	"id":2643743,
+	"name":"London",
+	"cod":200
+}
+
+{
+	"coord":
+	{
+		"lon":106.81,
+		"lat":-6.24
+	},
+	"weather":
+	[
+		{
+			"id":500,
+			"main":"Rain",
+			"description":"light rain",
+			"icon":"10d"
+		}
+	],
+	"base":"stations",
+	"main":
+	{
+		"temp":302.047,
+		"pressure":1022.15,
+		"humidity":99,
+		"temp_min":302.047,
+		"temp_max":302.047,
+		"sea_level":1022.68,
+		"grnd_level":1022.15
+	},
+	"wind":
+	{
+		"speed":3.56,
+		"deg":343.502
+	},
+	"rain":
+	{
+		"3h":0.6575
+	},
+	"clouds":{"all":0},
+	"dt":1477636777,
+	"sys":{"message":0.0092,"country":"ID","sunrise":1477607228,"sunset":1477651553},
+	"id":6754916,
+	"name":"Rawa Barat",
+	"cod":200
+}

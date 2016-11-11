@@ -15,7 +15,7 @@ public interface ListLocationContract {
 
     interface View {
 
-        void showComplete();
+        void showCompletion();
 
         void showError(String message);
 
@@ -35,6 +35,8 @@ public interface ListLocationContract {
         void addNewRealmCity(String id, String city);
 
         void updateWeather();
+
+        void deleteItem(int position);
     }
 
 }

@@ -12,8 +12,6 @@ import com.example.maunorafiq.pawangcuaca.usecase.GetLocation;
 import com.example.maunorafiq.pawangcuaca.usecase.contract.GetLocationContract;
 import com.example.maunorafiq.pawangcuaca.usecase.GetWeather;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import io.realm.Realm;
@@ -31,7 +29,7 @@ public class ListLocationPresenter extends BasePresenterImpl implements
         ListLocationContract.UserActionListener,
         GetLocationContract.Presenter {
 
-    private static final String TAG = "List Location Presenter";
+    private static final String TAG = "ListTime Location Presenter";
 
     private RestApi restApi;
     private ListLocationContract.View mInterface;
@@ -75,7 +73,6 @@ public class ListLocationPresenter extends BasePresenterImpl implements
         int i = currentPos;
         while (true) {
             int movedOrdinal = nextPos;
-            Log.d(TAG, "changeOrder: --" + i);
 
             mRealm.executeTransaction(realm -> {
                 RealmCity movedItem = new RealmCity();
@@ -83,11 +80,31 @@ public class ListLocationPresenter extends BasePresenterImpl implements
 
                 int newOrdinal = movedOrdinal;
                 movedItem.setOrdinal (currentIsGreater ? newOrdinal++ : newOrdinal--);
-                Log.d(TAG, "changeOrder: --" + (currentIsGreater ? newOrdinal++ : newOrdinal-- ));
                 realm.copyToRealmOrUpdate( movedItem );
             });
         }
 
+    }
+
+    @Override
+    public void deleteItem(int position) {
+        if (position == 0) return;
+        final RealmResults<RealmCity> cities = mRealm.where(RealmCity.class).findAll().sort("ordinal", Sort.ASCENDING);
+        RealmCity city = cities.where().equalTo("ordinal", position).findFirst();
+
+        mRealm.executeTransaction(realm -> {
+            if (city != null) city.deleteFromRealm();
+        });
+
+        for (int i=position+1; i<cities.size(); i++) {
+            int movedOrdinal = i;
+            mRealm.executeTransaction(realm -> {
+                RealmCity movedItem = new RealmCity();
+                movedItem = cities.get(movedOrdinal);
+                movedItem.setOrdinal(movedOrdinal-1);
+                realm.copyToRealmOrUpdate( movedItem );
+            });
+        }
     }
 
     @Override
@@ -111,7 +128,7 @@ public class ListLocationPresenter extends BasePresenterImpl implements
 
     @Override
     public void onCompleted() {
-        mInterface.showComplete();
+        mInterface.showCompletion();
     }
 
     @Override
@@ -136,6 +153,10 @@ public class ListLocationPresenter extends BasePresenterImpl implements
             realmResponse.setImageUrl ( response.getOWeatherResponse().getWeather().get(0).getIcon() );
             realm.copyToRealmOrUpdate ( realmResponse );
         });
+    }
+
+    public String getCityByOrdinal(int position) {
+        return mRealm.where(RealmCity.class).equalTo("ordinal", position).findFirst().getName();
     }
 
     public void findWeather(int ordinal, String id, String city, double lat, double lon) {
