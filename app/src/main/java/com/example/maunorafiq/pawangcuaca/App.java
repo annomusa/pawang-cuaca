@@ -23,6 +23,10 @@ public class App extends Application{
     public void onCreate() {
         super.onCreate();
 
+        initRealm();
+    }
+
+    private void initRealm() {
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder().build();
         Realm.setDefaultConfiguration(config);
