@@ -4,7 +4,7 @@ import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 
-import com.example.maunorafiq.pawangcuaca.base.BasePresenterImpl;
+import com.example.maunorafiq.pawangcuaca.app.base.BasePresenterImpl;
 import com.example.maunorafiq.pawangcuaca.di.CustomScope;
 import com.example.maunorafiq.pawangcuaca.model.reamldb.RealmCity;
 import com.example.maunorafiq.pawangcuaca.service.RestApi;

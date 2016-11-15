@@ -1,4 +1,4 @@
-package com.example.maunorafiq.pawangcuaca.base;
+package com.example.maunorafiq.pawangcuaca.app.base;
 
 import android.content.Context;
 
