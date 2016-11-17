@@ -56,6 +56,36 @@ public class ListLocationPresenter extends BasePresenterImpl implements
         return mRealm.where(RealmCity.class).findAll().sort("ordinal", Sort.ASCENDING);
     }
 
+    public void changeOrder(int currentPos, int nextPos) {
+        Log.d(TAG, "changeOrder: " + currentPos + " " + nextPos);
+        if (nextPos == 0 || currentPos == 0) return;
+
+        RealmResults<RealmCity> realmCities = mRealm.where(RealmCity.class).findAll().sort("ordinal", Sort.ASCENDING);
+        mRealm.executeTransaction(realm -> {
+            RealmCity movedItem = new RealmCity();
+            movedItem = realmCities.get(currentPos);
+            movedItem.setOrdinal (nextPos);
+            realm.copyToRealmOrUpdate( movedItem );
+        });
+
+        boolean currentIsGreater = currentPos > nextPos;
+
+        int i = currentPos;
+        while (true) {
+            int movedOrdinal = nextPos;
+
+            mRealm.executeTransaction(realm -> {
+                RealmCity movedItem = new RealmCity();
+                movedItem = realmCities.get(movedOrdinal);
+
+                int newOrdinal = movedOrdinal;
+                movedItem.setOrdinal (currentIsGreater ? newOrdinal++ : newOrdinal--);
+                realm.copyToRealmOrUpdate( movedItem );
+            });
+        }
+
+    }
+
     @Override
     public void deleteItem(int position) {
         if (position == 0) return;
