@@ -1,5 +1,5 @@
 
-package com.icehousecorp.maunorafiq.data.weather.repository.source.network.response;
+package com.icehousecorp.maunorafiq.data.current.entity.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -10,7 +10,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
-public class OWeatherResponse {
+public class CurrentWeatherResponse {
 
     @SerializedName("coord")
     @Expose
@@ -50,7 +50,7 @@ public class OWeatherResponse {
     private Integer cod;
 
     /**
-     * 
+     *
      * @return
      *     The coord
      */
@@ -59,7 +59,7 @@ public class OWeatherResponse {
     }
 
     /**
-     * 
+     *
      * @param coord
      *     The coord
      */
@@ -68,7 +68,7 @@ public class OWeatherResponse {
     }
 
     /**
-     * 
+     *
      * @return
      *     The weather
      */
@@ -77,7 +77,7 @@ public class OWeatherResponse {
     }
 
     /**
-     * 
+     *
      * @param weather
      *     The weather
      */
@@ -86,7 +86,7 @@ public class OWeatherResponse {
     }
 
     /**
-     * 
+     *
      * @return
      *     The base
      */
@@ -95,7 +95,7 @@ public class OWeatherResponse {
     }
 
     /**
-     * 
+     *
      * @param base
      *     The base
      */
@@ -104,7 +104,7 @@ public class OWeatherResponse {
     }
 
     /**
-     * 
+     *
      * @return
      *     The main
      */
@@ -113,7 +113,7 @@ public class OWeatherResponse {
     }
 
     /**
-     * 
+     *
      * @param main
      *     The main
      */

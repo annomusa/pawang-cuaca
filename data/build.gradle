@@ -70,4 +70,7 @@ dependencies {
     // RxJava
     compile 'io.reactivex:rxjava:1.0.4'
     compile 'io.reactivex:rxandroid:0.24.0'
+
+    // domain
+    compile project(':domain')
 }

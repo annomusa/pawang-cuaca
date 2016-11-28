@@ -1,5 +1,5 @@
 
-package com.icehousecorp.maunorafiq.data.weather.repository.source.network.response;
+package com.icehousecorp.maunorafiq.data.current.entity.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

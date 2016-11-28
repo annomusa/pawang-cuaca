@@ -2,6 +2,10 @@ apply plugin: 'java'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // RxJava
+    compile 'io.reactivex:rxjava:1.0.4'
+    compile 'io.reactivex:rxandroid:0.24.0'
 }
 
 sourceCompatibility = "1.8"
