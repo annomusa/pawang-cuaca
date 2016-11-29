@@ -3,11 +3,12 @@ package com.icehousecorp.maunorafiq.domain.current.interactor;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;
 
 /**
- * Created by Raffi on 11/28/2016.
+ * Created by maunorafiq on 11/28/16.
  */
 
 public abstract class UseCase {
@@ -16,9 +17,17 @@ public abstract class UseCase {
 
     protected abstract Observable buildUseCaseObservable();
 
-    public void execute(Subscriber useCaseSubscriber) {
+    @SuppressWarnings("unchecked")
+    public void execute (Subscriber useCaseSubscriber) {
         this.subscription = this.buildUseCaseObservable()
                 .subscribeOn(Schedulers.newThread())
-                .
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(useCaseSubscriber);
+    }
+
+    public void unsubscribe () {
+        if(!subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
     }
 }

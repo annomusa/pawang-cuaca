@@ -5,7 +5,6 @@ import com.icehousecorp.maunorafiq.data.current.repository.datasource.CurrentWea
 import com.icehousecorp.maunorafiq.data.current.repository.datasource.CurrentWeatherDataStoreFactory;
 import com.icehousecorp.maunorafiq.domain.current.CurrentWeather;
 import com.icehousecorp.maunorafiq.domain.current.repository.CurrentWeatherRepository;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -27,10 +26,9 @@ public class CurrentWeatherDataRepository implements CurrentWeatherRepository {
         this.currentWeatherEntityDataMapper = currentWeatherEntityDataMapper;
     }
 
-
     @Override
     public Observable<CurrentWeather> currentWeather(String city) {
-        final CurrentWeatherDataStore currentWeatherDataStore = this.currentWeatherDataStoreFactory.create(city);
+        final CurrentWeatherDataStore currentWeatherDataStore = this.currentWeatherDataStoreFactory.create();
         return currentWeatherDataStore.currentWeatherEntity(city).map(this.currentWeatherEntityDataMapper::transform);
     }
 }

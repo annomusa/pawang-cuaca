@@ -23,7 +23,8 @@ public class CurrentWeatherEntityDataMapper {
             currentWeather.setWeatherId(currentWeatherResponse.getWeather().get(0).getId());
             currentWeather.setWeatherName(currentWeatherResponse.getWeather().get(0).getMain());
             currentWeather.setWeatherDescription(currentWeatherResponse.getWeather().get(0).getDescription());
-            currentWeather.setWeatherUrlIcon(currentWeatherResponse.getWeather().get(0).getIcon());
+            currentWeather.setWeatherIcon(currentWeatherResponse.getWeather().get(0).getIcon());
+            currentWeather.setUtcTime(currentWeatherResponse.getDt());
         }
         return currentWeather;
     }

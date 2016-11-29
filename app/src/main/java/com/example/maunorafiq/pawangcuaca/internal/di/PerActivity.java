@@ -1,4 +1,4 @@
-package com.example.maunorafiq.pawangcuaca.di;
+package com.example.maunorafiq.pawangcuaca.internal.di;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -6,9 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import javax.inject.Scope;
 
 /**
- * Created by maunorafiq on 10/28/16.
+ * Created by maunorafiq on 11/29/16.
  */
-
 @Scope
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CustomScope {}
+public @interface PerActivity { }

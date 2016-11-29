@@ -2,16 +2,25 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'realm-android'
+apply plugin: 'com.fernandocejas.frodo'
+
+frodo {
+    enabled = true
+}
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "23.0.3"
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
+
     defaultConfig {
-        applicationId "com.example.maunorafiq.pawangcuaca"
-        minSdkVersion 21
-        targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+
+        applicationId globalConfiguration.getAt("androidApplicationId")
+        versionCode globalConfiguration.getAt("androidVersionCode")
+        versionName globalConfiguration.getAt("androidVersionName")
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -28,45 +37,43 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support:recyclerview-v7:24.2.1'
-    compile 'com.android.support:cardview-v7:24.2.1'
+    def appDependencies = rootProject.ext.presentationDependencies
 
-    // GPS
-    compile 'com.google.android.gms:play-services:9.8.0'
-    compile 'com.google.android.gms:play-services-location:9.8.0'
+    compile project(':domain')
+    compile project(':data')
+
+    compile appDependencies.appCompat
+    compile appDependencies.design
+    compile appDependencies.recyclerView
+    compile appDependencies.cardView
+
+    // GMS
+    compile appDependencies.gms
+    compile appDependencies.gmsLocation
 
     // Retrofit
-    compile 'com.google.code.gson:gson:2.6.1'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile appDependencies.gson
+    compile appDependencies.retrofit
+    compile appDependencies.retrofitConverter
+    compile appDependencies.retrofitAdapterRx
 
     // RxJava
-    compile 'io.reactivex:rxjava:1.0.4'
-    compile 'io.reactivex:rxandroid:0.24.0'
+    compile appDependencies.rxJava
+    compile appDependencies.rxAndroid
 
     // ButterKnife
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile appDependencies.butterKnife
 
     // Dagger2
-    compile 'com.google.dagger:dagger:2.2'
-    apt 'com.google.dagger:dagger-compiler:2.2'
-    provided 'javax.annotation:jsr250-api:1.0'
+    compile appDependencies.dagger
+    apt appDependencies.daggerCompiler
+    provided appDependencies.javaxAnnotation
 
     // Realm Adapter
-    compile 'io.realm:android-adapters:1.4.0'
+    compile appDependencies.realmDbAdapter
 
     // Picasso
-    compile 'com.squareup.picasso:picasso:2.5.2'
-
-    // Test unit
-    testCompile 'junit:junit:4.12'
+    compile appDependencies.picasso
 }
 
 retrolambda {

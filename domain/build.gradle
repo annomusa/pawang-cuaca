@@ -1,12 +1,29 @@
-apply plugin: 'java'
+apply plugin: 'com.android.library'
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+android {
+    def globalConfiguration = rootProject.extensions.getByName("ext")
 
-    // RxJava
-    compile 'io.reactivex:rxjava:1.0.4'
-    compile 'io.reactivex:rxandroid:0.24.0'
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
+
+    defaultConfig {
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        versionCode globalConfiguration.getAt("androidVersionCode")
+        versionName globalConfiguration.getAt("androidVersionName")
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
+dependencies {
+    def domainDependencies = rootProject.ext.domainDependencies
+
+    provided domainDependencies.javaxAnnotation
+    compile domainDependencies.javaxInject
+    compile domainDependencies.rxJava
+    compile domainDependencies.rxAndroid
+}

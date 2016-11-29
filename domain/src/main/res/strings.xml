@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Pawang Cuaca</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- location list -->
+    <string name="location_default">Your Location</string>
+    <string name="location_temperature_default">--</string>
+</resources>
