@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.maunorafiq.pawangcuaca.App;
+import com.example.maunorafiq.pawangcuaca.AndroidApplication;
 import com.example.maunorafiq.pawangcuaca.Constant;
 import com.example.maunorafiq.pawangcuaca.R;
 import com.example.maunorafiq.pawangcuaca.detail.adapter.ItemForecastAdapter;
@@ -58,7 +58,7 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
 
         ButterKnife.bind(this);
 
-        App.getApiComponent(this, Constant.oWeatherUrl).inject(this);
+        AndroidApplication.getApiComponent(this, Constant.oWeatherUrl).inject(this);
 
         mRequest = getIntent().getStringExtra("location");
         isLoaded = false;

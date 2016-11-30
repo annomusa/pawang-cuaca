@@ -1,7 +1,6 @@
 package com.example.maunorafiq.pawangcuaca.list;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -19,7 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.maunorafiq.pawangcuaca.App;
+import com.example.maunorafiq.pawangcuaca.AndroidApplication;
 import com.example.maunorafiq.pawangcuaca.Constant;
 import com.example.maunorafiq.pawangcuaca.R;
 import com.example.maunorafiq.pawangcuaca.detail.DetailActivity;
@@ -53,7 +52,7 @@ public class ListLocationActivity extends AppCompatActivity implements
 
         ButterKnife.bind(this);
 
-        App.getApiComponent(this, Constant.oWeatherUrl).inject(this);
+        AndroidApplication.getApiComponent(this, Constant.oWeatherUrl).inject(this);
 
         mPresenter.onCreate(this);
 
