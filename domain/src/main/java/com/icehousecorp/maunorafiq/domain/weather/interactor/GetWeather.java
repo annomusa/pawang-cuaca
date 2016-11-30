@@ -11,13 +11,13 @@ import rx.Observable;
  * Created by maunorafiq on 11/28/16.
  */
 
-public class GetCurrentWeather extends UseCase {
+public class GetWeather extends UseCase {
 
     private final String city;
     private final WeatherRepository weatherRepository;
 
     @Inject
-    public GetCurrentWeather(String city, WeatherRepository weatherRepository) {
+    public GetWeather(String city, WeatherRepository weatherRepository) {
         this.city = city;
         this.weatherRepository = weatherRepository;
     }

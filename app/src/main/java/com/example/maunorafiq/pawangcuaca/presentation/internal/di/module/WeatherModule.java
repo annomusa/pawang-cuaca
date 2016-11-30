@@ -1,7 +1,7 @@
 package com.example.maunorafiq.pawangcuaca.presentation.internal.di.module;
 
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.PerActivity;
-import com.icehousecorp.maunorafiq.domain.weather.interactor.GetCurrentWeather;
+import com.icehousecorp.maunorafiq.domain.weather.interactor.GetWeather;
 import com.icehousecorp.maunorafiq.domain.UseCase;
 import com.icehousecorp.maunorafiq.domain.weather.repository.WeatherRepository;
 import com.icehousecorp.maunorafiq.domain.forecast.interactor.GetForecast;
@@ -30,15 +30,15 @@ public class WeatherModule {
 
     @Provides
     @PerActivity
-    @Named("weatherList")
-    UseCase provideGetCurrentWeatherUseCase (WeatherRepository weatherRepository) {
-        return new GetCurrentWeather(cityName, weatherRepository);
+    @Named("weather")
+    UseCase provideGetWeatherUseCase (WeatherRepository weatherRepository) {
+        return new GetWeather(cityName, weatherRepository);
     }
 
     @Provides
     @PerActivity
-    @Named("weatherDetail")
-    UseCase provideGetForecastWeatherUseCase (ForecastRepository forecastRepository) {
+    @Named("forecast")
+    UseCase provideGetForecastUseCase (ForecastRepository forecastRepository) {
         return new GetForecast(cityName, forecastRepository);
     }
 
