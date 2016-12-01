@@ -3,7 +3,7 @@ package com.icehousecorp.maunorafiq.data.forecast.entity.mapper;
 import com.icehousecorp.maunorafiq.data.forecast.entity.response.ForecastResponse;
 import com.icehousecorp.maunorafiq.data.forecast.entity.response.ListTime;
 import com.icehousecorp.maunorafiq.domain.forecast.Forecast;
-import com.icehousecorp.maunorafiq.domain.weather.Weather;
+import com.icehousecorp.maunorafiq.domain.weathers.Weather;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,7 +4,11 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.icehousecorp.maunorafiq.data.weather.entity.response.WeatherResponse;
-import com.icehousecorp.maunorafiq.domain.weather.Weather;
+import com.icehousecorp.maunorafiq.domain.weathers.Weather;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Created by Raffi on 11/25/2016.

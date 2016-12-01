@@ -1,11 +1,21 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'realm-android'
 apply plugin: 'com.fernandocejas.frodo'
+apply plugin: 'me.tatarka.retrolambda'
 
 frodo {
     enabled = true
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.2.3'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
 }
 
 android {
@@ -22,11 +32,6 @@ android {
         versionCode globalConfiguration.getAt("androidVersionCode")
         versionName globalConfiguration.getAt("androidVersionName")
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-    }
-
-    dexOptions {
-        incremental true
     }
 
     buildTypes {
@@ -37,8 +42,18 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        quiet true
+        abortOnError false
+        ignoreWarnings true
+        disable 'InvalidPackage'            //Some libraries have issues with this.
+        disable 'OldTargetApi'              //Lint gives this warning but SDK 20 would be Android L Beta.
+        disable 'IconDensities'             //For testing purpose. This is safe to remove.
+        disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
     }
 }
 
@@ -80,9 +95,5 @@ dependencies {
 
     // Picasso
     compile appDependencies.picasso
-}
-
-retrolambda {
-    jvmArgs '-noverify'
 }
 

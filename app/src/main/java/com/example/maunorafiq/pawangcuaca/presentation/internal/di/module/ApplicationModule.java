@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.example.maunorafiq.pawangcuaca.presentation.AndroidApplication;
 import com.icehousecorp.maunorafiq.data.weather.repository.WeatherDataRepository;
-import com.icehousecorp.maunorafiq.domain.weather.repository.WeatherRepository;
+import com.icehousecorp.maunorafiq.domain.weathers.repository.WeathersRepository;
 
 import javax.inject.Singleton;
 
@@ -32,7 +32,7 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    WeatherRepository provideCurrentWeatherRepository (WeatherDataRepository weatherDataRepository) {
+    WeathersRepository provideWeathersRepository(WeatherDataRepository weatherDataRepository) {
         return weatherDataRepository;
     }
 }

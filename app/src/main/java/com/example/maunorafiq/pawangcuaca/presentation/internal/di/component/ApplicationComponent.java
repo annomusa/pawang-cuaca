@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.module.ApplicationModule;
 import com.example.maunorafiq.pawangcuaca.presentation.view.activity.BaseActivity;
-import com.icehousecorp.maunorafiq.domain.weather.repository.WeatherRepository;
+import com.icehousecorp.maunorafiq.domain.weathers.repository.WeathersRepository;
 
 import javax.inject.Singleton;
 
@@ -20,5 +20,5 @@ public interface ApplicationComponent {
     void inject (BaseActivity baseActivity);
 
     Context context();
-    WeatherRepository currentWeatherRepository();
+    WeathersRepository currentWeatherRepository();
 }

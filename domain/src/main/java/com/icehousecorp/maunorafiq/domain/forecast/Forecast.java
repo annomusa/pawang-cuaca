@@ -1,6 +1,6 @@
 package com.icehousecorp.maunorafiq.domain.forecast;
 
-import com.icehousecorp.maunorafiq.domain.weather.Weather;
+import com.icehousecorp.maunorafiq.domain.weathers.Weather;
 
 import java.util.List;
 

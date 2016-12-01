@@ -64,8 +64,8 @@ public class ListLocationPresenter extends BasePresenterImpl implements
         mRealm.executeTransaction(realm -> {
             RealmCity movedItem = new RealmCity();
             movedItem = realmCities.get(currentPos);
-            movedItem.setOrdinal (nextPos);
-            realm.copyToRealmOrUpdate( movedItem );
+            movedItem.setOrdinal(nextPos);
+            realm.copyToRealmOrUpdate(movedItem);
         });
 
         boolean currentIsGreater = currentPos > nextPos;

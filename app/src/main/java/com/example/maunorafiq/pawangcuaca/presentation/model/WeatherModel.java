@@ -5,4 +5,5 @@ package com.example.maunorafiq.pawangcuaca.presentation.model;
  */
 
 public class WeatherModel {
+
 }

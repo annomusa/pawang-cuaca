@@ -7,8 +7,12 @@ import com.example.maunorafiq.pawangcuaca.presentation.mapper.WeatherModelDataMa
 import com.example.maunorafiq.pawangcuaca.presentation.model.WeatherModel;
 import com.example.maunorafiq.pawangcuaca.presentation.view.WeatherListView;
 import com.icehousecorp.maunorafiq.domain.UseCase;
+import com.icehousecorp.maunorafiq.domain.weathers.Weather;
+
+import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import rx.Subscriber;
 
@@ -21,13 +25,13 @@ public class WeatherPresenter implements Presenter {
 
     private WeatherListView weatherListView;
 
-    private final UseCase getCurrentWeatherUseCase;
+    private final UseCase getWeatherUseCase;
     private final WeatherModelDataMapper weatherModelDataMapper;
 
     @Inject
-    public WeatherPresenter(UseCase getCurrentWeatherUseCase,
+    public WeatherPresenter(@Named("weather") UseCase getWeatherUseCase,
                             WeatherModelDataMapper weatherModelDataMapper) {
-        this.getCurrentWeatherUseCase = getCurrentWeatherUseCase;
+        this.getWeatherUseCase = getWeatherUseCase;
         this.weatherModelDataMapper = weatherModelDataMapper;
     }
 
@@ -47,13 +51,26 @@ public class WeatherPresenter implements Presenter {
 
     @Override
     public void destroy() {
-        this.getCurrentWeatherUseCase.unsubscribe();
+        this.getWeatherUseCase.unsubscribe();
         this.weatherListView = null;
     }
 
-    public void initialize() { }
+    public void initialize() {
+        this.loadListWeather();
+    }
 
-    private void loadListCurrentWeather() { }
+    private void loadListWeather() {
+        this.getListWeather();
+    }
+
+    private void getListWeather() {
+        this.getWeatherUseCase.execute(new ListWeatherSubscriber());
+    }
+
+    private void showListWeatherInView(List<Weather> weathers) {
+        final List<WeatherModel> weatherModels =
+                this.weatherModelDataMapper.transform(weathers);
+    }
 
     public void onWeatherClicked(WeatherModel weatherModel) {
         this.weatherListView.viewWeather(weatherModel);
@@ -61,7 +78,7 @@ public class WeatherPresenter implements Presenter {
 
 
 
-    private final class WeatherSubscriber extends Subscriber {
+    private final class ListWeatherSubscriber extends Subscriber<List<Weather>> {
         @Override
         public void onCompleted() {
 
@@ -73,8 +90,8 @@ public class WeatherPresenter implements Presenter {
         }
 
         @Override
-        public void onNext(Object o) {
-
+        public void onNext(List<Weather> weathers) {
+            WeatherPresenter.this.showListWeatherInView(weathers);
         }
     }
 }

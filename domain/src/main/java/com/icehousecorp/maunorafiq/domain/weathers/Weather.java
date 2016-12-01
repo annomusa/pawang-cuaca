@@ -1,4 +1,4 @@
-package com.icehousecorp.maunorafiq.domain.weather;
+package com.icehousecorp.maunorafiq.domain.weathers;
 
 /**
  * Created by maunorafiq on 11/28/16.

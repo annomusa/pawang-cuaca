@@ -21,7 +21,12 @@ public class RealmCity extends RealmObject{
 
     private String imageUrl;
 
+    public RealmCity() {
+    }
 
+    public RealmCity(String id) {
+        this.id = id;
+    }
 
     public void setId(String id) {
         this.id = id;

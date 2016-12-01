@@ -1,9 +1,10 @@
 package com.example.maunorafiq.pawangcuaca.presentation.internal.di.module;
 
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.PerActivity;
-import com.icehousecorp.maunorafiq.domain.weather.interactor.GetWeather;
+import com.icehousecorp.maunorafiq.domain.weathers.interactor.GetWeather;
 import com.icehousecorp.maunorafiq.domain.UseCase;
-import com.icehousecorp.maunorafiq.domain.weather.repository.WeatherRepository;
+import com.icehousecorp.maunorafiq.domain.weathers.interactor.GetWeathers;
+import com.icehousecorp.maunorafiq.domain.weathers.repository.WeathersRepository;
 import com.icehousecorp.maunorafiq.domain.forecast.interactor.GetForecast;
 import com.icehousecorp.maunorafiq.domain.forecast.repository.ForecastRepository;
 
@@ -31,8 +32,8 @@ public class WeatherModule {
     @Provides
     @PerActivity
     @Named("weather")
-    UseCase provideGetWeatherUseCase (WeatherRepository weatherRepository) {
-        return new GetWeather(cityName, weatherRepository);
+    UseCase provideGetWeatherUseCase (WeathersRepository weathersRepository) {
+        return new GetWeather(cityName, weathersRepository);
     }
 
     @Provides
@@ -40,6 +41,13 @@ public class WeatherModule {
     @Named("forecast")
     UseCase provideGetForecastUseCase (ForecastRepository forecastRepository) {
         return new GetForecast(cityName, forecastRepository);
+    }
+
+    @Provides
+    @PerActivity
+    @Named("weathers")
+    UseCase provideGetWeathersUseCase (WeathersRepository weathersRepository) {
+        return new GetWeathers(weathersRepository);
     }
 
 }

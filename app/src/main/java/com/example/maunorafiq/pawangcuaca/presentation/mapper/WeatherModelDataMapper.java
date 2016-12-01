@@ -2,7 +2,11 @@ package com.example.maunorafiq.pawangcuaca.presentation.mapper;
 
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.PerActivity;
 import com.example.maunorafiq.pawangcuaca.presentation.model.WeatherModel;
-import com.icehousecorp.maunorafiq.domain.weather.Weather;
+import com.icehousecorp.maunorafiq.domain.weathers.Weather;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -16,8 +20,21 @@ public class WeatherModelDataMapper {
     public WeatherModelDataMapper() { }
 
     public WeatherModel transform(Weather weather) {
-        WeatherModel weatherModel = new WeatherModel();
+        return new WeatherModel();
+    }
 
-        return weatherModel;
+    public List<WeatherModel> transform(List<Weather> weathers) {
+        List<WeatherModel> weatherModels;
+
+        if (weathers != null && !weathers.isEmpty()) {
+            weatherModels = new ArrayList<>();
+            for (Weather weather : weathers) {
+                weatherModels.add(transform(weather));
+            }
+        } else {
+            weatherModels = Collections.emptyList();
+        }
+
+        return weatherModels;
     }
 }
