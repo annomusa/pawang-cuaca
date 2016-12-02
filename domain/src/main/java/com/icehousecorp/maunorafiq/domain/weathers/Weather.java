@@ -73,7 +73,7 @@ public class Weather {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("*** Weather Weather ***");
+        stringBuilder.append("*** Weather Weather ***\n");
         stringBuilder.append("City id : " + this.getCityId() + "\n");
         stringBuilder.append("City name : " + this.getCityName() + "\n");
         stringBuilder.append("UTC Time : " + this.getUtcTime() + "\n");

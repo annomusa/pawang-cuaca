@@ -13,7 +13,7 @@ import rx.Observable;
 
 public class PutCity extends UseCase {
 
-    private String city;
+    private String city = "Berlin";
     private final CityRepository cityRepository;
 
     @Inject

@@ -65,7 +65,7 @@ public class WeatherPresenter implements Presenter {
 
     public void initialize() {
         this.loadListWeather();
-        this.addCity("New York");
+        this.addCity("Amsterdam");
     }
 
     public void addCity(String city) {
@@ -90,7 +90,7 @@ public class WeatherPresenter implements Presenter {
         this.weatherListView.viewWeather(weatherModel);
     }
 
-    private final class ListWeatherSubscriber extends Subscriber<List<Weather>> {
+    private final class ListWeatherSubscriber extends Subscriber<Weather> {
         @Override
         public void onCompleted() {
 
@@ -102,10 +102,8 @@ public class WeatherPresenter implements Presenter {
         }
 
         @Override
-        public void onNext(List<Weather> weathers) {
-            for (Weather weather : weathers) {
-                Log.d(TAG, "Weathers: " + weather.toString());
-            }
+        public void onNext(Weather weather) {
+            Log.d(TAG, "Weathers: " + weather.toString());
         }
     }
 
