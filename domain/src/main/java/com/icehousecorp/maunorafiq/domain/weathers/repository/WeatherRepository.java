@@ -2,15 +2,13 @@ package com.icehousecorp.maunorafiq.domain.weathers.repository;
 
 import com.icehousecorp.maunorafiq.domain.weathers.Weather;
 
-import java.util.List;
-
 import rx.Observable;
 
 /**
- * Created by maunorafiq on 11/28/16.
+ * Created by maunorafiq on 12/2/16.
  */
 
-public interface WeathersRepository {
+public interface WeatherRepository {
+    Observable<Weather> currentWeather(String city);
 
-    Observable<List<Weather>> listWeather();
 }

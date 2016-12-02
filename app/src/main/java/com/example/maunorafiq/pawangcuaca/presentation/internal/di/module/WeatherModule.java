@@ -4,6 +4,9 @@ import com.example.maunorafiq.pawangcuaca.presentation.internal.di.PerActivity;
 import com.icehousecorp.maunorafiq.domain.weathers.interactor.GetWeather;
 import com.icehousecorp.maunorafiq.domain.UseCase;
 import com.icehousecorp.maunorafiq.domain.weathers.interactor.GetWeathers;
+import com.icehousecorp.maunorafiq.domain.weathers.interactor.PutCity;
+import com.icehousecorp.maunorafiq.domain.weathers.repository.CityRepository;
+import com.icehousecorp.maunorafiq.domain.weathers.repository.WeatherRepository;
 import com.icehousecorp.maunorafiq.domain.weathers.repository.WeathersRepository;
 import com.icehousecorp.maunorafiq.domain.forecast.interactor.GetForecast;
 import com.icehousecorp.maunorafiq.domain.forecast.repository.ForecastRepository;
@@ -20,34 +23,30 @@ import dagger.Provides;
 @Module
 public class WeatherModule {
 
-    private String cityName = "Amsterdam";
-
     public WeatherModule() {
     }
 
-    public WeatherModule(String cityName) {
-        this.cityName = cityName;
+    @Provides
+    @PerActivity
+    GetWeather provideGetWeatherUseCase (WeatherRepository weatherRepository) {
+        return new GetWeather(weatherRepository);
     }
 
     @Provides
     @PerActivity
-    @Named("weather")
-    UseCase provideGetWeatherUseCase (WeathersRepository weathersRepository) {
-        return new GetWeather(cityName, weathersRepository);
+    GetForecast provideGetForecastUseCase (ForecastRepository forecastRepository) {
+        return new GetForecast(forecastRepository);
     }
 
     @Provides
     @PerActivity
-    @Named("forecast")
-    UseCase provideGetForecastUseCase (ForecastRepository forecastRepository) {
-        return new GetForecast(cityName, forecastRepository);
-    }
-
-    @Provides
-    @PerActivity
-    @Named("weathers")
-    UseCase provideGetWeathersUseCase (WeathersRepository weathersRepository) {
+    GetWeathers provideGetWeathersUseCase (WeathersRepository weathersRepository) {
         return new GetWeathers(weathersRepository);
     }
 
+    @Provides
+    @PerActivity
+    PutCity providePutWeatherUseCase (CityRepository cityRepository) {
+        return new PutCity(cityRepository);
+    }
 }

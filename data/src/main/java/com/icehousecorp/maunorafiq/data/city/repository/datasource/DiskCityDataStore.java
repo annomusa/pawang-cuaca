@@ -1,5 +1,6 @@
 package com.icehousecorp.maunorafiq.data.city.repository.datasource;
 
+import com.icehousecorp.maunorafiq.data.city.disk.RealmService;
 import com.icehousecorp.maunorafiq.data.city.entity.CityEntity;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
+import rx.functions.Action1;
 
 /**
  * Created by maunorafiq on 12/1/16.
@@ -15,25 +17,21 @@ import io.realm.Sort;
 
 public class DiskCityDataStore implements CityDataStore {
 
-    private final Realm realm;
+    private final RealmService realmService;
 
-    public DiskCityDataStore() {
-        this.realm = Realm.getDefaultInstance();
-    }
-
-    public void closeRealm() {
-        realm.close();
+    public DiskCityDataStore(RealmService realmService) {
+        this.realmService = realmService;
     }
 
     @Override
     public List<String> getCityEntities() {
-        List<String> list = new ArrayList<>();
-        RealmResults<CityEntity> realmResults = realm.where(CityEntity.class).findAll().sort("ordinal", Sort.ASCENDING);
+        List<String> result = new ArrayList<>();
+        realmService.get().subscribe(cityEntities -> {
+            for (CityEntity cityEntity : cityEntities) {
+                result.add(cityEntity.getCityName());
+            }
+        });
 
-        for (CityEntity cityEntity : realmResults) {
-            list.add(cityEntity.getCityName());
-        }
-
-        return list;
+        return result;
     }
 }

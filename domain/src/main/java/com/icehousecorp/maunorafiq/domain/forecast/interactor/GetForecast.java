@@ -13,17 +13,20 @@ import rx.Observable;
 
 public class GetForecast extends UseCase {
 
-    private final String city;
+    private String city;
     private final ForecastRepository forecastRepository;
 
     @Inject
-    public GetForecast(String city, ForecastRepository forecastRepository) {
-        this.city = city;
+    public GetForecast(ForecastRepository forecastRepository) {
         this.forecastRepository = forecastRepository;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
         return this.forecastRepository.forecastWeather(this.city);
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

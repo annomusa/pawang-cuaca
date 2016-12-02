@@ -7,10 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.maunorafiq.pawangcuaca.presentation.internal.di.component.WeatherComponent;
 import com.example.maunorafiq.pawangcuaca.presentation.model.WeatherModel;
+import com.example.maunorafiq.pawangcuaca.presentation.presenter.WeatherPresenter;
 import com.example.maunorafiq.pawangcuaca.presentation.view.WeatherListView;
 
 import java.util.Collection;
+
+import javax.inject.Inject;
 
 /**
  * Created by maunorafiq on 11/29/16.
@@ -20,13 +24,28 @@ public class WeatherFragment extends BaseFragment implements WeatherListView {
 
     private final String TAG = this.getClass().getSimpleName();
 
+    @Inject WeatherPresenter weatherPresenter;
+
+    private WeatherListListener weatherListListener;
+
     public interface WeatherListListener {
         void onWeatherClicked(final WeatherModel weatherModel);
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof WeatherListListener) {
+            this.weatherListListener = (WeatherListListener) context;
+        }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getComponent(WeatherComponent.class).inject(this);
+        weatherPresenter.initialize();
         Log.d(TAG, "onCreate: ");
     }
 

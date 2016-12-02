@@ -1,6 +1,7 @@
 package com.icehousecorp.maunorafiq.domain.weathers.interactor;
 
 import com.icehousecorp.maunorafiq.domain.UseCase;
+import com.icehousecorp.maunorafiq.domain.weathers.repository.WeatherRepository;
 import com.icehousecorp.maunorafiq.domain.weathers.repository.WeathersRepository;
 
 import javax.inject.Inject;
@@ -13,17 +14,20 @@ import rx.Observable;
 
 public class GetWeather extends UseCase {
 
-    private final String city;
-    private final WeathersRepository weathersRepository;
+    private String city = "Amsterdam";
+    private final WeatherRepository weatherRepository;
 
     @Inject
-    public GetWeather(String city, WeathersRepository weathersRepository) {
-        this.city = city;
-        this.weathersRepository = weathersRepository;
+    public GetWeather(WeatherRepository weatherRepository) {
+        this.weatherRepository = weatherRepository;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return this.weathersRepository.currentWeather(this.city);
+        return this.weatherRepository.currentWeather(this.city);
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

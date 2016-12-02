@@ -1,5 +1,9 @@
 package com.icehousecorp.maunorafiq.data.city.repository.datasource;
 
+import android.support.annotation.NonNull;
+
+import com.icehousecorp.maunorafiq.data.city.disk.RealmService;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -9,14 +13,17 @@ import javax.inject.Singleton;
 @Singleton
 public class CityDataStoreFactory {
 
+    private final RealmService realmService;
+
     @Inject
-    public CityDataStoreFactory() {
+    public CityDataStoreFactory(RealmService realmService) {
+        this.realmService = realmService;
     }
 
     public CityDataStore create() {
         CityDataStore cityDataStore;
 
-        cityDataStore = new DiskCityDataStore();
+        cityDataStore = new DiskCityDataStore(this.realmService);
 
         return cityDataStore;
     }

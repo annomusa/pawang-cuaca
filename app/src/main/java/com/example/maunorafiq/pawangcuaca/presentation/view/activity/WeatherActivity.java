@@ -9,13 +9,16 @@ import com.example.maunorafiq.pawangcuaca.R;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.HasComponent;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.component.DaggerWeatherComponent;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.component.WeatherComponent;
+import com.example.maunorafiq.pawangcuaca.presentation.internal.di.module.WeatherModule;
+import com.example.maunorafiq.pawangcuaca.presentation.model.WeatherModel;
 import com.example.maunorafiq.pawangcuaca.presentation.view.fragment.WeatherFragment;
 
 /**
  * Created by maunorafiq on 11/29/16.
  */
 
-public class WeatherActivity extends BaseActivity implements HasComponent<WeatherComponent> {
+public class WeatherActivity extends BaseActivity implements HasComponent<WeatherComponent>,
+        WeatherFragment.WeatherListListener{
 
     private final String TAG = this.getClass().getSimpleName();
 
@@ -41,11 +44,17 @@ public class WeatherActivity extends BaseActivity implements HasComponent<Weathe
         this.weatherComponent = DaggerWeatherComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
+                .weatherModule(new WeatherModule())
                 .build();
     }
 
     @Override
     public WeatherComponent getComponent() {
         return weatherComponent;
+    }
+
+    @Override
+    public void onWeatherClicked(WeatherModel weatherModel) {
+
     }
 }
