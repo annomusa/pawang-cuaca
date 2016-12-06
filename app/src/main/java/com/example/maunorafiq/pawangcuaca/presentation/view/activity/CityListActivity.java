@@ -10,20 +10,20 @@ import com.example.maunorafiq.pawangcuaca.presentation.internal.di.HasComponent;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.component.DaggerWeatherComponent;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.component.WeatherComponent;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.module.WeatherModule;
-import com.example.maunorafiq.pawangcuaca.presentation.model.WeatherModel;
-import com.example.maunorafiq.pawangcuaca.presentation.view.fragment.WeatherFragment;
+import com.example.maunorafiq.pawangcuaca.presentation.model.CityModel;
+import com.example.maunorafiq.pawangcuaca.presentation.view.fragment.CityListFragment;
 
 /**
  * Created by maunorafiq on 11/29/16.
  */
 
-public class WeatherActivity extends BaseActivity implements HasComponent<WeatherComponent>,
-        WeatherFragment.WeatherListListener{
+public class CityListActivity extends BaseActivity implements HasComponent<WeatherComponent>,
+        CityListFragment.CityListListener {
 
     private final String TAG = this.getClass().getSimpleName();
 
     public static Intent getCallingIntent (Context context) {
-        return new Intent(context, WeatherActivity.class);
+        return new Intent(context, CityListActivity.class);
     }
 
     private WeatherComponent weatherComponent;
@@ -37,7 +37,7 @@ public class WeatherActivity extends BaseActivity implements HasComponent<Weathe
 
         this.initializeInjector();
 
-        addFragment(R.id.fragmentContainer, new WeatherFragment());
+        addFragment(R.id.fragmentContainer, new CityListFragment());
     }
 
     private void initializeInjector () {
@@ -54,7 +54,7 @@ public class WeatherActivity extends BaseActivity implements HasComponent<Weathe
     }
 
     @Override
-    public void onWeatherClicked(WeatherModel weatherModel) {
+    public void onCityClicked(CityModel cityModel) {
 
     }
 }

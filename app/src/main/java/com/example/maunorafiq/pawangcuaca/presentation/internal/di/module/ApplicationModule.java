@@ -7,10 +7,8 @@ import com.icehousecorp.maunorafiq.data.city.disk.RealmService;
 import com.icehousecorp.maunorafiq.data.city.disk.RealmServiceImpl;
 import com.icehousecorp.maunorafiq.data.city.repository.CityDataRepository;
 import com.icehousecorp.maunorafiq.data.weather.repository.WeatherDataRepository;
-import com.icehousecorp.maunorafiq.data.weather.repository.WeathersDataRepository;
-import com.icehousecorp.maunorafiq.domain.weathers.repository.CityRepository;
+import com.icehousecorp.maunorafiq.domain.city.repository.CityRepository;
 import com.icehousecorp.maunorafiq.domain.weathers.repository.WeatherRepository;
-import com.icehousecorp.maunorafiq.domain.weathers.repository.WeathersRepository;
 
 import javax.inject.Singleton;
 
@@ -34,12 +32,6 @@ public class ApplicationModule {
     @Singleton
     Context provideApplicationContext () {
         return this.application;
-    }
-
-    @Provides
-    @Singleton
-    WeathersRepository provideWeathersRepository(WeathersDataRepository weathersDataRepository) {
-        return weathersDataRepository;
     }
 
     @Provides

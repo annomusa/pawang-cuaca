@@ -1,17 +1,13 @@
 package com.example.maunorafiq.pawangcuaca.presentation.internal.di.module;
 
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.PerActivity;
+import com.icehousecorp.maunorafiq.domain.city.interactor.GetCity;
 import com.icehousecorp.maunorafiq.domain.weathers.interactor.GetWeather;
-import com.icehousecorp.maunorafiq.domain.UseCase;
-import com.icehousecorp.maunorafiq.domain.weathers.interactor.GetWeathers;
-import com.icehousecorp.maunorafiq.domain.weathers.interactor.PutCity;
-import com.icehousecorp.maunorafiq.domain.weathers.repository.CityRepository;
+import com.icehousecorp.maunorafiq.domain.city.interactor.PutCity;
+import com.icehousecorp.maunorafiq.domain.city.repository.CityRepository;
 import com.icehousecorp.maunorafiq.domain.weathers.repository.WeatherRepository;
-import com.icehousecorp.maunorafiq.domain.weathers.repository.WeathersRepository;
 import com.icehousecorp.maunorafiq.domain.forecast.interactor.GetForecast;
 import com.icehousecorp.maunorafiq.domain.forecast.repository.ForecastRepository;
-
-import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
@@ -40,13 +36,13 @@ public class WeatherModule {
 
     @Provides
     @PerActivity
-    GetWeathers provideGetWeathersUseCase (WeathersRepository weathersRepository) {
-        return new GetWeathers(weathersRepository);
+    PutCity providePutCityUseCase(CityRepository cityRepository, WeatherRepository weatherRepository) {
+        return new PutCity(cityRepository, weatherRepository);
     }
 
     @Provides
     @PerActivity
-    PutCity providePutWeatherUseCase (CityRepository cityRepository) {
-        return new PutCity(cityRepository);
+    GetCity provideGetCityUseCase(CityRepository cityRepository) {
+        return new GetCity(cityRepository);
     }
 }

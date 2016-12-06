@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.maunorafiq.pawangcuaca.presentation.view.activity.ForecastActivity;
-import com.example.maunorafiq.pawangcuaca.presentation.view.activity.WeatherActivity;
+import com.example.maunorafiq.pawangcuaca.presentation.view.activity.CityListActivity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -21,7 +21,7 @@ public class Navigator {
 
     public void navigateToWeather (Context context) {
         if (context != null) {
-            Intent intent = WeatherActivity.getCallingIntent(context);
+            Intent intent = CityListActivity.getCallingIntent(context);
             context.startActivity(intent);
         }
     }

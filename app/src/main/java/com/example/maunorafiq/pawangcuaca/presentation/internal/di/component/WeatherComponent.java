@@ -3,8 +3,8 @@ package com.example.maunorafiq.pawangcuaca.presentation.internal.di.component;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.PerActivity;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.module.ActivityModule;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.module.WeatherModule;
+import com.example.maunorafiq.pawangcuaca.presentation.view.fragment.CityListFragment;
 import com.example.maunorafiq.pawangcuaca.presentation.view.fragment.ForecastFragment;
-import com.example.maunorafiq.pawangcuaca.presentation.view.fragment.WeatherFragment;
 
 import dagger.Component;
 
@@ -15,6 +15,6 @@ import dagger.Component;
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = {WeatherModule.class, ActivityModule.class})
 public interface WeatherComponent extends ActivityComponent {
-    void inject(WeatherFragment weatherFragment);
+    void inject(CityListFragment cityListFragment);
     void inject(ForecastFragment forecastFragment);
 }

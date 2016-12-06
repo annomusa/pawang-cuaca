@@ -5,7 +5,6 @@ import com.icehousecorp.maunorafiq.data.weather.repository.datasource.WeatherDat
 import com.icehousecorp.maunorafiq.data.weather.repository.datasource.WeatherDataStoreFactory;
 import com.icehousecorp.maunorafiq.domain.weathers.Weather;
 import com.icehousecorp.maunorafiq.domain.weathers.repository.WeatherRepository;
-import com.icehousecorp.maunorafiq.domain.weathers.repository.WeathersRepository;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

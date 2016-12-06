@@ -20,21 +20,17 @@ public class WeatherModelDataMapper {
     public WeatherModelDataMapper() { }
 
     public WeatherModel transform(Weather weather) {
-        return new WeatherModel();
+        WeatherModel weatherModel = new WeatherModel();
+        weatherModel.setCityName(weather.getCityName());
+        weatherModel.setWeatherId(weather.getWeatherId());
+        weatherModel.setWeatherName(weather.getWeatherName());
+        weatherModel.setWeatherDescription(weather.getWeatherDescription());
+        weatherModel.setWeatherIcon(weather.getWeatherIcon());
+        weatherModel.setTemperature(weather.getTemperature());
+        weatherModel.setPressure(weather.getPressure());
+        weatherModel.setHumidity(weather.getHumidity());
+
+        return weatherModel;
     }
 
-    public List<WeatherModel> transform(List<Weather> weathers) {
-        List<WeatherModel> weatherModels;
-
-        if (weathers != null && !weathers.isEmpty()) {
-            weatherModels = new ArrayList<>();
-            for (Weather weather : weathers) {
-                weatherModels.add(transform(weather));
-            }
-        } else {
-            weatherModels = Collections.emptyList();
-        }
-
-        return weatherModels;
-    }
 }

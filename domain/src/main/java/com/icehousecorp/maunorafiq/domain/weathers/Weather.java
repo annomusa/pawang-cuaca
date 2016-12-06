@@ -17,6 +17,33 @@ public class Weather {
     private String weatherName;
     private String weatherDescription;
     private String weatherIcon;
+    private String temperature;
+    private String pressure;
+    private String humidity;
+
+    public String getPressure() {
+        return pressure;
+    }
+
+    public void setPressure(String pressure) {
+        this.pressure = pressure;
+    }
+
+    public String getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(String humidity) {
+        this.humidity = humidity;
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
+    }
 
     public int getCityId() {
         return cityId;
@@ -81,6 +108,10 @@ public class Weather {
         stringBuilder.append("Weather name : " + this.getWeatherName() + "\n");
         stringBuilder.append("Weather Description : " + this.getWeatherDescription() + "\n");
         stringBuilder.append("Weather Icon : " + this.getWeatherIcon() + "\n");
+        stringBuilder.append("Weather temperature : " + this.getTemperature() + "\n");
+        stringBuilder.append("Weather Pressure : " + this.getPressure() + "\n");
+        stringBuilder.append("Weather humidity : " + this.getHumidity() + "\n");
+        stringBuilder.append("***********************\n");
 
         return stringBuilder.toString();
     }

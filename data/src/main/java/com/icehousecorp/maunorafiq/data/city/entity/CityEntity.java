@@ -35,4 +35,14 @@ public class CityEntity extends RealmObject {
     public void setOrdinal(int ordinal) {
         this.ordinal = ordinal;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("*** City Entity ***\n");
+        stringBuilder.append("City name : " + this.getCityName() + "\n");
+        stringBuilder.append("City Ordinal : " + this.getOrdinal() + "\n");
+
+        return stringBuilder.toString();
+    }
 }

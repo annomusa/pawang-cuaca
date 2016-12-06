@@ -7,4 +7,5 @@ package com.icehousecorp.maunorafiq.data;
 public class Constant {
     public static final String API_BASE_URL = "http://api.openweathermap.org/data/2.5/";
     public static final String openWeatherApi = "90faa1669716319e787ca1ab5da48cbc";
+    public static final String iconImageUrl = "http://openweathermap.org/img/w/";
 }

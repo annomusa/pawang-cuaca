@@ -40,8 +40,8 @@ public class ListLocationActivity extends AppCompatActivity implements
         ListLocationContract.View {
 
     @Inject ListLocationPresenter mPresenter;
-    @Bind(R.id.list_location) RecyclerView rvListLocation;
-    @Bind(R.id.content_list_location) SwipeRefreshLayout refreshListLocation;
+    @Bind(R.id.rv_city_list) RecyclerView rvListLocation;
+    @Bind(R.id.srl_content_list_location) SwipeRefreshLayout refreshListLocation;
 
     private String TAG = "ListTime location activity";
 
@@ -100,7 +100,7 @@ public class ListLocationActivity extends AppCompatActivity implements
     }
 
     private void initFloatingButton() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add_city);
         fab.setOnClickListener(this::openSearchCity);
     }
 

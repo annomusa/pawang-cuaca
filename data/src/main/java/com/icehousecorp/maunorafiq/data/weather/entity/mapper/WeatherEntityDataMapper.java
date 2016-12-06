@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import static com.icehousecorp.maunorafiq.data.Constant.iconImageUrl;
+
 /**
  * Created by Raffi on 11/25/2016.
  */
@@ -27,8 +29,11 @@ public class WeatherEntityDataMapper {
             weather.setWeatherId(weatherResponse.getWeather().get(0).getId());
             weather.setWeatherName(weatherResponse.getWeather().get(0).getMain());
             weather.setWeatherDescription(weatherResponse.getWeather().get(0).getDescription());
-            weather.setWeatherIcon(weatherResponse.getWeather().get(0).getIcon());
+            weather.setWeatherIcon(iconImageUrl + weatherResponse.getWeather().get(0).getIcon() + ".png");
             weather.setUtcTime(weatherResponse.getDt());
+            weather.setTemperature(Integer.toString(weatherResponse.getMain().getTemp().intValue()));
+            weather.setPressure(weatherResponse.getMain().getPressure().toString());
+            weather.setHumidity(weatherResponse.getMain().getHumidity().toString());
         }
         return weather;
     }

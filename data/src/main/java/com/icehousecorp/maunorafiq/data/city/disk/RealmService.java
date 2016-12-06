@@ -13,9 +13,9 @@ import rx.Observable;
 
 public interface RealmService {
 
-    Observable<List<CityEntity>> get();
+    List<CityEntity> get();
 
-    Observable<Weather> put(String cityName);
+    boolean put(String cityName);
 
     void update(String cityName, int ordinal);
 }

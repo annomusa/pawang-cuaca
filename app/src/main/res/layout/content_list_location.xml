@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:androidApplication="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_list_location"
+    android:id="@+id/srl_content_list_location"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     androidApplication:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -11,10 +11,18 @@
     tools:showIn="@layout/activity_list_location">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/list_location"
+        android:id="@+id/rv_city_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
+
+    <include
+        layout="@layout/view_progress"
+        />
+
+    <include
+        layout="@layout/view_retry"
+        />
 
 </android.support.v4.widget.SwipeRefreshLayout>

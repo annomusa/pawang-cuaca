@@ -12,5 +12,7 @@ import rx.Observable;
 
 public interface CityDataStore {
 
-    List<String> getCityEntities();
+    List<CityEntity> getListCityEntity();
+
+    boolean putCityEntity(String city);
 }
