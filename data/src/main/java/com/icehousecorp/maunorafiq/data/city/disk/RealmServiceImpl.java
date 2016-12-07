@@ -1,10 +1,6 @@
 package com.icehousecorp.maunorafiq.data.city.disk;
 
-import android.util.Log;
-
 import com.icehousecorp.maunorafiq.data.city.entity.CityEntity;
-import com.icehousecorp.maunorafiq.data.weather.repository.WeatherDataRepository;
-import com.icehousecorp.maunorafiq.domain.weathers.Weather;
 
 import java.util.ArrayList;
 import java.util.List;

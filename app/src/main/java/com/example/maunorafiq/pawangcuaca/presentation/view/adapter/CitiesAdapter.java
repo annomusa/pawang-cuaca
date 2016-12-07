@@ -63,11 +63,11 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ItemViewHo
 
         holder.tvLocation.setText(cityModel.getCityName());
         holder.tvLastChecked.setText("Last checked : today");
-
         if (cityModel.getWeatherModel() != null) {
-            char drajat = 0x00B0;
-            holder.tvTemperature.setText(cityModel.getWeatherModel().getTemperature().concat(String.valueOf(drajat)));
-            Picasso.with(context).load(cityModel.getWeatherModel().getWeatherIcon()).into(holder.ivTemperature);
+            final WeatherModel weatherModel = cityModel.getWeatherModel();
+
+            holder.tvTemperature.setText(weatherModel.getTemperature());
+            Picasso.with(context).load(weatherModel.getWeatherIcon()).into(holder.ivTemperature);
         } else {
             holder.tvTemperature.setText("--");
         }

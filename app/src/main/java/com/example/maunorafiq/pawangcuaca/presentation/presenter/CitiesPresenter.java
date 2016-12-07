@@ -10,8 +10,8 @@ import com.example.maunorafiq.pawangcuaca.presentation.model.CityModel;
 import com.example.maunorafiq.pawangcuaca.presentation.view.CityListView;
 import com.icehousecorp.maunorafiq.domain.city.City;
 import com.icehousecorp.maunorafiq.domain.city.interactor.GetCity;
-import com.icehousecorp.maunorafiq.domain.weathers.Weather;
-import com.icehousecorp.maunorafiq.domain.weathers.interactor.GetWeather;
+import com.icehousecorp.maunorafiq.domain.weather.Weather;
+import com.icehousecorp.maunorafiq.domain.weather.interactor.GetWeather;
 import com.icehousecorp.maunorafiq.domain.city.interactor.PutCity;
 
 import java.util.ArrayList;
@@ -38,8 +38,6 @@ public class CitiesPresenter implements Presenter {
     private final CityModelDataMapper cityModelDataMapper;
     private final WeatherModelDataMapper weatherModelDataMapper;
 
-    private List<CityModel> cityModelList;
-
     @Inject
     public CitiesPresenter(GetWeather getWeatherUseCase,
                            PutCity putCityUseCase,
@@ -51,8 +49,6 @@ public class CitiesPresenter implements Presenter {
         this.getCityUseCase = getCityUseCase;
         this.cityModelDataMapper = cityModelDataMapper;
         this.weatherModelDataMapper = weatherModelDataMapper;
-
-        cityModelList = new ArrayList<>();
     }
 
     public void setView(@NonNull CityListView cityListView) {
@@ -68,6 +64,8 @@ public class CitiesPresenter implements Presenter {
     @Override
     public void destroy() {
         getWeatherUseCase.unsubscribe();
+        putCityUseCase.unsubscribe();
+        getCityUseCase.unsubscribe();
         cityListView = null;
     }
 
@@ -75,8 +73,13 @@ public class CitiesPresenter implements Presenter {
         loadListWeather();
     }
 
+    private void loadListWeather() {
+        showViewLoading();
+        hideViewRetry();
+        getListWeather();
+    }
+
     public void addCity(String city) {
-        Log.d(TAG, "addCity: " + city);
         cityListView.addNewCity(new CityModel(city));
         fetchWeather(city);
     }
@@ -86,30 +89,28 @@ public class CitiesPresenter implements Presenter {
         putCityUseCase.execute(new WeatherSubscriber());
     }
 
-    private void loadListWeather() {
-        showViewLoading();
-        hideViewRetry();
-        getListWeather();
-    }
-
-    public void onWeatherClicked(CityModel cityModel) {
+    public void onCityClicked(CityModel cityModel) {
         cityListView.viewCity(cityModel);
     }
 
-    public void showViewLoading() {
+    private void showViewLoading() {
         cityListView.showLoading();
     }
 
-    public void hideViewLoading() {
+    private void hideViewLoading() {
         cityListView.hideLoading();
     }
 
-    public void showViewRetry() {
+    private void showViewRetry() {
         cityListView.showRetry();
     }
 
-    public void hideViewRetry() {
+    private void hideViewRetry() {
         cityListView.hideRetry();
+    }
+
+    private void showViewError(String message) {
+        cityListView.showError(message);
     }
 
     private void showListCityInView(List<City> cityList) {
@@ -132,8 +133,8 @@ public class CitiesPresenter implements Presenter {
 
         @Override
         public void onError(Throwable e) {
+            showViewError(e.getMessage());
             hideViewLoading();
-            Log.d(TAG, "onError: " + e.getMessage());
             showViewRetry();
         }
 
@@ -150,12 +151,12 @@ public class CitiesPresenter implements Presenter {
     private final class WeatherSubscriber extends Subscriber<Weather> {
         @Override
         public void onCompleted() {
-
+            hideViewLoading();
         }
 
         @Override
         public void onError(Throwable e) {
-            Log.d(TAG, "onError: " + e.getMessage());
+            showViewError(e.getMessage());
         }
 
         @Override

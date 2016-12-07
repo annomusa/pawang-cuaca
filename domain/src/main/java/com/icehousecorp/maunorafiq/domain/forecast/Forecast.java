@@ -1,6 +1,6 @@
 package com.icehousecorp.maunorafiq.domain.forecast;
 
-import com.icehousecorp.maunorafiq.domain.weathers.Weather;
+import com.icehousecorp.maunorafiq.domain.weather.Weather;
 
 import java.util.List;
 
@@ -16,16 +16,7 @@ public class Forecast {
     }
 
     private String cityName;
-    private Weather currentWeather;
     private List<Weather> forecastList;
-
-    public Weather getCurrentWeather() {
-        return currentWeather;
-    }
-
-    public void setCurrentWeather(Weather currentWeather) {
-        this.currentWeather = currentWeather;
-    }
 
     public int getCityId() {
         return cityId;
@@ -53,7 +44,6 @@ public class Forecast {
         stringBuilder.append("*** Forecast Weather ***");
         stringBuilder.append("City id : " + this.getCityId());
         stringBuilder.append("City name : " + this.getCityName());
-//        stringBuilder.append("Current Weather : " + this.getCurrentWeather().getCityName());
         stringBuilder.append("Forecast Weather : " + this.getForecastList().size());
 
         return stringBuilder.toString();

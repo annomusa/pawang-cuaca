@@ -1,7 +1,6 @@
 package com.icehousecorp.maunorafiq.domain.city.repository;
 
 import com.icehousecorp.maunorafiq.domain.city.City;
-import com.icehousecorp.maunorafiq.domain.weathers.Weather;
 
 import java.util.List;
 

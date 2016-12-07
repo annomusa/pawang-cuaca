@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:androidApplication="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/rl_forecast"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone">
+
+    <TextView
+        android:text="Pressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPressure"
+        android:layout_below="@+id/tvPressureVal"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="1017.56 hPa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPressureVal"
+        android:textSize="26sp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/tvTemperatureVal"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Humidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvHumidity"
+        android:layout_below="@+id/tvHumidityVal"
+        android:layout_alignStart="@+id/tvHumidityVal" />
+
+    <TextView
+        android:text="98%"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvHumidityVal"
+        android:textSize="26sp"
+        android:layout_below="@+id/tvPressure"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        androidApplication:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/ivIcon"
+        android:scaleType="fitXY"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="13dp"
+        android:layout_alignTop="@+id/tvTemperatureVal"
+        android:layout_alignParentEnd="true" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rvWeatherForecast"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvHumidity"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDescription"
+        android:textSize="30sp"
+        android:layout_below="@+id/tvLocation"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text='30"C'
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTemperatureVal"
+        android:textSize="90sp"
+        android:layout_below="@+id/tvDescription"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Loading . ."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvLocation"
+        android:textSize="40sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

@@ -19,7 +19,7 @@ public class Navigator {
     @Inject
     public Navigator () { }
 
-    public void navigateToWeather (Context context) {
+    public void navigateToCityList (Context context) {
         if (context != null) {
             Intent intent = CityListActivity.getCallingIntent(context);
             context.startActivity(intent);

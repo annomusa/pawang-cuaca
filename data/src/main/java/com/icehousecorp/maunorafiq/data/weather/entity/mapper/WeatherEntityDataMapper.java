@@ -4,11 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.icehousecorp.maunorafiq.data.weather.entity.response.WeatherResponse;
-import com.icehousecorp.maunorafiq.domain.weathers.Weather;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import com.icehousecorp.maunorafiq.domain.weather.Weather;
 
 import static com.icehousecorp.maunorafiq.data.Constant.iconImageUrl;
 

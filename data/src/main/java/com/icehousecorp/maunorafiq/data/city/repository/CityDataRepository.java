@@ -1,13 +1,10 @@
 package com.icehousecorp.maunorafiq.data.city.repository;
 
-import android.util.Log;
-
 import com.icehousecorp.maunorafiq.data.city.entity.CityEntity;
 import com.icehousecorp.maunorafiq.data.city.entity.mapper.CityEntityDataMapper;
 import com.icehousecorp.maunorafiq.data.city.repository.datasource.CityDataStore;
 import com.icehousecorp.maunorafiq.data.city.repository.datasource.CityDataStoreFactory;
 import com.icehousecorp.maunorafiq.domain.city.City;
-import com.icehousecorp.maunorafiq.domain.weathers.Weather;
 import com.icehousecorp.maunorafiq.domain.city.repository.CityRepository;
 
 import java.util.ArrayList;

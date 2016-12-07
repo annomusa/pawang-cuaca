@@ -2,7 +2,7 @@ package com.icehousecorp.maunorafiq.domain.city.interactor;
 
 import com.icehousecorp.maunorafiq.domain.UseCase;
 import com.icehousecorp.maunorafiq.domain.city.repository.CityRepository;
-import com.icehousecorp.maunorafiq.domain.weathers.repository.WeatherRepository;
+import com.icehousecorp.maunorafiq.domain.weather.repository.WeatherRepository;
 
 import javax.inject.Inject;
 

@@ -1,6 +1,6 @@
-package com.icehousecorp.maunorafiq.domain.weathers.repository;
+package com.icehousecorp.maunorafiq.domain.weather.repository;
 
-import com.icehousecorp.maunorafiq.domain.weathers.Weather;
+import com.icehousecorp.maunorafiq.domain.weather.Weather;
 
 import rx.Observable;
 

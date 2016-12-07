@@ -5,7 +5,8 @@ import android.content.Context;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.module.ApplicationModule;
 import com.example.maunorafiq.pawangcuaca.presentation.view.activity.BaseActivity;
 import com.icehousecorp.maunorafiq.domain.city.repository.CityRepository;
-import com.icehousecorp.maunorafiq.domain.weathers.repository.WeatherRepository;
+import com.icehousecorp.maunorafiq.domain.forecast.repository.ForecastRepository;
+import com.icehousecorp.maunorafiq.domain.weather.repository.WeatherRepository;
 
 import javax.inject.Singleton;
 
@@ -22,5 +23,6 @@ public interface ApplicationComponent {
 
     Context context();
     WeatherRepository weatherRepository();
+    ForecastRepository forecastRepositoy();
     CityRepository cityRepository();
 }

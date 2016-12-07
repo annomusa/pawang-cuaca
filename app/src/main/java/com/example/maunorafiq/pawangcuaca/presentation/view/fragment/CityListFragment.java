@@ -27,7 +27,6 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -52,8 +51,7 @@ public class CityListFragment extends BaseFragment implements CityListView {
         void onCityClicked(final CityModel cityModel);
     }
 
-    @Inject
-    CitiesPresenter citiesPresenter;
+    @Inject CitiesPresenter citiesPresenter;
     @Inject CitiesAdapter citiesAdapter;
 
     @Bind(R.id.rv_city_list) RecyclerView rvCityList;
@@ -202,8 +200,8 @@ public class CityListFragment extends BaseFragment implements CityListView {
 
     private CitiesAdapter.OnItemClickListener onItemClickListener = cityModel -> {
         if (citiesPresenter != null && cityModel!= null) {
-                citiesPresenter.onWeatherClicked(cityModel);
-            }
+            citiesPresenter.onCityClicked(cityModel);
+        }
     };
 
     @OnClick(R.id.fab_add_city)

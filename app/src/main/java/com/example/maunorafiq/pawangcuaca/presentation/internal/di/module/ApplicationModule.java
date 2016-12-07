@@ -6,9 +6,11 @@ import com.example.maunorafiq.pawangcuaca.presentation.AndroidApplication;
 import com.icehousecorp.maunorafiq.data.city.disk.RealmService;
 import com.icehousecorp.maunorafiq.data.city.disk.RealmServiceImpl;
 import com.icehousecorp.maunorafiq.data.city.repository.CityDataRepository;
+import com.icehousecorp.maunorafiq.data.forecast.repository.ForecastDataRepository;
 import com.icehousecorp.maunorafiq.data.weather.repository.WeatherDataRepository;
 import com.icehousecorp.maunorafiq.domain.city.repository.CityRepository;
-import com.icehousecorp.maunorafiq.domain.weathers.repository.WeatherRepository;
+import com.icehousecorp.maunorafiq.domain.forecast.repository.ForecastRepository;
+import com.icehousecorp.maunorafiq.domain.weather.repository.WeatherRepository;
 
 import javax.inject.Singleton;
 
@@ -36,8 +38,14 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    WeatherRepository provideWeatherRepository(WeatherDataRepository weathersDataRepository) {
-        return weathersDataRepository;
+    WeatherRepository provideWeatherRepository(WeatherDataRepository weatherDataRepository) {
+        return weatherDataRepository;
+    }
+
+    @Provides
+    @Singleton
+    ForecastRepository provideForecastRepository(ForecastDataRepository forecastDataRepository) {
+        return forecastDataRepository;
     }
 
     @Provides

@@ -55,6 +55,6 @@ public class CityListActivity extends BaseActivity implements HasComponent<Weath
 
     @Override
     public void onCityClicked(CityModel cityModel) {
-
+        navigator.navigateToForecast(this, cityModel.getCityName());
     }
 }

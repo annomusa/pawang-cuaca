@@ -2,10 +2,10 @@ package com.example.maunorafiq.pawangcuaca.presentation.internal.di.module;
 
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.PerActivity;
 import com.icehousecorp.maunorafiq.domain.city.interactor.GetCity;
-import com.icehousecorp.maunorafiq.domain.weathers.interactor.GetWeather;
+import com.icehousecorp.maunorafiq.domain.weather.interactor.GetWeather;
 import com.icehousecorp.maunorafiq.domain.city.interactor.PutCity;
 import com.icehousecorp.maunorafiq.domain.city.repository.CityRepository;
-import com.icehousecorp.maunorafiq.domain.weathers.repository.WeatherRepository;
+import com.icehousecorp.maunorafiq.domain.weather.repository.WeatherRepository;
 import com.icehousecorp.maunorafiq.domain.forecast.interactor.GetForecast;
 import com.icehousecorp.maunorafiq.domain.forecast.repository.ForecastRepository;
 

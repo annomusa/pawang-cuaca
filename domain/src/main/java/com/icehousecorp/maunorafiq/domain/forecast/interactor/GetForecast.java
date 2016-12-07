@@ -13,7 +13,7 @@ import rx.Observable;
 
 public class GetForecast extends UseCase {
 
-    private String city;
+    private String city = "Amsterdam";
     private final ForecastRepository forecastRepository;
 
     @Inject

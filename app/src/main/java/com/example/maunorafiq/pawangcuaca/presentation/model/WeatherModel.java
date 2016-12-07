@@ -6,9 +6,15 @@ package com.example.maunorafiq.pawangcuaca.presentation.model;
 
 public class WeatherModel {
 
-    private String cityName;
+    private int weatherId;
+
+    private String weatherName;
+
+    private String weatherDescription;
 
     private String weatherIcon;
+
+    private String cityName;
 
     private String temperature;
 
@@ -16,11 +22,35 @@ public class WeatherModel {
 
     private String humidity;
 
-    private String weatherDescription;
+    private String day;
 
-    private int weatherId;
+    private String hourBegin;
 
-    private String weatherName;
+    private String hourEnd;
+
+    public String getHourEnd() {
+        return hourEnd;
+    }
+
+    public void setHourEnd(String hourEnd) {
+        this.hourEnd = hourEnd;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getHourBegin() {
+        return hourBegin;
+    }
+
+    public void setHourBegin(String hourBegin) {
+        this.hourBegin = hourBegin;
+    }
 
     public String getCityName() {
         return cityName;
@@ -98,6 +128,8 @@ public class WeatherModel {
         stringBuilder.append("Temperature : " + this.getTemperature() + "\n");
         stringBuilder.append("Pressure : " + this.getPressure() + "\n");
         stringBuilder.append("Humidity : " + this.getHumidity() + "\n");
+        stringBuilder.append("UTC Day : " + this.getDay() + "\n");
+        stringBuilder.append("UTC Hour : " + this.getHourBegin() + "-" + this.getHourEnd() + "\n");
 
         return stringBuilder.toString();
     }

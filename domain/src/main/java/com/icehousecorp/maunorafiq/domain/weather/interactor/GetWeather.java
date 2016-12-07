@@ -1,7 +1,7 @@
-package com.icehousecorp.maunorafiq.domain.weathers.interactor;
+package com.icehousecorp.maunorafiq.domain.weather.interactor;
 
 import com.icehousecorp.maunorafiq.domain.UseCase;
-import com.icehousecorp.maunorafiq.domain.weathers.repository.WeatherRepository;
+import com.icehousecorp.maunorafiq.domain.weather.repository.WeatherRepository;
 
 import javax.inject.Inject;
 

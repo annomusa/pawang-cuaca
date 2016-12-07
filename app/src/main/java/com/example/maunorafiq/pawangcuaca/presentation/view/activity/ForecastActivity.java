@@ -1,5 +1,6 @@
 package com.example.maunorafiq.pawangcuaca.presentation.view.activity;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,23 +29,23 @@ public class ForecastActivity extends BaseActivity implements HasComponent<Weath
         return intent;
     }
 
-    private String city;
     private WeatherComponent weatherComponent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout);
-
-        Log.d(TAG, "onCreate: ");
-
         this.initializeActivity();
         this.initializeInjector();
     }
 
     private void initializeActivity() {
-        this.city = getIntent().getStringExtra(INTENT_EXTRA_PARAM_CITY);
-        addFragment(R.id.fragmentContainer, new ForecastFragment());
+        String city = getIntent().getStringExtra(INTENT_EXTRA_PARAM_CITY);
+        Bundle bundle = new Bundle();
+        Fragment fragment = new ForecastFragment();
+        bundle.putString("city", city);
+        fragment.setArguments(bundle);
+        addFragment(R.id.fragmentContainer, fragment);
     }
 
     private void initializeInjector() {
