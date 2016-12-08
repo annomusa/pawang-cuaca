@@ -1,7 +1,7 @@
 package com.example.maunorafiq.pawangcuaca.di.module;
 
 import com.example.maunorafiq.pawangcuaca.di.CustomScope;
-import com.example.maunorafiq.pawangcuaca.service.RestApi;
+import com.example.maunorafiq.pawangcuaca.mvp.service.RestApi;
 
 import dagger.Module;
 import dagger.Provides;

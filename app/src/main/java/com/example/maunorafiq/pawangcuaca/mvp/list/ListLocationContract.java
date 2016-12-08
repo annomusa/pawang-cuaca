@@ -1,9 +1,7 @@
 package com.example.maunorafiq.pawangcuaca.list;
 
-import android.content.Context;
-
 import com.example.maunorafiq.pawangcuaca.model.reamldb.RealmCity;
-import com.example.maunorafiq.pawangcuaca.usecase.GetWeather;
+import com.example.maunorafiq.pawangcuaca.mvp.usecase.GetWeather;
 
 import java.util.List;
 

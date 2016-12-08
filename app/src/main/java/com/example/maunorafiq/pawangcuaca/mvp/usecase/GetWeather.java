@@ -1,10 +1,10 @@
-package com.example.maunorafiq.pawangcuaca.usecase;
+package com.example.maunorafiq.pawangcuaca.mvp.usecase;
 
 import android.util.Log;
 
-import com.example.maunorafiq.pawangcuaca.Constant;
+import com.example.maunorafiq.pawangcuaca.mvp.Constant;
 import com.example.maunorafiq.pawangcuaca.model.openweather.current.OWeatherResponse;
-import com.example.maunorafiq.pawangcuaca.service.RestApi;
+import com.example.maunorafiq.pawangcuaca.mvp.service.RestApi;
 
 import rx.Observable;
 

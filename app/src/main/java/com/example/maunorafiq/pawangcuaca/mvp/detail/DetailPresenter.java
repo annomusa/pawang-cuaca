@@ -2,11 +2,11 @@ package com.example.maunorafiq.pawangcuaca.detail;
 
 import android.util.Log;
 
-import com.example.maunorafiq.pawangcuaca.Constant;
+import com.example.maunorafiq.pawangcuaca.mvp.Constant;
 import com.example.maunorafiq.pawangcuaca.base.BasePresenterImpl;
 import com.example.maunorafiq.pawangcuaca.di.CustomScope;
 import com.example.maunorafiq.pawangcuaca.model.openweather.forecast.OWeatherResponse2;
-import com.example.maunorafiq.pawangcuaca.service.RestApi;
+import com.example.maunorafiq.pawangcuaca.mvp.service.RestApi;
 
 import javax.inject.Inject;
 

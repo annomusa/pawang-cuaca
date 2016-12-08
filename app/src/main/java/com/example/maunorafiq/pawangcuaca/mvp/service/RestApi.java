@@ -1,4 +1,4 @@
-package com.example.maunorafiq.pawangcuaca.service;
+package com.example.maunorafiq.pawangcuaca.mvp.service;
 
 import com.example.maunorafiq.pawangcuaca.model.openweather.current.OWeatherResponse;
 import com.example.maunorafiq.pawangcuaca.model.openweather.forecast.OWeatherResponse2;

@@ -2,17 +2,16 @@ package com.example.maunorafiq.pawangcuaca.detail.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.maunorafiq.pawangcuaca.Constant;
+import com.example.maunorafiq.pawangcuaca.mvp.Constant;
 import com.example.maunorafiq.pawangcuaca.R;
 import com.example.maunorafiq.pawangcuaca.model.openweather.forecast.ListTime;
-import com.example.maunorafiq.pawangcuaca.utility.CalendarHelper;
+import com.example.maunorafiq.pawangcuaca.mvp.utility.CalendarHelper;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

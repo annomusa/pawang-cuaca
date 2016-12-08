@@ -3,16 +3,14 @@ package com.example.maunorafiq.pawangcuaca.list.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.maunorafiq.pawangcuaca.Constant;
+import com.example.maunorafiq.pawangcuaca.mvp.Constant;
 import com.example.maunorafiq.pawangcuaca.R;
 import com.example.maunorafiq.pawangcuaca.model.reamldb.RealmCity;
 import com.squareup.picasso.Picasso;

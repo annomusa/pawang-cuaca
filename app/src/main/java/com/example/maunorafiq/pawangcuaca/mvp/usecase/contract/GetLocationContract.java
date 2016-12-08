@@ -1,4 +1,4 @@
-package com.example.maunorafiq.pawangcuaca.usecase.contract;
+package com.example.maunorafiq.pawangcuaca.mvp.usecase.contract;
 
 import android.location.Location;
 

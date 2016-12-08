@@ -1,6 +1,6 @@
 package com.example.maunorafiq.pawangcuaca.model.reamldb;
 
-import com.example.maunorafiq.pawangcuaca.usecase.GetWeather;
+import com.example.maunorafiq.pawangcuaca.mvp.usecase.GetWeather;
 
 import io.realm.Realm;
 import io.realm.RealmResults;

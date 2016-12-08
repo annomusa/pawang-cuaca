@@ -1,4 +1,4 @@
-package com.example.maunorafiq.pawangcuaca.usecase;
+package com.example.maunorafiq.pawangcuaca.mvp.usecase;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,8 +12,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
-import com.example.maunorafiq.pawangcuaca.Constant;
-import com.example.maunorafiq.pawangcuaca.usecase.contract.GetLocationContract;
+import com.example.maunorafiq.pawangcuaca.mvp.Constant;
+import com.example.maunorafiq.pawangcuaca.mvp.usecase.contract.GetLocationContract;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;

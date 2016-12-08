@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.maunorafiq.pawangcuaca.AndroidApplication;
-import com.example.maunorafiq.pawangcuaca.Constant;
+import com.example.maunorafiq.pawangcuaca.mvp.AndroidApplication;
+import com.example.maunorafiq.pawangcuaca.mvp.Constant;
 import com.example.maunorafiq.pawangcuaca.R;
 import com.example.maunorafiq.pawangcuaca.detail.adapter.ItemForecastAdapter;
 import com.example.maunorafiq.pawangcuaca.list.decorator.DividerItemDecoration;

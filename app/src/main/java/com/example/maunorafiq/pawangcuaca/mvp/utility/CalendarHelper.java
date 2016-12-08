@@ -1,4 +1,4 @@
-package com.example.maunorafiq.pawangcuaca.utility;
+package com.example.maunorafiq.pawangcuaca.mvp.utility;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

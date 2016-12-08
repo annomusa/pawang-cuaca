@@ -7,10 +7,10 @@ import android.util.Log;
 import com.example.maunorafiq.pawangcuaca.base.BasePresenterImpl;
 import com.example.maunorafiq.pawangcuaca.di.CustomScope;
 import com.example.maunorafiq.pawangcuaca.model.reamldb.RealmCity;
-import com.example.maunorafiq.pawangcuaca.service.RestApi;
-import com.example.maunorafiq.pawangcuaca.usecase.GetLocation;
-import com.example.maunorafiq.pawangcuaca.usecase.contract.GetLocationContract;
-import com.example.maunorafiq.pawangcuaca.usecase.GetWeather;
+import com.example.maunorafiq.pawangcuaca.mvp.service.RestApi;
+import com.example.maunorafiq.pawangcuaca.mvp.usecase.GetLocation;
+import com.example.maunorafiq.pawangcuaca.mvp.usecase.contract.GetLocationContract;
+import com.example.maunorafiq.pawangcuaca.mvp.usecase.GetWeather;
 
 import javax.inject.Inject;
 

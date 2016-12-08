@@ -1,4 +1,4 @@
-package com.example.maunorafiq.pawangcuaca;
+package com.example.maunorafiq.pawangcuaca.mvp;
 
 /**
  * Created by maunorafiq on 10/28/16.

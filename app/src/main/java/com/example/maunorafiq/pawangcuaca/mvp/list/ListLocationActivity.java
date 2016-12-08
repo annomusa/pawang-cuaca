@@ -18,13 +18,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.maunorafiq.pawangcuaca.AndroidApplication;
-import com.example.maunorafiq.pawangcuaca.Constant;
+import com.example.maunorafiq.pawangcuaca.mvp.AndroidApplication;
+import com.example.maunorafiq.pawangcuaca.mvp.Constant;
 import com.example.maunorafiq.pawangcuaca.R;
 import com.example.maunorafiq.pawangcuaca.detail.DetailActivity;
 import com.example.maunorafiq.pawangcuaca.list.adapter.ItemListAdapter;
 import com.example.maunorafiq.pawangcuaca.list.decorator.DividerItemDecoration;
-import com.example.maunorafiq.pawangcuaca.usecase.GetWeather;
+import com.example.maunorafiq.pawangcuaca.mvp.usecase.GetWeather;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
