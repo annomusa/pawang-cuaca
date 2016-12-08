@@ -9,6 +9,7 @@ buildscript {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -28,9 +29,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
 }
-
-
 
 dependencies {
     def domainDependencies = rootProject.ext.domainDependencies
@@ -40,4 +42,16 @@ dependencies {
     compile domainDependencies.rxJava
     compile domainDependencies.rxAndroid
 
+    compile domainDependencies.dagger
+    kapt domainDependencies.daggerCompiler
+    provided domainDependencies.javaxAnnotation
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+}
+repositories {
+    mavenCentral()
+}
+kapt {
+    generateStubs = true
 }

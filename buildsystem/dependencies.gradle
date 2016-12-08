@@ -84,7 +84,9 @@ ext {
             javaxAnnotation:    "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
             javaxInject:        "javax.inject:javax.inject:${javaxInjectVersion}",
             rxJava:             "io.reactivex:rxjava:${rxJavaVersion}",
-            rxAndroid:          "io.reactivex:rxandroid:${rxAndroidVersion}"
+            rxAndroid:          "io.reactivex:rxandroid:${rxAndroidVersion}",
+            daggerCompiler:     "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger:             "com.google.dagger:dagger:${daggerVersion}",
     ]
 
     dataDependencies = [
@@ -99,7 +101,7 @@ ext {
             androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
             retrofit:           "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             retrofitConverter:  "com.squareup.retrofit2:converter-gson:${retrofitConverterVersion}",
-            retrofitAdapterRx:  "com.squareup.retrofit2:adapter-rxjava:${retrofitAdapterRxVersion}"
+            retrofitAdapterRx:  "com.squareup.retrofit2:adapter-rxjava:${retrofitAdapterRxVersion}",
     ]
 
 }
