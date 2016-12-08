@@ -18,7 +18,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -72,14 +72,17 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ItemVi
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder{
-        @Bind(R.id.tvDayForecast) TextView tvDayForecast;
-        @Bind(R.id.tvTimeForecast) TextView tvTimeForecast;
-        @Bind(R.id.tvMainWeather) TextView tvMainWeather;
-        @Bind(R.id.ivIconForecast) ImageView ivIconForecast;
+        @BindView(R.id.tvDayForecast) TextView tvDayForecast;
+        @BindView(R.id.tvTimeForecast) TextView tvTimeForecast;
+        @BindView(R.id.tvMainWeather) TextView tvMainWeather;
+        @BindView(R.id.ivIconForecast) ImageView ivIconForecast;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            tvDayForecast = (TextView) itemView.findViewById(R.id.tvDayForecast);
+            tvTimeForecast = (TextView) itemView.findViewById(R.id.tvTimeForecast);
+            tvMainWeather = (TextView) itemView.findViewById(R.id.tvMainWeather);
+            ivIconForecast = (ImageView) itemView.findViewById(R.id.ivIconForecast);
         }
     }
 }

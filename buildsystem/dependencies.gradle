@@ -20,7 +20,7 @@ ext {
     javaxInjectVersion = '1'
 
     // ButterKnife
-    butterKnifeVersion = '7.0.1'
+    butterKnifeVersion = '8.4.0'
 
     // Rx Java
     rxJavaVersion = '1.0.14'
@@ -62,6 +62,7 @@ ext {
 
             // ButterKnife
             butterKnife:        "com.jakewharton:butterknife:${butterKnifeVersion}",
+            butterAnnotation:   "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
 
             // RxJava
             rxJava:             "io.reactivex:rxjava:${rxJavaVersion}",

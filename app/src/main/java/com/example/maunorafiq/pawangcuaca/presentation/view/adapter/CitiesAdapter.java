@@ -18,9 +18,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 /**
  * Created by maunorafiq on 11/8/16.
  */
@@ -128,14 +125,17 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ItemViewHo
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_location) TextView tvLocation;
-        @Bind(R.id.tv_location_temperature) TextView tvTemperature;
-        @Bind(R.id.tv_location_last_checked) TextView tvLastChecked;
-        @Bind(R.id.image_weather) ImageView ivTemperature;
+        TextView tvLocation;
+        TextView tvTemperature;
+        TextView tvLastChecked;
+        ImageView ivTemperature;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            tvLocation = (TextView) itemView.findViewById(R.id.tv_location);
+            tvTemperature = (TextView) itemView.findViewById(R.id.tv_location_temperature);
+            tvLastChecked = (TextView) itemView.findViewById(R.id.tv_location_last_checked);
+            ivTemperature = (ImageView) itemView.findViewById(R.id.image_weather);
         }
     }
 }

@@ -24,7 +24,7 @@ import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -39,21 +39,35 @@ public class ForecastFragment extends BaseFragment implements ForecastView {
     @Inject ForecastPresenter forecastPresenter;
     @Inject ForecastAdapter forecastAdapter;
 
-    @Bind(R.id.rl_forecast) RelativeLayout rlForecast;
-
-    @Bind(R.id.tvPressureVal) TextView tvPressureVal;
-    @Bind(R.id.tvHumidityVal) TextView tvHumidityVal;
-    @Bind(R.id.tvTemperatureVal) TextView tvTemperatureVal;
-    @Bind(R.id.ivIcon) ImageView ivWeatherIcon;
-    @Bind(R.id.tvDescription) TextView tvWeatherDescription;
-    @Bind(R.id.tvLocation) TextView tvLocation;
-    @Bind(R.id.rvWeatherForecast) RecyclerView rvForecastList;
-    @Bind(R.id.rl_progress) RelativeLayout rlProgress;
-    @Bind(R.id.rl_retry) RelativeLayout rlRetry;
-    @Bind(R.id.bt_retry) Button btnRetry;
+    RelativeLayout rlForecast;
+    TextView tvPressureVal;
+    TextView tvHumidityVal;
+    TextView tvTemperatureVal;
+    ImageView ivWeatherIcon;
+    TextView tvWeatherDescription;
+    TextView tvLocation;
+    RecyclerView rvForecastList;
+    RelativeLayout rlProgress;
+    RelativeLayout rlRetry;
+    Button btnRetry;
 
     public ForecastFragment() {
         setRetainInstance(true);
+    }
+
+    private void findViewById(View fragmentView) {
+        rlForecast = (RelativeLayout) fragmentView.findViewById(R.id.rl_forecast);
+        tvPressureVal = (TextView) fragmentView.findViewById(R.id.tvPressureVal);
+        tvHumidityVal = (TextView) fragmentView.findViewById(R.id.tvHumidityVal);
+        tvTemperatureVal = (TextView) fragmentView.findViewById(R.id.tvTemperatureVal);
+        ivWeatherIcon = (ImageView) fragmentView.findViewById(R.id.ivIcon);
+        tvWeatherDescription = (TextView) fragmentView.findViewById(R.id.tvDescription);
+        tvLocation = (TextView) fragmentView.findViewById(R.id.tvLocation);
+        rvForecastList = (RecyclerView) fragmentView.findViewById(R.id.rvWeatherForecast);
+        rlProgress = (RelativeLayout) fragmentView.findViewById(R.id.rl_progress);
+        rlRetry = (RelativeLayout) fragmentView.findViewById(R.id.rl_retry);
+        btnRetry = (Button) fragmentView.findViewById(R.id.bt_retry);
+        btnRetry.setOnClickListener(v -> loadForecast());
     }
 
     @Override
@@ -67,6 +81,7 @@ public class ForecastFragment extends BaseFragment implements ForecastView {
                              Bundle savedInstanceState) {
         final View fragmentView = inflater.inflate(R.layout.fragment_forecast, container, false);
         ButterKnife.bind(this, fragmentView);
+        findViewById(fragmentView);
         setUpRecyclerView();
         return fragmentView;
     }
@@ -94,7 +109,6 @@ public class ForecastFragment extends BaseFragment implements ForecastView {
     public void onDestroyView() {
         super.onDestroyView();
         rvForecastList.setAdapter(null);
-        ButterKnife.unbind(this);
     }
 
     @Override
@@ -160,10 +174,5 @@ public class ForecastFragment extends BaseFragment implements ForecastView {
             String city = getArguments().getString("city", "Amsterdam");
             forecastPresenter.initialize(city);
         }
-    }
-
-    @OnClick(R.id.bt_retry)
-    void onButtonRetryClick() {
-        loadForecast();
     }
 }

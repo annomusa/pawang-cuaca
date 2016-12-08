@@ -2,11 +2,12 @@ package com.icehousecorp.maunorafiq.data.city.entity;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by maunorafiq on 12/1/16.
  */
-
+@RealmClass
 public class CityEntity extends RealmObject {
 
     @PrimaryKey

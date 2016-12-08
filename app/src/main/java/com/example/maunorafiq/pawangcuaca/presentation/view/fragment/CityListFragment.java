@@ -32,7 +32,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -55,16 +55,32 @@ public class CityListFragment extends BaseFragment implements CityListView {
     @Inject CitiesPresenter citiesPresenter;
     @Inject CitiesAdapter citiesAdapter;
 
-    @Bind(R.id.rv_city_list) RecyclerView rvCityList;
-    @Bind(R.id.srl_content_list_location) SwipeRefreshLayout swipeRefreshLayout;
-    @Bind(R.id.rl_progress) RelativeLayout rlProgress;
-    @Bind(R.id.fab_add_city) FloatingActionButton fabAddCity;
+    RecyclerView rvCityList;
+    SwipeRefreshLayout swipeRefreshLayout;
+    RelativeLayout rlProgress;
+    FloatingActionButton fabAddCity;
 
     private CityListListener cityListListener;
     private final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 123;
 
     public CityListFragment() {
         setRetainInstance(true);
+    }
+
+    private void findViewById(View fragmentView) {
+        rvCityList = (RecyclerView) fragmentView.findViewById(R.id.rv_city_list);
+        swipeRefreshLayout = (SwipeRefreshLayout) fragmentView.findViewById(R.id.srl_content_list_location);
+        rlProgress = (RelativeLayout) fragmentView.findViewById(R.id.rl_progress);
+        fabAddCity = (FloatingActionButton) fragmentView.findViewById(R.id.fab_add_city);
+        fabAddCity.setOnClickListener(v -> {
+            try {
+                Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                        .build(getActivity());
+                startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+            } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+                Log.d(TAG, e.getMessage());
+            }
+        });
     }
 
     @Override
@@ -86,6 +102,7 @@ public class CityListFragment extends BaseFragment implements CityListView {
                              Bundle savedInstanceState) {
         final View fragmentView = inflater.inflate(R.layout.activity_list_location, container, false);
         ButterKnife.bind(this, fragmentView);
+        findViewById(fragmentView);
         setUpRecyclerView();
         setUpRefreshLayout();
         return fragmentView;
@@ -114,7 +131,6 @@ public class CityListFragment extends BaseFragment implements CityListView {
     public void onDestroyView() {
         super.onDestroyView();
         rvCityList.setAdapter(null);
-        ButterKnife.unbind(this);
     }
 
     @Override
@@ -196,27 +212,11 @@ public class CityListFragment extends BaseFragment implements CityListView {
         citiesPresenter.initialize();
     }
 
-    @OnClick(R.id.bt_retry)
-    void onButtonRetryClick() {
-        loadCityList();
-    }
-
     private CitiesAdapter.OnItemClickListener onItemClickListener = cityModel -> {
         if (citiesPresenter != null && cityModel!= null) {
             citiesPresenter.onCityClicked(cityModel);
         }
     };
-
-    @OnClick(R.id.fab_add_city)
-    void setOnFabClick() {
-        try {
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                    .build(getActivity());
-            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
-            Log.d(TAG, e.getMessage());
-        }
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

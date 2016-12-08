@@ -23,6 +23,6 @@ interface ApplicationComponent {
 
     fun context(): Context
     fun weatherRepository(): WeatherRepository
-    fun forecastRepositoy(): ForecastRepository
+    fun forecastRepository(): ForecastRepository
     fun cityRepository(): CityRepository
 }
