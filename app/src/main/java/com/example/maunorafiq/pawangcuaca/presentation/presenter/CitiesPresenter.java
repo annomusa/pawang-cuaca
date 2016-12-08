@@ -133,9 +133,9 @@ public class CitiesPresenter implements Presenter {
 
         @Override
         public void onError(Throwable e) {
-            showViewError(e.getMessage());
             hideViewLoading();
             showViewRetry();
+            showViewError(e.getMessage());
         }
 
         @Override
@@ -156,6 +156,8 @@ public class CitiesPresenter implements Presenter {
 
         @Override
         public void onError(Throwable e) {
+            hideViewLoading();
+            showViewRetry();
             showViewError(e.getMessage());
         }
 

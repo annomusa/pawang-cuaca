@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.maunorafiq.pawangcuaca.R;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.component.WeatherComponent;
@@ -57,8 +58,6 @@ public class CityListFragment extends BaseFragment implements CityListView {
     @Bind(R.id.rv_city_list) RecyclerView rvCityList;
     @Bind(R.id.srl_content_list_location) SwipeRefreshLayout swipeRefreshLayout;
     @Bind(R.id.rl_progress) RelativeLayout rlProgress;
-    @Bind(R.id.rl_retry) RelativeLayout rlRetry;
-    @Bind(R.id.bt_retry) Button btnRetry;
     @Bind(R.id.fab_add_city) FloatingActionButton fabAddCity;
 
     private CityListListener cityListListener;
@@ -88,6 +87,7 @@ public class CityListFragment extends BaseFragment implements CityListView {
         final View fragmentView = inflater.inflate(R.layout.activity_list_location, container, false);
         ButterKnife.bind(this, fragmentView);
         setUpRecyclerView();
+        setUpRefreshLayout();
         return fragmentView;
     }
 
@@ -137,17 +137,16 @@ public class CityListFragment extends BaseFragment implements CityListView {
     @Override
     public void hideLoading() {
         rlProgress.setVisibility(View.GONE);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void showRetry() {
-        rlRetry.setVisibility(View.VISIBLE);
+        Toast.makeText(context(), "Error Occur\nSwipe Down To Reload!", Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void hideRetry() {
-        rlRetry.setVisibility(View.GONE);
-    }
+    public void hideRetry() { }
 
     @Override
     public void renderCityList(List<CityModel> cityModelList) {
@@ -187,6 +186,10 @@ public class CityListFragment extends BaseFragment implements CityListView {
         citiesAdapter.setOnItemClickListener(onItemClickListener);
         rvCityList.setLayoutManager(new CitiesLayoutManager(context()));
         rvCityList.setAdapter(citiesAdapter);
+    }
+
+    private void setUpRefreshLayout() {
+        swipeRefreshLayout.setOnRefreshListener(this::loadCityList);
     }
 
     private void loadCityList() {

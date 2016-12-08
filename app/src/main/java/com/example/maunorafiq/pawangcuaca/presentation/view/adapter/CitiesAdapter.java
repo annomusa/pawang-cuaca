@@ -14,8 +14,6 @@ import com.example.maunorafiq.pawangcuaca.presentation.model.WeatherModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -62,10 +60,10 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ItemViewHo
         final CityModel cityModel = cityModelList.get(position);
 
         holder.tvLocation.setText(cityModel.getCityName());
-        holder.tvLastChecked.setText("Last checked : today");
         if (cityModel.getWeatherModel() != null) {
             final WeatherModel weatherModel = cityModel.getWeatherModel();
 
+            holder.tvLastChecked.setText(weatherModel.getWeatherName());
             holder.tvTemperature.setText(weatherModel.getTemperature());
             Picasso.with(context).load(weatherModel.getWeatherIcon()).into(holder.ivTemperature);
         } else {
@@ -85,13 +83,35 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ItemViewHo
     }
 
     public void setCityModelList(List<CityModel> cityModelList) {
-        if (cityModelList != null) this.cityModelList.addAll(cityModelList);
+        boolean isContain = false;
+        for (CityModel cityModel : cityModelList) {
+            for (CityModel cityModel1 : this.cityModelList) {
+                if (cityModel.getCityName().equals(cityModel1.getCityName())){
+                    isContain = true;
+                    break;
+                }
+            }
+
+            if (!isContain) {
+                this.cityModelList.add(cityModel);
+            }
+        }
+
         notifyDataSetChanged();
     }
 
     public void addNewCity(CityModel cityModel) {
-        cityModelList.add(cityModel);
-        notifyDataSetChanged();
+        boolean isContain = false;
+        for (CityModel cityModel1 : cityModelList) {
+            if (cityModel1.getCityName().equals(cityModel.getCityName())){
+                isContain = true;
+                break;
+            }
+        }
+        if (!isContain){
+            cityModelList.add(cityModel);
+            notifyDataSetChanged();
+        }
     }
 
     public void updateCityModel(WeatherModel weatherModel) {

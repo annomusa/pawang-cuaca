@@ -40,6 +40,7 @@ public class ForecastFragment extends BaseFragment implements ForecastView {
     @Inject ForecastAdapter forecastAdapter;
 
     @Bind(R.id.rl_forecast) RelativeLayout rlForecast;
+
     @Bind(R.id.tvPressureVal) TextView tvPressureVal;
     @Bind(R.id.tvHumidityVal) TextView tvHumidityVal;
     @Bind(R.id.tvTemperatureVal) TextView tvTemperatureVal;
