@@ -10,9 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.maunorafiq.pawangcuaca.R;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.component.WeatherComponent;
@@ -31,10 +29,6 @@ import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -101,7 +95,6 @@ public class CityListFragment extends BaseFragment implements CityListView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View fragmentView = inflater.inflate(R.layout.activity_list_location, container, false);
-        ButterKnife.bind(this, fragmentView);
         findViewById(fragmentView);
         setUpRecyclerView();
         setUpRefreshLayout();
@@ -158,7 +151,7 @@ public class CityListFragment extends BaseFragment implements CityListView {
 
     @Override
     public void showRetry() {
-        Toast.makeText(context(), "Error Occur\nSwipe Down To Reload!", Toast.LENGTH_LONG).show();
+        showToastMessage("Error Occur\nSwipe Down To Reload!");
     }
 
     @Override

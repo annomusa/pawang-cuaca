@@ -35,9 +35,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    dexOptions {
-        incremental false
-    }
 
     lintOptions {
         quiet true
