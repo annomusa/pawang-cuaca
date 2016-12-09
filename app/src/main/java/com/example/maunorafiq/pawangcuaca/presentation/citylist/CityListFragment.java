@@ -1,4 +1,4 @@
-package com.example.maunorafiq.pawangcuaca.presentation.view.fragment;
+package com.example.maunorafiq.pawangcuaca.presentation.citylist;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,18 +10,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.maunorafiq.pawangcuaca.R;
+import com.example.maunorafiq.pawangcuaca.presentation.base.BaseFragment;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.component.WeatherComponent;
 import com.example.maunorafiq.pawangcuaca.presentation.model.CityModel;
 import com.example.maunorafiq.pawangcuaca.presentation.model.WeatherModel;
-import com.example.maunorafiq.pawangcuaca.presentation.presenter.CitiesPresenter;
-import com.example.maunorafiq.pawangcuaca.presentation.view.CityListView;
-import com.example.maunorafiq.pawangcuaca.presentation.view.adapter.CitiesAdapter;
-import com.example.maunorafiq.pawangcuaca.presentation.view.adapter.CitiesLayoutManager;
+import com.example.maunorafiq.pawangcuaca.presentation.citylist.adapter.CitiesAdapter;
+import com.example.maunorafiq.pawangcuaca.presentation.citylist.adapter.CitiesLayoutManager;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
@@ -52,7 +50,8 @@ public class CityListFragment extends BaseFragment implements CityListView {
         void onCityClicked(final CityModel cityModel);
     }
 
-    @Inject CitiesPresenter citiesPresenter;
+    @Inject
+    CityListPresenter cityListPresenter;
     @Inject CitiesAdapter citiesAdapter;
 
     @Bind(R.id.rv_city_list) RecyclerView rvCityList;
@@ -94,20 +93,20 @@ public class CityListFragment extends BaseFragment implements CityListView {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        citiesPresenter.setView(this);
+        cityListPresenter.setView(this);
         loadCityList();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        citiesPresenter.resume();
+        cityListPresenter.resume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        citiesPresenter.pause();
+        cityListPresenter.pause();
     }
 
     @Override
@@ -120,7 +119,7 @@ public class CityListFragment extends BaseFragment implements CityListView {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        citiesPresenter.destroy();
+        cityListPresenter.destroy();
     }
 
     @Override
@@ -193,7 +192,7 @@ public class CityListFragment extends BaseFragment implements CityListView {
     }
 
     private void loadCityList() {
-        citiesPresenter.initialize();
+        cityListPresenter.initialize();
     }
 
     @OnClick(R.id.bt_retry)
@@ -202,8 +201,8 @@ public class CityListFragment extends BaseFragment implements CityListView {
     }
 
     private CitiesAdapter.OnItemClickListener onItemClickListener = cityModel -> {
-        if (citiesPresenter != null && cityModel!= null) {
-            citiesPresenter.onCityClicked(cityModel);
+        if (cityListPresenter != null && cityModel!= null) {
+            cityListPresenter.onCityClicked(cityModel);
         }
     };
 
@@ -224,7 +223,7 @@ public class CityListFragment extends BaseFragment implements CityListView {
             case PLACE_AUTOCOMPLETE_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
                     Place place = PlaceAutocomplete.getPlace(context(), data);
-                    citiesPresenter.addCity(place.getName().toString());
+                    cityListPresenter.addCity(place.getName().toString());
                 } else if (resultCode == RESULT_ERROR) {
                     Status status = PlaceAutocomplete.getStatus(context(), data);
                     Log.d(TAG, "onActivityResult: " + status.toString());

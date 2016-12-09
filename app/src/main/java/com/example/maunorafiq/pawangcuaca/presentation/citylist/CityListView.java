@@ -1,9 +1,9 @@
-package com.example.maunorafiq.pawangcuaca.presentation.view;
+package com.example.maunorafiq.pawangcuaca.presentation.citylist;
 
 import com.example.maunorafiq.pawangcuaca.presentation.model.CityModel;
 import com.example.maunorafiq.pawangcuaca.presentation.model.WeatherModel;
+import com.example.maunorafiq.pawangcuaca.presentation.base.LoadDataView;
 
-import java.util.Collection;
 import java.util.List;
 
 /**

@@ -3,8 +3,8 @@ package com.example.maunorafiq.pawangcuaca.presentation.navigation;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.maunorafiq.pawangcuaca.presentation.view.activity.ForecastActivity;
-import com.example.maunorafiq.pawangcuaca.presentation.view.activity.CityListActivity;
+import com.example.maunorafiq.pawangcuaca.presentation.forecast.ForecastActivity;
+import com.example.maunorafiq.pawangcuaca.presentation.citylist.CityListActivity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

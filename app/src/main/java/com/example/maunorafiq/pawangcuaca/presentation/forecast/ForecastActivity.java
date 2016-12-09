@@ -1,17 +1,16 @@
-package com.example.maunorafiq.pawangcuaca.presentation.view.activity;
+package com.example.maunorafiq.pawangcuaca.presentation.forecast;
 
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.maunorafiq.pawangcuaca.R;
+import com.example.maunorafiq.pawangcuaca.presentation.base.BaseActivity;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.HasComponent;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.component.DaggerWeatherComponent;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.component.WeatherComponent;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.module.WeatherModule;
-import com.example.maunorafiq.pawangcuaca.presentation.view.fragment.ForecastFragment;
 
 /**
  * Created by maunorafiq on 11/29/16.

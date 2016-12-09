@@ -1,14 +1,13 @@
-package com.example.maunorafiq.pawangcuaca.presentation.presenter;
+package com.example.maunorafiq.pawangcuaca.presentation.forecast;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.PerActivity;
 import com.example.maunorafiq.pawangcuaca.presentation.mapper.ForecastModelDataMapper;
 import com.example.maunorafiq.pawangcuaca.presentation.mapper.WeatherModelDataMapper;
 import com.example.maunorafiq.pawangcuaca.presentation.model.ForecastModel;
 import com.example.maunorafiq.pawangcuaca.presentation.model.WeatherModel;
-import com.example.maunorafiq.pawangcuaca.presentation.view.ForecastView;
+import com.example.maunorafiq.pawangcuaca.presentation.base.Presenter;
 import com.icehousecorp.maunorafiq.domain.forecast.Forecast;
 import com.icehousecorp.maunorafiq.domain.forecast.interactor.GetForecast;
 import com.icehousecorp.maunorafiq.domain.weather.Weather;

@@ -1,4 +1,4 @@
-package com.example.maunorafiq.pawangcuaca.presentation.presenter;
+package com.example.maunorafiq.pawangcuaca.presentation.citylist;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -7,14 +7,13 @@ import com.example.maunorafiq.pawangcuaca.presentation.internal.di.PerActivity;
 import com.example.maunorafiq.pawangcuaca.presentation.mapper.CityModelDataMapper;
 import com.example.maunorafiq.pawangcuaca.presentation.mapper.WeatherModelDataMapper;
 import com.example.maunorafiq.pawangcuaca.presentation.model.CityModel;
-import com.example.maunorafiq.pawangcuaca.presentation.view.CityListView;
+import com.example.maunorafiq.pawangcuaca.presentation.base.Presenter;
 import com.icehousecorp.maunorafiq.domain.city.City;
 import com.icehousecorp.maunorafiq.domain.city.interactor.GetCity;
 import com.icehousecorp.maunorafiq.domain.weather.Weather;
 import com.icehousecorp.maunorafiq.domain.weather.interactor.GetWeather;
 import com.icehousecorp.maunorafiq.domain.city.interactor.PutCity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,7 +25,7 @@ import rx.Subscriber;
  */
 
 @PerActivity
-public class CitiesPresenter implements Presenter {
+public class CityListPresenter implements Presenter {
 
     private final String TAG = this.getClass().getSimpleName();
 
@@ -39,11 +38,11 @@ public class CitiesPresenter implements Presenter {
     private final WeatherModelDataMapper weatherModelDataMapper;
 
     @Inject
-    public CitiesPresenter(GetWeather getWeatherUseCase,
-                           PutCity putCityUseCase,
-                           GetCity getCityUseCase,
-                           CityModelDataMapper cityModelDataMapper,
-                           WeatherModelDataMapper weatherModelDataMapper) {
+    public CityListPresenter(GetWeather getWeatherUseCase,
+                             PutCity putCityUseCase,
+                             GetCity getCityUseCase,
+                             CityModelDataMapper cityModelDataMapper,
+                             WeatherModelDataMapper weatherModelDataMapper) {
         this.getWeatherUseCase = getWeatherUseCase;
         this.putCityUseCase = putCityUseCase;
         this.getCityUseCase = getCityUseCase;

@@ -1,4 +1,4 @@
-package com.example.maunorafiq.pawangcuaca.presentation.view.fragment;
+package com.example.maunorafiq.pawangcuaca.presentation.base;
 
 import android.app.Fragment;
 import android.widget.Toast;

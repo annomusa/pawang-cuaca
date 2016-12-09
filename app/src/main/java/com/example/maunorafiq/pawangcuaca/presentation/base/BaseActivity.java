@@ -1,10 +1,9 @@
-package com.example.maunorafiq.pawangcuaca.presentation.view.activity;
+package com.example.maunorafiq.pawangcuaca.presentation.base;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 
 import com.example.maunorafiq.pawangcuaca.presentation.AndroidApplication;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.component.ApplicationComponent;
@@ -19,7 +18,7 @@ import javax.inject.Inject;
 
 public class BaseActivity extends Activity {
 
-    @Inject Navigator navigator;
+    @Inject public Navigator navigator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -1,9 +1,8 @@
-package com.example.maunorafiq.pawangcuaca.presentation.view.fragment;
+package com.example.maunorafiq.pawangcuaca.presentation.forecast;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +12,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.maunorafiq.pawangcuaca.R;
+import com.example.maunorafiq.pawangcuaca.presentation.base.BaseFragment;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.component.WeatherComponent;
 import com.example.maunorafiq.pawangcuaca.presentation.model.ForecastModel;
 import com.example.maunorafiq.pawangcuaca.presentation.model.WeatherModel;
-import com.example.maunorafiq.pawangcuaca.presentation.presenter.ForecastPresenter;
-import com.example.maunorafiq.pawangcuaca.presentation.view.ForecastView;
-import com.example.maunorafiq.pawangcuaca.presentation.view.adapter.ForecastAdapter;
-import com.example.maunorafiq.pawangcuaca.presentation.view.adapter.ForecastLayoutManager;
+import com.example.maunorafiq.pawangcuaca.presentation.forecast.adapter.ForecastAdapter;
+import com.example.maunorafiq.pawangcuaca.presentation.forecast.adapter.ForecastLayoutManager;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
