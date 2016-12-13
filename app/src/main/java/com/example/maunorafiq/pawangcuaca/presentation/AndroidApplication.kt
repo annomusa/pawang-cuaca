@@ -15,8 +15,7 @@ import io.realm.RealmConfiguration
 
 class AndroidApplication : Application() {
 
-    var applicationComponent: ApplicationComponent? = null
-        private set
+    lateinit var applicationComponent: ApplicationComponent
 
     override fun onCreate() {
         super.onCreate()

@@ -5,5 +5,5 @@ package com.example.maunorafiq.pawangcuaca.presentation.internal.di
  */
 
 interface HasComponent<C> {
-    val component: C
+    val component: C?
 }
