@@ -50,8 +50,7 @@ public class CityListFragment extends BaseFragment implements CityListView {
         void onCityClicked(final CityModel cityModel);
     }
 
-    @Inject
-    CityListPresenter cityListPresenter;
+    @Inject CityListPresenter cityListPresenter;
     @Inject CitiesAdapter citiesAdapter;
 
     @Bind(R.id.rv_city_list) RecyclerView rvCityList;

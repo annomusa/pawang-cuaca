@@ -57,6 +57,6 @@ public class ForecastActivity extends BaseActivity implements HasComponent<Weath
 
     @Override
     public WeatherComponent getComponent() {
-        return this.weatherComponent;
+        return weatherComponent;
     }
 }
