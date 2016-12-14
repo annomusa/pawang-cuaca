@@ -16,7 +16,7 @@ interface LoadDataView {
 
     fun hideRetry()
 
-    fun showError(message: String?)
+    fun showError(message: String)
 
     fun context(): Context
 }

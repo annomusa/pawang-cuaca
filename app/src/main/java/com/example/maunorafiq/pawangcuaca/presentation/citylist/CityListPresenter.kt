@@ -65,7 +65,7 @@ constructor(private val getWeatherUseCase: GetWeather,
     }
 
     fun addCity(city: String) {
-        cityListView!!.addNewCity(CityModel(city))
+        cityListView?.addNewCity(CityModel(city))
         fetchWeather(city)
     }
 
@@ -75,35 +75,35 @@ constructor(private val getWeatherUseCase: GetWeather,
     }
 
     fun onCityClicked(cityModel: CityModel) {
-        cityListView!!.viewCity(cityModel)
+        cityListView?.viewCity(cityModel)
     }
 
     private fun showViewLoading() {
-        cityListView!!.showLoading()
+        cityListView?.showLoading()
     }
 
     private fun hideViewLoading() {
-        cityListView!!.hideLoading()
+        cityListView?.hideLoading()
     }
 
     private fun showViewRetry() {
-        cityListView!!.showRetry()
+        cityListView?.showRetry()
     }
 
     private fun hideViewRetry() {
-        cityListView!!.hideRetry()
+        cityListView?.hideRetry()
     }
 
-    private fun showViewError(message: String?) {
-        cityListView!!.showError(message)
+    private fun showViewError(message: String) {
+        cityListView?.showError(message)
     }
 
     private fun showListCityInView(cityList: List<City>) {
-        cityListView!!.renderCityList(cityModelDataMapper.transform(cityList))
+        cityListView?.renderCityList(cityModelDataMapper.transform(cityList))
     }
 
     private fun updateCityWeatherInVIew(weather: Weather) {
-        cityListView!!.updateCity(weatherModelDataMapper.transform(weather))
+        cityListView?.updateCity(weatherModelDataMapper.transform(weather))
     }
 
     private fun getListWeather() {
@@ -118,17 +118,17 @@ constructor(private val getWeatherUseCase: GetWeather,
         override fun onError(e: Throwable) {
             hideViewLoading()
             showViewRetry()
-            showViewError(e.message)
+            showViewError(e.message ?: "Error Unknown")
         }
 
         override fun onNext(t: Any?) {
             if (t != null) {
-                val cities = t as List<City>
-                for (city in cities) {
+                @SuppressWarnings("unchecked")
+                for (city in t as List<City>) {
                     getWeatherUseCase.setCity(city.cityName)
                     getWeatherUseCase.execute(WeatherSubscriber())
                 }
-                showListCityInView(cities)
+                showListCityInView(t)
             }
         }
     }
@@ -141,13 +141,12 @@ constructor(private val getWeatherUseCase: GetWeather,
         override fun onError(e: Throwable) {
             hideViewLoading()
             showViewRetry()
-            showViewError(e.message)
+            showViewError(e.message ?: "Error Unknown")
         }
 
         override fun onNext(t: Any?) {
             if (t != null) {
-                val weather = t as Weather
-                updateCityWeatherInVIew(weather)
+                updateCityWeatherInVIew(t as Weather)
             }
         }
     }

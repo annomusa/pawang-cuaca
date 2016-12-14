@@ -22,8 +22,6 @@ import com.squareup.picasso.Picasso
 
 import javax.inject.Inject
 
-import butterknife.ButterKnife
-
 /**
  * Created by maunorafiq on 11/29/16.
  */
@@ -74,7 +72,6 @@ class ForecastFragment : BaseFragment(), ForecastView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val fragmentView = inflater.inflate(R.layout.fragment_forecast, container, false)
-        ButterKnife.bind(this, fragmentView)
         findViewById(fragmentView)
         setUpRecyclerView()
         return fragmentView
@@ -137,7 +134,7 @@ class ForecastFragment : BaseFragment(), ForecastView {
         rlProgress.visibility = View.GONE
     }
 
-    override fun showError(message: String?) {
+    override fun showError(message: String) {
     }
 
     override fun context(): Context {

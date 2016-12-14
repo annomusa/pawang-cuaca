@@ -60,31 +60,31 @@ constructor(private val getForecastUseCase: GetForecast,
     }
 
     private fun showViewLoading() {
-        forecastView!!.showLoading()
+        forecastView?.showLoading()
     }
 
     private fun hideViewLoading() {
-        forecastView!!.hideLoading()
+        forecastView?.hideLoading()
     }
 
     private fun showViewRetry() {
-        forecastView!!.showRetry()
+        forecastView?.showRetry()
     }
 
     private fun hideViewRetry() {
-        forecastView!!.hideRetry()
+        forecastView?.hideRetry()
     }
 
-    private fun showViewError(message: String?) {
-        forecastView!!.showError(message)
+    private fun showViewError(message: String) {
+        forecastView?.showError(message)
     }
 
     private fun showForecastInView(forecastModel: ForecastModel) {
-        forecastView!!.renderForecastWeather(forecastModel)
+        forecastView?.renderForecastWeather(forecastModel)
     }
 
     private fun showForecastInView(weatherModel: WeatherModel) {
-        forecastView!!.renderForecastWeather(weatherModel)
+        forecastView?.renderForecastWeather(weatherModel)
     }
 
     private fun getForecast(city: String) {
@@ -101,7 +101,7 @@ constructor(private val getForecastUseCase: GetForecast,
         }
 
         override fun onError(e: Throwable) {
-            showViewError(e.message)
+            showViewError(e.message ?: "Error Unknown")
             hideViewLoading()
             showViewRetry()
         }
@@ -117,7 +117,7 @@ constructor(private val getForecastUseCase: GetForecast,
         }
 
         override fun onError(e: Throwable) {
-            showViewError(e.message)
+            showViewError(e.message ?: "Error Unknown")
             hideViewLoading()
             showViewRetry()
         }

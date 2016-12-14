@@ -160,8 +160,8 @@ class CityListFragment : BaseFragment(), CityListView {
         cityListAdapter.addNewCity(cityModel)
     }
 
-    override fun showError(message: String?) {
-        Log.d(TAG, "showError: " + message!!)
+    override fun showError(message: String) {
+        Log.d(TAG, "showError: " + message)
     }
 
     override fun context(): Context {
