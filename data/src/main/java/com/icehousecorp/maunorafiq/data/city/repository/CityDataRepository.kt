@@ -39,8 +39,5 @@ constructor(private val cityDataStoreFactory: CityDataStoreFactory,
         val result = listCityEntity.map { cityEntityDataMapper.transform(it) }
 
         return Observable.just(result)
-        //        return Observable.from(listCityEntity)
-        //                .map(cityEntityDataMapper::transform)
-        //                .toList();
     }
 }

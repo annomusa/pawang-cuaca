@@ -20,7 +20,7 @@ constructor(private val weatherModelDataMapper: WeatherModelDataMapper) {
     private val TAG = this.javaClass.simpleName
 
     fun transform(forecast: Forecast): ForecastModel {
-        val forecastModel = ForecastModel(forecast.cityName)
+        val forecastModel = ForecastModel(forecast.cityName ?: "Amsterdam")
         forecastModel.forecastList = weatherModelDataMapper.transform(forecast.forecastList)
         return forecastModel
     }

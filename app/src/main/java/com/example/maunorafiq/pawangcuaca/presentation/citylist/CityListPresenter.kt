@@ -110,7 +110,7 @@ constructor(private val getWeatherUseCase: GetWeather,
         getCityUseCase.execute(ListCitySubscriber())
     }
 
-    private inner class ListCitySubscriber : Subscriber<List<City>>() {
+    private inner class ListCitySubscriber : Subscriber<Any>() {
         override fun onCompleted() {
             hideViewLoading()
         }
@@ -121,16 +121,19 @@ constructor(private val getWeatherUseCase: GetWeather,
             showViewError(e.message)
         }
 
-        override fun onNext(cities: List<City>) {
-            for (city in cities) {
-                getWeatherUseCase.setCity(city.cityName)
-                getWeatherUseCase.execute(WeatherSubscriber())
+        override fun onNext(t: Any?) {
+            if (t != null) {
+                val cities = t as List<City>
+                for (city in cities) {
+                    getWeatherUseCase.setCity(city.cityName)
+                    getWeatherUseCase.execute(WeatherSubscriber())
+                }
+                showListCityInView(cities)
             }
-            showListCityInView(cities)
         }
     }
 
-    private inner class WeatherSubscriber : Subscriber<Weather>() {
+    private inner class WeatherSubscriber : Subscriber<Any>() {
         override fun onCompleted() {
             hideViewLoading()
         }
@@ -141,12 +144,11 @@ constructor(private val getWeatherUseCase: GetWeather,
             showViewError(e.message)
         }
 
-        override fun onNext(weather: Weather?) {
-            if (weather == null) {
-                Log.d(TAG, "Weather: City already in list")
-                return
+        override fun onNext(t: Any?) {
+            if (t != null) {
+                val weather = t as Weather
+                updateCityWeatherInVIew(weather)
             }
-            updateCityWeatherInVIew(weather)
         }
     }
 }

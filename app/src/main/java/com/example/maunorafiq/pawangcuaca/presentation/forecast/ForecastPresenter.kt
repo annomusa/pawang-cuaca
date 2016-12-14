@@ -95,7 +95,7 @@ constructor(private val getForecastUseCase: GetForecast,
         getWeatherUseCase.execute(WeatherSubscriber())
     }
 
-    private inner class ForecastSubscriber : Subscriber<Forecast>() {
+    private inner class ForecastSubscriber : Subscriber<Any>() {
         override fun onCompleted() {
             hideViewLoading()
         }
@@ -105,13 +105,13 @@ constructor(private val getForecastUseCase: GetForecast,
             hideViewLoading()
             showViewRetry()
         }
-
-        override fun onNext(forecast: Forecast) {
-            showForecastInView(forecastModelDataMapper.transform(forecast))
+        override fun onNext(t: Any?) {
+            if (t != null)
+                showForecastInView(forecastModelDataMapper.transform(t as Forecast))
         }
     }
 
-    private inner class WeatherSubscriber : Subscriber<Weather>() {
+    private inner class WeatherSubscriber : Subscriber<Any>() {
         override fun onCompleted() {
             hideViewLoading()
         }
@@ -122,8 +122,9 @@ constructor(private val getForecastUseCase: GetForecast,
             showViewRetry()
         }
 
-        override fun onNext(weather: Weather) {
-            showForecastInView(weatherModelDataMapper.transform(weather))
+        override fun onNext(t: Any?) {
+            if (t != null)
+                showForecastInView(weatherModelDataMapper.transform(t as Weather))
         }
     }
 }

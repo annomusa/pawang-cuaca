@@ -15,7 +15,7 @@ class CityEntityDataMapper
 constructor() {
 
     fun transform(cityEntity: CityEntity): City {
-        var city: City
+        val city: City
 
         city = City(cityEntity.cityName)
         city.ordinal = cityEntity.ordinal

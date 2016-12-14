@@ -17,7 +17,7 @@ open class CityEntity : RealmObject {
     constructor() {
     }
 
-    constructor(cityName: String) {
+    constructor(cityName: String?) {
         this.cityName = cityName
     }
 

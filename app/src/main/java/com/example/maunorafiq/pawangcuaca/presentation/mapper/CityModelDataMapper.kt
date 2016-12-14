@@ -18,7 +18,7 @@ class CityModelDataMapper
 constructor() {
 
     fun transform(city: City): CityModel {
-        val cityModel = CityModel(city.cityName)
+        val cityModel = CityModel(city.cityName ?: "Amsterdam")
         cityModel.ordinal = city.ordinal
 
         return cityModel
