@@ -38,6 +38,10 @@ android {
         multiDexEnabled true
     }
 
+    dexOptions {
+        incremental true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
