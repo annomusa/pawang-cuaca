@@ -27,6 +27,8 @@ class AndroidApplication : Application() {
         this.applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(ApplicationModule(this))
                 .build()
+        this.applicationComponent = DaggerApplicationComponent.builder()
+                .build()
     }
 
     private fun initializeRealm() {
