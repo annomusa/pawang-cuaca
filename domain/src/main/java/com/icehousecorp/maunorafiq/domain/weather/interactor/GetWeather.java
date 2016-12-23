@@ -13,7 +13,9 @@ import rx.Observable;
 
 public class GetWeather extends UseCase {
 
-    private String city = "Amsterdam";
+    private String city;
+    private Double lat;
+    private Double lon;
     private final WeatherRepository weatherRepository;
 
     @Inject
@@ -23,10 +25,19 @@ public class GetWeather extends UseCase {
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return this.weatherRepository.currentWeather(this.city);
+        if (this.city != null) return this.weatherRepository.currentWeather(this.city);
+        else return this.weatherRepository.currentWeather(lat, lon);
     }
 
     public void setCity(String city) {
         this.city = city;
+        this.lat = null;
+        this.lon = null;
+    }
+
+    public void setCoordinate(double lat, double lon) {
+        this.lat = lat;
+        this.lon = lon;
+        this.city = null;
     }
 }

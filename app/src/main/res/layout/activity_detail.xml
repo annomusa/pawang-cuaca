@@ -12,14 +12,6 @@
     tools:context="com.example.maunorafiq.pawangcuaca.detail.DetailActivity">
 
     <TextView
-        android:text="Pressure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvPressure"
-        android:layout_below="@+id/tvPressureVal"
-        android:layout_alignParentStart="true" />
-
-    <TextView
         android:text="1017.56 hPa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -101,20 +93,28 @@
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:text='30"C'
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvTemperatureVal"
-        android:textSize="90sp"
-        android:layout_below="@+id/tvDescription"
-        android:layout_alignParentStart="true" />
-
-    <TextView
         android:text="Loading . ."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvLocation"
         android:textSize="40sp"
         android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Pressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPressure"
+        android:layout_below="@+id/tvPressureVal"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text='30"C'
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTemperatureVal"
+        android:textSize="90sp"
+        android:layout_below="@+id/tvDescription"
         android:layout_alignParentStart="true" />
 </RelativeLayout>

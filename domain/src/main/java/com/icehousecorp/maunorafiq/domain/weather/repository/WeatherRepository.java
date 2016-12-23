@@ -11,4 +11,5 @@ import rx.Observable;
 public interface WeatherRepository {
     Observable<Weather> currentWeather(String city);
 
+    Observable<Weather> currentWeather(Double lat, Double lon);
 }

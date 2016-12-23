@@ -2,6 +2,8 @@ package com.example.maunorafiq.pawangcuaca.presentation.internal.di.module;
 
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.PerActivity;
 import com.icehousecorp.maunorafiq.domain.city.interactor.GetCity;
+import com.icehousecorp.maunorafiq.domain.gpslocation.interactor.GetGpsLocation;
+import com.icehousecorp.maunorafiq.domain.gpslocation.repository.GpsLocationRepository;
 import com.icehousecorp.maunorafiq.domain.weather.interactor.GetWeather;
 import com.icehousecorp.maunorafiq.domain.city.interactor.PutCity;
 import com.icehousecorp.maunorafiq.domain.city.repository.CityRepository;
@@ -44,5 +46,11 @@ public class WeatherModule {
     @PerActivity
     GetCity provideGetCityUseCase(CityRepository cityRepository) {
         return new GetCity(cityRepository);
+    }
+
+    @Provides
+    @PerActivity
+    GetGpsLocation provideGetGpsLocationUseCase(GpsLocationRepository gpsLocationRepository) {
+        return new GetGpsLocation(gpsLocationRepository);
     }
 }

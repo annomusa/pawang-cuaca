@@ -1,9 +1,16 @@
 package com.example.maunorafiq.pawangcuaca.presentation.citylist;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.maunorafiq.pawangcuaca.R;
 import com.example.maunorafiq.pawangcuaca.presentation.base.BaseFragment;
@@ -22,7 +28,11 @@ import com.example.maunorafiq.pawangcuaca.presentation.citylist.adapter.CitiesAd
 import com.example.maunorafiq.pawangcuaca.presentation.citylist.adapter.CitiesLayoutManager;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
@@ -59,7 +69,9 @@ public class CityListFragment extends BaseFragment implements CityListView {
     @Bind(R.id.fab_add_city) FloatingActionButton fabAddCity;
 
     private CityListListener cityListListener;
-    private final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 123;
+    public static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 123;
+    public static final int LOCATION_PERMISSION_REQUEST_CODE = 124;
+    public static final int CHECK_SETTINGS_REQUEST_CODE = 125;
 
     public CityListFragment() {
         setRetainInstance(true);
@@ -94,6 +106,12 @@ public class CityListFragment extends BaseFragment implements CityListView {
         super.onViewCreated(view, savedInstanceState);
         cityListPresenter.setView(this);
         loadCityList();
+        askPermissionLocation();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -106,6 +124,11 @@ public class CityListFragment extends BaseFragment implements CityListView {
     public void onPause() {
         super.onPause();
         cityListPresenter.pause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     @Override
@@ -140,7 +163,7 @@ public class CityListFragment extends BaseFragment implements CityListView {
 
     @Override
     public void showRetry() {
-        Toast.makeText(context(), "Error Occur\nSwipe Down To Reload!", Toast.LENGTH_LONG).show();
+        showToastMessage("Error Occur\nSwipe Down To Reload!");
     }
 
     @Override
@@ -172,7 +195,7 @@ public class CityListFragment extends BaseFragment implements CityListView {
 
     @Override
     public void showError(String message) {
-        Log.d(TAG, "showError: " + message);
+        showToastMessage(message);
     }
 
     @Override
@@ -187,11 +210,30 @@ public class CityListFragment extends BaseFragment implements CityListView {
     }
 
     private void setUpRefreshLayout() {
-        swipeRefreshLayout.setOnRefreshListener(this::loadCityList);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            loadCityList();
+            fetchGpsLocation();
+        });
     }
 
     private void loadCityList() {
         cityListPresenter.initialize();
+    }
+
+    private void fetchGpsLocation() {
+        cityListPresenter.fetchGpsLocation();
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void askPermissionLocation() {
+        boolean isGranted = ContextCompat.checkSelfPermission(context(),
+                android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED;
+        if (!isGranted)
+            requestPermissions (
+                    new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION },
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        else fetchGpsLocation();
     }
 
     @OnClick(R.id.bt_retry)
@@ -218,19 +260,53 @@ public class CityListFragment extends BaseFragment implements CityListView {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult: ");
         switch (requestCode) {
             case PLACE_AUTOCOMPLETE_REQUEST_CODE:
-                if (resultCode == RESULT_OK) {
-                    Place place = PlaceAutocomplete.getPlace(context(), data);
-                    cityListPresenter.addCity(place.getName().toString());
-                } else if (resultCode == RESULT_ERROR) {
-                    Status status = PlaceAutocomplete.getStatus(context(), data);
-                    Log.d(TAG, "onActivityResult: " + status.toString());
-                } else if (resultCode == RESULT_CANCELED) {
-                    Status status = PlaceAutocomplete.getStatus(context(), data);
-                    Log.d(TAG, "onActivityResult: " + status.toString());
+                handlePlaceAutoComplete(resultCode, data);
+                break;
+            case CHECK_SETTINGS_REQUEST_CODE:
+                switch (resultCode) {
+                    case RESULT_OK:
+                        Log.d(TAG, "onActivityResult: ");
+                        fetchGpsLocation();
+                        break;
+                    case RESULT_CANCELED:
+                        break;
                 }
                 break;
+        }
+    }
+
+    private void handlePlaceAutoComplete(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            Place place = PlaceAutocomplete.getPlace(context(), data);
+            cityListPresenter.addCity(place.getName().toString());
+        } else if (resultCode == RESULT_ERROR) {
+            Status status = PlaceAutocomplete.getStatus(context(), data);
+            Log.d(TAG, "onActivityResult: " + status.toString());
+        } else if (resultCode == RESULT_CANCELED) {
+            Status status = PlaceAutocomplete.getStatus(context(), data);
+            Log.d(TAG, "onActivityResult: " + status.toString());
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE:
+                handleLocationPermission(grantResults);
+        }
+    }
+
+    private void handleLocationPermission(@NonNull int[] grantResults) {
+        boolean isGranted = grantResults.length > 0 && grantResults[0]
+                == PackageManager.PERMISSION_GRANTED;
+        if (isGranted) {
+            fetchGpsLocation();
         }
     }
 }

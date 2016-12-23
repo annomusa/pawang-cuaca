@@ -23,13 +23,7 @@ public class CloudForecastDataStore implements ForecastDataStore {
 
     private ForecastApi restApi;
 
-    public CloudForecastDataStore() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-
+    public CloudForecastDataStore(Retrofit retrofit) {
         this.restApi = retrofit.create(ForecastApi.class);
     }
 

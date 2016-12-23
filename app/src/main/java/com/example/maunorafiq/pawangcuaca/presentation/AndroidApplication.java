@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.component.ApplicationComponent;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.component.DaggerApplicationComponent;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.module.ApplicationModule;
+import com.example.maunorafiq.pawangcuaca.presentation.internal.di.module.NetworkModule;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -27,6 +28,7 @@ public class AndroidApplication extends Application {
     private void initializeInjector() {
         this.applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
+                .networkModule(new NetworkModule("http://api.openweathermap.org/data/2.5/"))
                 .build();
     }
 

@@ -6,7 +6,11 @@ package com.example.maunorafiq.pawangcuaca.presentation.model;
 
 public class CityModel {
 
-    private final String cityName;
+    private String cityName;
+
+    public CityModel() {
+
+    }
 
     public CityModel(String cityName) {
         this.cityName = cityName;
@@ -25,6 +29,10 @@ public class CityModel {
 
     public String getCityName() {
         return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     public int getOrdinal() {

@@ -11,4 +11,6 @@ import rx.Observable;
 public interface WeatherDataStore {
 
     Observable<WeatherResponse> getWeatherEntity(final String city);
+
+    Observable<WeatherResponse> getWeatherEntity(double lat, double lon);
 }

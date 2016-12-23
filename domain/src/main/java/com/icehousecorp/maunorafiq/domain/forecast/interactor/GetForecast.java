@@ -23,7 +23,7 @@ public class GetForecast extends UseCase {
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return this.forecastRepository.forecastWeather(this.city);
+        return forecastRepository.forecastWeather(this.city);
     }
 
     public void setCity(String city) {

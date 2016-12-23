@@ -7,9 +7,11 @@ import com.icehousecorp.maunorafiq.data.city.disk.RealmService;
 import com.icehousecorp.maunorafiq.data.city.disk.RealmServiceImpl;
 import com.icehousecorp.maunorafiq.data.city.repository.CityDataRepository;
 import com.icehousecorp.maunorafiq.data.forecast.repository.ForecastDataRepository;
+import com.icehousecorp.maunorafiq.data.gpslocation.GpsLocationDataRepository;
 import com.icehousecorp.maunorafiq.data.weather.repository.WeatherDataRepository;
 import com.icehousecorp.maunorafiq.domain.city.repository.CityRepository;
 import com.icehousecorp.maunorafiq.domain.forecast.repository.ForecastRepository;
+import com.icehousecorp.maunorafiq.domain.gpslocation.repository.GpsLocationRepository;
 import com.icehousecorp.maunorafiq.domain.weather.repository.WeatherRepository;
 
 import javax.inject.Singleton;
@@ -52,6 +54,12 @@ public class ApplicationModule {
     @Singleton
     CityRepository provideCityRepository(CityDataRepository cityDataRepository) {
         return cityDataRepository;
+    }
+
+    @Provides
+    @Singleton
+    GpsLocationRepository provideGpsLocationRepository(GpsLocationDataRepository gpsLocationDataRepository) {
+        return gpsLocationDataRepository;
     }
 
     @Provides

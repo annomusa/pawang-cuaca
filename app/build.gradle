@@ -1,13 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'realm-android'
-apply plugin: 'com.fernandocejas.frodo'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.getkeepsafe.dexcount'
-
-frodo {
-    enabled = true
-}
 
 buildscript {
     repositories {
@@ -38,10 +33,6 @@ android {
         multiDexEnabled true
     }
 
-    dexOptions {
-        incremental true
-    }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -52,16 +43,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    lintOptions {
-        quiet true
-        abortOnError false
-        ignoreWarnings true
-        disable 'InvalidPackage'            //Some libraries have issues with this.
-        disable 'OldTargetApi'              //Lint gives this warning but SDK 20 would be Android L Beta.
-        disable 'IconDensities'             //For testing purpose. This is safe to remove.
-        disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
     }
 }
 
@@ -97,9 +78,6 @@ dependencies {
     compile appDependencies.dagger
     apt appDependencies.daggerCompiler
     provided appDependencies.javaxAnnotation
-
-    // Realm Adapter
-    compile appDependencies.realmDbAdapter
 
     // Picasso
     compile appDependencies.picasso

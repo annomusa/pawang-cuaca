@@ -3,6 +3,7 @@ package com.example.maunorafiq.pawangcuaca.presentation.citylist;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.maunorafiq.pawangcuaca.R;
@@ -27,17 +28,16 @@ public class CityListActivity extends BaseActivity implements HasComponent<Weath
     }
 
     private WeatherComponent weatherComponent;
+    private CityListFragment cityListFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout);
-
-        Log.d(TAG, "onCreate: ");
-
         this.initializeInjector();
 
-        addFragment(R.id.fragmentContainer, new CityListFragment());
+        cityListFragment = new CityListFragment();
+        addFragment(R.id.fragmentContainer, cityListFragment);
     }
 
     private void initializeInjector () {
@@ -50,11 +50,22 @@ public class CityListActivity extends BaseActivity implements HasComponent<Weath
 
     @Override
     public WeatherComponent getComponent() {
-        return weatherComponent;
+        if (weatherComponent != null) return weatherComponent;
+        else {
+            initializeInjector();
+            return weatherComponent;
+        }
     }
 
     @Override
     public void onCityClicked(CityModel cityModel) {
         navigator.navigateToForecast(this, cityModel.getCityName());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult: ");
+        cityListFragment.onActivityResult(requestCode, resultCode, data);
     }
 }

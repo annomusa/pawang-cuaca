@@ -2,6 +2,7 @@ package com.example.maunorafiq.pawangcuaca.presentation.citylist.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ItemViewHo
         void onCityItemClicked(CityModel cityModel);
     }
 
+    private final String TAG = this.getClass().getSimpleName();
     private Context context;
     private List<CityModel> cityModelList;
     private final LayoutInflater layoutInflater;
@@ -41,6 +43,7 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ItemViewHo
     public CitiesAdapter(Context context) {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         cityModelList = new ArrayList<>();
+        cityModelList.add(0, new CityModel());
         this.context = context;
     }
 
@@ -59,7 +62,11 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ItemViewHo
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         final CityModel cityModel = cityModelList.get(position);
 
-        holder.tvLocation.setText(cityModel.getCityName());
+        if (cityModel.getCityName() != null)
+            holder.tvLocation.setText(cityModel.getCityName());
+        else
+            holder.tvLocation.setText("Your location");
+
         if (cityModel.getWeatherModel() != null) {
             final WeatherModel weatherModel = cityModel.getWeatherModel();
 
@@ -85,8 +92,8 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ItemViewHo
     public void setCityModelList(List<CityModel> cityModelList) {
         boolean isContain = false;
         for (CityModel cityModel : cityModelList) {
-            for (CityModel cityModel1 : this.cityModelList) {
-                if (cityModel.getCityName().equals(cityModel1.getCityName())){
+            for (int i=1; i<this.cityModelList.size(); i++) {
+                if (cityModel.getCityName().equals(this.cityModelList.get(i).getCityName())){
                     isContain = true;
                     break;
                 }
@@ -102,8 +109,8 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ItemViewHo
 
     public void addNewCity(CityModel cityModel) {
         boolean isContain = false;
-        for (CityModel cityModel1 : cityModelList) {
-            if (cityModel1.getCityName().equals(cityModel.getCityName())){
+        for (int i = 1; i<cityModelList.size(); i++){
+            if (cityModelList.get(i).getCityName().equals(cityModel.getCityName())){
                 isContain = true;
                 break;
             }
@@ -115,11 +122,15 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ItemViewHo
     }
 
     public void updateCityModel(WeatherModel weatherModel) {
-        for (CityModel cityModel : cityModelList) {
-            if (cityModel.getCityName().equals(weatherModel.getCityName())) {
-                cityModel.setWeatherModel(weatherModel);
+        for (int i=1; i<cityModelList.size(); i++){
+            if (cityModelList.get(i).getCityName().equals(weatherModel.getCityName())) {
+                cityModelList.get(i).setWeatherModel(weatherModel);
+                notifyDataSetChanged();
+                return;
             }
         }
+        cityModelList.get(0).setCityName(weatherModel.getCityName());
+        cityModelList.get(0).setWeatherModel(weatherModel);
         notifyDataSetChanged();
     }
 

@@ -49,7 +49,6 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ItemVi
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         final WeatherModel weatherModel = weatherModelList.get(position);
-        Log.d(TAG, "onBindViewHolder: " + position);
         holder.tvDayForecast.setText(weatherModel.getDay());
         holder.tvTimeForecast.setText(weatherModel.getHourBegin() + " - " + weatherModel.getHourEnd());
         holder.tvMainWeather.setText(weatherModel.getWeatherName());

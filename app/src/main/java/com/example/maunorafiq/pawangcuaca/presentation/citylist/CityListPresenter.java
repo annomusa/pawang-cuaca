@@ -1,8 +1,11 @@
 package com.example.maunorafiq.pawangcuaca.presentation.citylist;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.maunorafiq.pawangcuaca.presentation.Util.ResolveGpsLocation;
 import com.example.maunorafiq.pawangcuaca.presentation.internal.di.PerActivity;
 import com.example.maunorafiq.pawangcuaca.presentation.mapper.CityModelDataMapper;
 import com.example.maunorafiq.pawangcuaca.presentation.mapper.WeatherModelDataMapper;
@@ -29,7 +32,9 @@ public class CityListPresenter implements Presenter {
 
     private final String TAG = this.getClass().getSimpleName();
 
+    private final Context context;
     private CityListView cityListView;
+    private ResolveGpsLocation resolveGpsLocation;
 
     private final GetWeather getWeatherUseCase;
     private final PutCity putCityUseCase;
@@ -38,11 +43,13 @@ public class CityListPresenter implements Presenter {
     private final WeatherModelDataMapper weatherModelDataMapper;
 
     @Inject
-    public CityListPresenter(GetWeather getWeatherUseCase,
+    public CityListPresenter(Activity context,
+                             GetWeather getWeatherUseCase,
                              PutCity putCityUseCase,
                              GetCity getCityUseCase,
                              CityModelDataMapper cityModelDataMapper,
                              WeatherModelDataMapper weatherModelDataMapper) {
+        this.context = context;
         this.getWeatherUseCase = getWeatherUseCase;
         this.putCityUseCase = putCityUseCase;
         this.getCityUseCase = getCityUseCase;
@@ -52,6 +59,7 @@ public class CityListPresenter implements Presenter {
 
     public void setView(@NonNull CityListView cityListView) {
         this.cityListView = cityListView;
+        resolveGpsLocation = new ResolveGpsLocation(context);
     }
 
     @Override
@@ -76,6 +84,14 @@ public class CityListPresenter implements Presenter {
         showViewLoading();
         hideViewRetry();
         getListWeather();
+    }
+
+    public void fetchGpsLocation() {
+        resolveGpsLocation.fetchGpsLocation(
+                location -> {
+                    getWeatherUseCase.setCoordinate(location.getLatitude(), location.getLongitude());
+                    getWeatherUseCase.execute(new WeatherSubscriber());
+                });
     }
 
     public void addCity(String city) {

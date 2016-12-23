@@ -35,4 +35,13 @@ public class WeatherDataRepository implements WeatherRepository {
                 .getWeatherEntity(city)
                 .map(weatherResponse -> weatherEntityDataMapper.transform(weatherResponse, city));
     }
+
+    @Override
+    public Observable<Weather> currentWeather(Double lat, Double lon) {
+        final WeatherDataStore weatherDataStore = this.weatherDataStoreFactory.create();
+
+        return weatherDataStore
+                .getWeatherEntity(lat, lon)
+                .map(weatherResponse -> weatherEntityDataMapper.transform(weatherResponse, weatherResponse.getName()));
+    }
 }

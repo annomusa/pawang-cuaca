@@ -4,13 +4,10 @@ buildscript {
     }
     dependencies {
         classpath 'me.tatarka:gradle-retrolambda:3.2.3'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'com.fernandocejas.frodo'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'realm-android'
 
@@ -33,14 +30,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
-    lintOptions {
-        quiet true
-        abortOnError false
-        ignoreWarnings true
-        disable 'InvalidPackage'  // Some libraries have issues with this
-        disable 'OldTargetApi'    // Due to Robolectric that modifies the manifest when running tests
-    }
 }
 
 
@@ -60,4 +49,7 @@ dependencies {
     compile dataDependencies.retrofitConverter
     compile dataDependencies.retrofitAdapterRx
 
+    // GPS
+    compile 'com.google.android.gms:play-services:10.0.1'
+    compile 'com.google.android.gms:play-services-location:10.0.1'
 }
